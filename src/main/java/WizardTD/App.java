@@ -1,4 +1,4 @@
-// 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
+// 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
 // do the mana button properly;
 // make it so towers are upgradeable and display the right sprite;
 // implement keyboard hotkeys;
@@ -17,6 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+
+import WizardTD.Button.Button;
+import WizardTD.Button.ManaButton;
+import WizardTD.Button.GameSpeedButton;
 
 import WizardTD.Tile.Grass;
 import WizardTD.Tile.PathTile;
@@ -47,6 +51,7 @@ public class App extends PApplet {
 
     JSONObject json;
 
+    public static float gameSpeed;
     public Tile[][] gameMap = new Tile[20][20];
     public PImage wizardHomeBackground;
     public int homeCol;
@@ -133,7 +138,9 @@ public class App extends PApplet {
      */
 	@Override
     public void setup() {
+        gameSpeed = 1;
         frameRate(FPS);
+
         beetleSprite = loadImage("src/main/resources/WizardTD/beetle.png");
         beetle1Sprite = loadImage("src/main/resources/WizardTD/beetle1.png");
         beetle2Sprite = loadImage("src/main/resources/WizardTD/beetle2.png");
@@ -296,8 +303,8 @@ public class App extends PApplet {
         enemyList.add(new Enemy(wormSprite, path));
     }
 
-    Button fastForward = new Button(650, 55, "FF", "2x speed", isFastForward);
-    Button pause = new Button(650, 110, "P", "PAUSE", isPaused);
+    Button fastForward = new GameSpeedButton(650, 55, "FF", "2x speed", isFastForward);
+    Button pause = new GameSpeedButton(650, 110, "P", "PAUSE", isPaused);
     Button buildTower = new Button(650, 165, "T", "Build\nTower", isBuildTower);
     Button buildIceTower = new Button(650, 220, "I", "Build\nIce Tower", isBuildIceTower);
     Button upgradeRange = new Button(650, 275, "U1", "Upgrade\nRange", isUpgradeRange);
@@ -401,6 +408,9 @@ public class App extends PApplet {
                 isUpgradeSpeed = buttonList.get(5).getIsClicked();
                 isUpgradeDamage = buttonList.get(6).getIsClicked();
                 isUpgradeMana = buttonList.get(7).getIsClicked();
+                if (b instanceof GameSpeedButton) {
+                    ((GameSpeedButton)b).changeGameSpeed();
+                }
             }
         }
 

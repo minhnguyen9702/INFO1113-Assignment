@@ -115,7 +115,7 @@ public class Tower extends Tile {
                 timer = 0;
                 App.fireballList.add(new Fireball(this.x+16, this.y+16, enemyInRange.get(0), damage));
             }
-            timer++;
+            timer += 1*App.gameSpeed;
         }
     }
 }

@@ -1,7 +1,9 @@
-package WizardTD;
+package WizardTD.Button;
+
+import WizardTD.App;
 
 public class ManaButton extends Button {
-    ManaButton(float x, float y, String shortHand, String label, boolean isClicked) {
+    public ManaButton(float x, float y, String shortHand, String label, boolean isClicked) {
         super(x, y, shortHand, label, isClicked);
     }
 

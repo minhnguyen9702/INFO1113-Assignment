@@ -21,7 +21,7 @@ public class Fireball extends Entity {
     public void tick() {
         targetX = target.getX()+10;
         targetY = target.getY()+10;
-        float speed = (float)5.0;    
+        float speed = 5*App.gameSpeed;    
 
         float directionX = targetX - this.x;
         float directionY = targetY - this.y;

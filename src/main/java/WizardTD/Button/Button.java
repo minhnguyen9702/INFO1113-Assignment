@@ -1,4 +1,4 @@
-package WizardTD;
+package WizardTD.Button;
 
 public class Button {
     protected float x;
