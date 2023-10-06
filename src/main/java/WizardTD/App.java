@@ -61,6 +61,7 @@ public class App extends PApplet {
     public ArrayList<List<Tile>> pathsList = new ArrayList<List<Tile>>();
     public ArrayList<Tower> towerList = new ArrayList<Tower>();
     public static ArrayList<Fireball> fireballList = new ArrayList<Fireball>();
+    public ArrayList<Fireball> fireballsToRemove = new ArrayList<Fireball>();
     public ArrayList<Button> buttonList = new ArrayList<Button>();
 
     public PImage beetleSprite;
@@ -472,11 +473,12 @@ public class App extends PApplet {
             if(tower.getSpeedLevel() > 0) {
                 rect(tower.getX()+6, tower.getY()+6, 20, 20);
             }
-            strokeWeight(1);
+
             // this section of code is for draing the tower's ranges
+            strokeWeight(1);
+            stroke(0, 0, 0);
+            noFill();
             if (mouseX > tower.getX() && mouseX < tower.getX() + 32 && mouseY > tower.getY() && mouseY < tower.getY() + 32) {
-                stroke(0, 0, 0);
-                noFill();
                 ellipse(tower.getX()+16, tower.getY()+16, tower.getRange()*2, tower.getRange()*2);
             }
             // this section of code checks if enemies are in range of the tower
@@ -498,6 +500,10 @@ public class App extends PApplet {
 
         for (Enemy enemy : enemyList) {
             // this checks if enemies are alive otherwise they are removed from enemyList
+            fill(255, 0, 0);
+            rect(enemy.getX()-3, enemy.getY()-6, 26, 3);
+            fill(0, 255, 0);
+            rect(enemy.getX()-3, enemy.getY()-6, (enemy.getCurrentHitPoints()/enemy.getMaxHitPoints())*26, 3);
             enemy.tick();
             enemy.draw(this);
             if (!enemy.isAlive()) {
@@ -507,11 +513,13 @@ public class App extends PApplet {
         enemyList.removeAll(enemiesToRemove);
 
         for(Fireball fireball : fireballList) {
-            if (fireball.getIsCollided() == false) {
-                fireball.tick();
-                fireball.draw(this);
+            fireball.tick();
+            fireball.draw(this);
+            if (fireball.getIsCollided()) {
+                fireballsToRemove.add(fireball);
             }
         }
+        fireballList.removeAll(fireballsToRemove);
 
         gameMap[homeRow][homeCol].draw(this);
 
