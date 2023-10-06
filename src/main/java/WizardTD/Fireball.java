@@ -4,6 +4,7 @@ public class Fireball extends Entity {
     private Enemy target;
     private float targetX;
     private float targetY;
+    private float damage;
     private boolean isCollided;
 
     public Fireball (float startX, float startY, Enemy target, float damage) {
@@ -11,6 +12,7 @@ public class Fireball extends Entity {
         this.target = target;
         this.x = startX;
         this.y = startY;
+        this.damage = damage;
         isCollided = false;
     }
 
@@ -36,6 +38,7 @@ public class Fireball extends Entity {
 
         if(this.x > (targetX-10) && this.x < (targetX-10) + 20){
 	        if(this.y > (targetY-10) && this.y < (targetY-10) + 20){
+                target.takeDamage(damage);
                 isCollided = true;
 	        }
         }

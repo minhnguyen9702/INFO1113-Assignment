@@ -19,9 +19,8 @@ import java.util.Random;
 import java.util.Scanner;
 
 import WizardTD.Button.Button;
-import WizardTD.Button.ManaButton;
 import WizardTD.Button.GameSpeedButton;
-
+import WizardTD.Button.ManaButton;
 import WizardTD.Tile.Grass;
 import WizardTD.Tile.PathTile;
 import WizardTD.Tile.Shrub;
@@ -57,6 +56,7 @@ public class App extends PApplet {
     public int homeCol;
     public int homeRow;
     public ArrayList<Enemy> enemyList = new ArrayList<Enemy>();
+    public ArrayList<Enemy> enemiesToRemove = new ArrayList<>();
     public ArrayList<Tile> spawnTiles = new ArrayList<Tile>();
     public ArrayList<List<Tile>> pathsList = new ArrayList<List<Tile>>();
     public ArrayList<Tower> towerList = new ArrayList<Tower>();
@@ -491,14 +491,20 @@ public class App extends PApplet {
             }
             // towers have to tick in order to fire fireballs/iceballs
             tower.tick();
+            tower.enemyInRangeRemoveAll(enemiesToRemove);
         }
 
         image(wizardHomeBackground, homeCol*CELLSIZE, homeRow*CELLSIZE+TOPBAR);
 
         for (Enemy enemy : enemyList) {
+            // this checks if enemies are alive otherwise they are removed from enemyList
             enemy.tick();
             enemy.draw(this);
+            if (!enemy.isAlive()) {
+                enemiesToRemove.add(enemy);
+            }
         }
+        enemyList.removeAll(enemiesToRemove);
 
         for(Fireball fireball : fireballList) {
             if (fireball.getIsCollided() == false) {

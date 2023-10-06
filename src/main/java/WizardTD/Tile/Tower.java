@@ -46,6 +46,10 @@ public class Tower extends Tile {
         enemyInRange.remove(enemy);
     }
 
+    public void enemyInRangeRemoveAll(ArrayList<Enemy> enemiesToRemove) {
+        enemyInRange.removeAll(enemiesToRemove);
+    }
+
     public float getRange() {
         return range;
     }
