@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>App.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">info1113</a> &gt; <a href="index.source.html" class="el_package">WizardTD</a> &gt; <span class="el_source">App.java</span></div><h1>App.java</h1><pre class="source lang-java linenums">// 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
+
+package WizardTD;
+
+import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
+
+import WizardTD.Tile.Grass;
+import WizardTD.Tile.PathTile;
+import WizardTD.Tile.Shrub;
+import WizardTD.Tile.SpawnTile;
+import WizardTD.Tile.Tile;
+import WizardTD.Tile.WizardHome;
+import processing.core.PApplet;
+import processing.core.PImage;
+import processing.data.JSONObject;
+import processing.event.MouseEvent;
+
+public class App extends PApplet {
+
+    public static final int CELLSIZE = 32;
+    public static final int SIDEBAR = 120;
+    public static final int TOPBAR = 40;
+    public static final int BOARD_WIDTH = 20;
+
+
+<span class="fc" id="L34">    public static int WIDTH = CELLSIZE*BOARD_WIDTH+SIDEBAR;</span>
+<span class="fc" id="L35">    public static int HEIGHT = BOARD_WIDTH*CELLSIZE+TOPBAR;</span>
+
+    public static final int FPS = 60;
+
+    public String configPath;
+
+    JSONObject json;
+<span class="fc" id="L42">    public Tile[][] gameMap = new Tile[20][20];</span>
+    public PImage wizardHomeBackground;
+    public int homeCol;
+    public int homeRow;
+<span class="fc" id="L46">    public ArrayList&lt;Enemy&gt; enemyList = new ArrayList&lt;Enemy&gt;();</span>
+<span class="fc" id="L47">    public ArrayList&lt;Tile&gt; spawnTiles = new ArrayList&lt;Tile&gt;();</span>
+<span class="fc" id="L48">    public ArrayList&lt;List&lt;Tile&gt;&gt; pathsList = new ArrayList&lt;List&lt;Tile&gt;&gt;();</span>
+
+<span class="fc" id="L50">    public Random random = new Random();</span>
+	
+	// Feel free to add any additional methods or attributes you want. Please put classes in different files.
+
+<span class="fc" id="L54">    public App() {</span>
+<span class="fc" id="L55">        this.configPath = &quot;config.json&quot;;</span>
+<span class="fc" id="L56">    }</span>
+
+    /**
+     * Initialise the setting of the window size.
+     */
+	@Override
+    public void settings() {
+<span class="fc" id="L63">        size(WIDTH, HEIGHT);</span>
+<span class="fc" id="L64">    }</span>
+
+    /**
+     * Load all resources such as images. Initialise the elements such as the player, enemies and map elements.
+     */
+	@Override
+    public void setup() {
+<span class="fc" id="L71">        frameRate(FPS);</span>
+
+        // The section of code below loads the level layout by reading the JSON file which gives it the path to the level.txt file.
+<span class="fc" id="L74">        json = loadJSONObject(configPath);</span>
+<span class="fc" id="L75">        String levelPath = json.getString(&quot;layout&quot;);</span>
+<span class="fc" id="L76">        File f = new File(levelPath);</span>
+        try {
+<span class="fc" id="L78">            Scanner scan = new Scanner(f);</span>
+<span class="fc" id="L79">            int lineCount = 0;</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">            while (scan.hasNextLine()) {</span>
+<span class="fc" id="L81">                String line = scan.nextLine();</span>
+<span class="fc" id="L82">                String[] lineSplit = line.split(&quot;&quot;);</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">                if (lineSplit.length &lt; 20) {</span>
+<span class="nc" id="L84">                    String[] temp = new String[lineSplit.length];</span>
+<span class="nc" id="L85">                    System.arraycopy(lineSplit, 0, temp, 0, lineSplit.length);</span>
+<span class="nc" id="L86">                    lineSplit = new String[20];</span>
+<span class="nc" id="L87">                    System.arraycopy(temp, 0, lineSplit, 0, temp.length);</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">                    for (int i = temp.length; i &lt; 20; i++) {</span>
+<span class="nc" id="L89">                        lineSplit[i] = &quot; &quot;;</span>
+                    }
+                }
+<span class="fc bfc" id="L92" title="All 2 branches covered.">                for (int i = 0; i &lt; lineSplit.length; i++) {</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">                    if (lineSplit[i].equals(&quot; &quot;)) {</span>
+<span class="fc" id="L94">                        gameMap[lineCount][i] = new Grass(i*CELLSIZE, lineCount*CELLSIZE+TOPBAR, loadImage(&quot;src/main/resources/WizardTD/grass.png&quot;));</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">                    } else if (lineSplit[i].equals(&quot;S&quot;)) {</span>
+<span class="fc" id="L96">                        gameMap[lineCount][i] = new Shrub(i*CELLSIZE, lineCount*CELLSIZE+TOPBAR, loadImage(&quot;src/main/resources/WizardTD/shrub.png&quot;));</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">                    } else if (lineSplit[i].equals(&quot;X&quot;)) {</span>
+<span class="pc bpc" id="L98" title="2 of 8 branches missed.">                        if (i == 0 || i == 19 || lineCount == 0 || lineCount == 19) {</span>
+<span class="fc" id="L99">                            gameMap[lineCount][i] = new SpawnTile(i*CELLSIZE, lineCount*CELLSIZE+TOPBAR, loadImage(&quot;src/main/resources/WizardTD/path0.png&quot;));</span>
+<span class="fc" id="L100">                            spawnTiles.add(gameMap[lineCount][i]);</span>
+                        } else {
+<span class="fc" id="L102">                            gameMap[lineCount][i] = new PathTile(i*CELLSIZE, lineCount*CELLSIZE+TOPBAR, loadImage(&quot;src/main/resources/WizardTD/path0.png&quot;));</span>
+                        }
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">                    } else if (lineSplit[i].equals(&quot;W&quot;)) {</span>
+<span class="fc" id="L105">                        gameMap[lineCount][i] = new WizardHome(i*CELLSIZE-8, lineCount*CELLSIZE+TOPBAR-8, loadImage(&quot;src/main/resources/WizardTD/wizard_house.png&quot;));</span>
+<span class="fc" id="L106">                        homeRow = lineCount;</span>
+<span class="fc" id="L107">                        homeCol = i;</span>
+                    }
+                }
+<span class="fc" id="L110">                lineCount++;</span>
+<span class="fc" id="L111">            }</span>
+<span class="fc" id="L112">            scan.close();</span>
+<span class="nc" id="L113">        } catch (FileNotFoundException e) {</span>
+<span class="nc" id="L114">            System.err.println(&quot;File Not Found&quot;);</span>
+<span class="fc" id="L115">        }</span>
+
+<span class="fc bfc" id="L117" title="All 2 branches covered.">        for (Tile spawnTile : spawnTiles) {</span>
+<span class="fc" id="L118">            pathsList.add(findPath(gameMap, (int)spawnTile.getRow(), (int)spawnTile.getCol(), homeRow, homeCol));</span>
+<span class="fc" id="L119">        }</span>
+        
+        // this section of code rotates the path tiles based upon what paths surrounds them.
+<span class="fc bfc" id="L122" title="All 2 branches covered.">        for(int i = 0; i &lt; gameMap.length; i++) {</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">            for(int j = 0; j &lt;gameMap.length; j++) {</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">                if (gameMap[i][j] instanceof PathTile) {</span>
+<span class="pc bpc" id="L125" title="1 of 4 branches missed.">                    if (i == 0 || i == 19) {</span>
+<span class="fc" id="L126">                        gameMap[i][j].setSprite(rotateImageByDegrees(loadImage(&quot;src/main/resources/WizardTD/path0.png&quot;), 90));</span>
+                    }
+
+                    try {
+<span class="fc bfc" id="L130" title="All 4 branches covered.">                        if (gameMap[i+1][j] instanceof PathTile || gameMap[i-1][j] instanceof PathTile) {</span>
+<span class="fc" id="L131">                            gameMap[i][j].setSprite(rotateImageByDegrees(loadImage(&quot;src/main/resources/WizardTD/path0.png&quot;), 90));</span>
+                        }
+
+<span class="fc bfc" id="L134" title="All 4 branches covered.">                        if (gameMap[i][j+1] instanceof PathTile &amp;&amp; gameMap[i][j-1] instanceof PathTile) {</span>
+<span class="fc" id="L135">                            gameMap[i][j].setSprite(loadImage(&quot;src/main/resources/WizardTD/path0.png&quot;));</span>
+                        }
+
+<span class="fc bfc" id="L138" title="All 4 branches covered.">                        if (gameMap[i+1][j] instanceof PathTile &amp;&amp; gameMap[i][j-1] instanceof PathTile) {</span>
+<span class="fc" id="L139">                            gameMap[i][j].setSprite(loadImage(&quot;src/main/resources/WizardTD/path1.png&quot;));</span>
+                        }
+<span class="fc bfc" id="L141" title="All 4 branches covered.">                        if (gameMap[i-1][j] instanceof PathTile &amp;&amp; gameMap[i][j-1] instanceof PathTile) {</span>
+<span class="fc" id="L142">                            gameMap[i][j].setSprite(rotateImageByDegrees(loadImage(&quot;src/main/resources/WizardTD/path1.png&quot;), 90));</span>
+                        }
+<span class="fc bfc" id="L144" title="All 4 branches covered.">                        if (gameMap[i-1][j] instanceof PathTile &amp;&amp; gameMap[i][j+1] instanceof PathTile) {</span>
+<span class="fc" id="L145">                            gameMap[i][j].setSprite(rotateImageByDegrees(loadImage(&quot;src/main/resources/WizardTD/path1.png&quot;), 180));</span>
+                        }
+<span class="fc bfc" id="L147" title="All 4 branches covered.">                        if (gameMap[i+1][j] instanceof PathTile &amp;&amp; gameMap[i][j+1] instanceof PathTile) {</span>
+<span class="fc" id="L148">                            gameMap[i][j].setSprite(rotateImageByDegrees(loadImage(&quot;src/main/resources/WizardTD/path1.png&quot;), 270));</span>
+                        }
+
+<span class="fc bfc" id="L151" title="All 6 branches covered.">                        if (gameMap[i+1][j] instanceof PathTile &amp;&amp; gameMap[i][j+1] instanceof PathTile &amp;&amp; gameMap[i][j-1] instanceof PathTile) {</span>
+<span class="fc" id="L152">                            gameMap[i][j].setSprite(loadImage(&quot;src/main/resources/WizardTD/path2.png&quot;));</span>
+                        }
+<span class="fc bfc" id="L154" title="All 6 branches covered.">                        if (gameMap[i+1][j] instanceof PathTile &amp;&amp; gameMap[i-1][j] instanceof PathTile &amp;&amp; gameMap[i][j-1] instanceof PathTile) {</span>
+<span class="fc" id="L155">                            gameMap[i][j].setSprite(rotateImageByDegrees(loadImage(&quot;src/main/resources/WizardTD/path2.png&quot;), 90));</span>
+                        }
+<span class="pc bpc" id="L157" title="1 of 6 branches missed.">                        if (gameMap[i-1][j] instanceof PathTile &amp;&amp; gameMap[i][j+1] instanceof PathTile &amp;&amp; gameMap[i][j-1] instanceof PathTile) {</span>
+<span class="fc" id="L158">                            gameMap[i][j].setSprite(rotateImageByDegrees(loadImage(&quot;src/main/resources/WizardTD/path2.png&quot;), 180));</span>
+                        }
+<span class="fc bfc" id="L160" title="All 6 branches covered.">                        if (gameMap[i+1][j] instanceof PathTile &amp;&amp; gameMap[i-1][j] instanceof PathTile &amp;&amp; gameMap[i][j+1] instanceof PathTile) {</span>
+<span class="fc" id="L161">                            gameMap[i][j].setSprite(rotateImageByDegrees(loadImage(&quot;src/main/resources/WizardTD/path2.png&quot;), 270));</span>
+                        }
+
+<span class="pc bpc" id="L164" title="1 of 8 branches missed.">                        if (gameMap[i-1][j] instanceof PathTile &amp;&amp; gameMap[i+1][j] instanceof PathTile &amp;&amp; gameMap[i][j+1] instanceof PathTile &amp;&amp; gameMap[i][j-1] instanceof PathTile) {</span>
+<span class="fc" id="L165">                            gameMap[i][j].setSprite(loadImage(&quot;src/main/resources/WizardTD/path3.png&quot;));</span>
+                        }
+<span class="fc" id="L167">                    } catch (ArrayIndexOutOfBoundsException e) {</span>
+<span class="fc" id="L168">                        continue;</span>
+<span class="fc" id="L169">                    }</span>
+                }
+            }
+        }
+
+<span class="fc" id="L174">    wizardHomeBackground = loadImage(&quot;src/main/resources/WizardTD/grass.png&quot;);</span>
+    
+<span class="fc" id="L176">    enemyList.add(new Enemy(loadImage(&quot;src/main/resources/WizardTD/gremlin.png&quot;), pathsList.get(0)));</span>
+<span class="fc" id="L177">    enemyList.add(new Enemy(loadImage(&quot;src/main/resources/WizardTD/gremlin.png&quot;), pathsList.get(1)));</span>
+
+        // Load images during setup
+		// Eg:
+        // loadImage(&quot;src/main/resources/WizardTD/tower0.png&quot;);
+        // loadImage(&quot;src/main/resources/WizardTD/tower1.png&quot;);
+        // loadImage(&quot;src/main/resources/WizardTD/tower2.png&quot;);
+
+<span class="fc" id="L185">    }   </span>
+
+    /**
+     * Receive key pressed signal from the keyboard.
+     */
+	@Override
+    public void keyPressed(){
+        
+<span class="nc" id="L193">    }</span>
+
+    /**
+     * Receive key released signal from the keyboard.
+     */
+	@Override
+    public void keyReleased(){
+
+<span class="nc" id="L201">    }</span>
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        
+<span class="nc" id="L206">    }</span>
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+<span class="nc" id="L211">    }</span>
+
+    /*@Override
+    public void mouseDragged(MouseEvent e) {
+
+    }*/
+
+    /**
+     * Draw all elements in the game by current frame.
+     */
+	@Override
+    public void draw() {
+        // the entire game map is draw but homeX and homeY are taken so that the wizard's Home is drawn on a layer above the rest of the gamemap.
+<span class="fc bfc" id="L224" title="All 2 branches covered.">        for (int i = 0; i &lt; gameMap.length; i++) {</span>
+<span class="fc bfc" id="L225" title="All 2 branches covered.">            for(int j = 0; j &lt; gameMap[i].length; j++) {</span>
+<span class="fc" id="L226">                gameMap[i][j].draw(this);</span>
+            }
+        }
+
+<span class="fc" id="L230">        image(wizardHomeBackground, homeCol*CELLSIZE, homeRow*CELLSIZE+TOPBAR);</span>
+<span class="fc" id="L231">        gameMap[homeRow][homeCol].draw(this);</span>
+
+<span class="fc bfc" id="L233" title="All 2 branches covered.">        for (Enemy enemy : enemyList) {</span>
+<span class="fc" id="L234">            enemy.tick();</span>
+<span class="fc" id="L235">            enemy.draw(this);</span>
+<span class="fc" id="L236">        }</span>
+<span class="fc" id="L237">    }</span>
+
+    public static void main(String[] args) {
+<span class="nc" id="L240">        PApplet.main(&quot;WizardTD.App&quot;);</span>
+<span class="nc" id="L241">    }</span>
+
+    /**
+     * Source: https://stackoverflow.com/questions/37758061/rotate-a-buffered-image-in-java
+     * @param pimg The image to be rotated
+     * @param angle between 0 and 360 degrees
+     * @return the new rotated image
+     */
+    public PImage rotateImageByDegrees(PImage pimg, double angle) {
+<span class="fc" id="L250">        BufferedImage img = (BufferedImage) pimg.getNative();</span>
+<span class="fc" id="L251">        double rads = Math.toRadians(angle);</span>
+<span class="fc" id="L252">        double sin = Math.abs(Math.sin(rads)), cos = Math.abs(Math.cos(rads));</span>
+<span class="fc" id="L253">        int w = img.getWidth();</span>
+<span class="fc" id="L254">        int h = img.getHeight();</span>
+<span class="fc" id="L255">        int newWidth = (int) Math.floor(w * cos + h * sin);</span>
+<span class="fc" id="L256">        int newHeight = (int) Math.floor(h * cos + w * sin);</span>
+
+<span class="fc" id="L258">        PImage result = this.createImage(newWidth, newHeight, RGB);</span>
+        //BufferedImage rotated = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);
+<span class="fc" id="L260">        BufferedImage rotated = (BufferedImage) result.getNative();</span>
+<span class="fc" id="L261">        Graphics2D g2d = rotated.createGraphics();</span>
+<span class="fc" id="L262">        AffineTransform at = new AffineTransform();</span>
+<span class="fc" id="L263">        at.translate((newWidth - w) / 2, (newHeight - h) / 2);</span>
+
+<span class="fc" id="L265">        int x = w / 2;</span>
+<span class="fc" id="L266">        int y = h / 2;</span>
+
+<span class="fc" id="L268">        at.rotate(rads, x, y);</span>
+<span class="fc" id="L269">        g2d.setTransform(at);</span>
+<span class="fc" id="L270">        g2d.drawImage(img, 0, 0, null);</span>
+<span class="fc" id="L271">        g2d.dispose();</span>
+<span class="fc bfc" id="L272" title="All 2 branches covered.">        for (int i = 0; i &lt; newWidth; i++) {</span>
+<span class="fc bfc" id="L273" title="All 2 branches covered.">            for (int j = 0; j &lt; newHeight; j++) {</span>
+<span class="fc" id="L274">                result.set(i, j, rotated.getRGB(i, j));</span>
+            }
+        }
+
+<span class="fc" id="L278">        return result;</span>
+    }
+
+    public List&lt;Tile&gt; findPath(Tile[][] grid, int startRow, int startCol, int homeRow, int homeCol) {
+<span class="fc" id="L282">        int rows = grid.length;</span>
+<span class="fc" id="L283">        int cols = grid[0].length;</span>
+
+        // Initialize visited array to keep track of visited cells
+<span class="fc" id="L286">        boolean[][] visited = new boolean[rows][cols];</span>
+
+        // Initialize the path
+<span class="fc" id="L289">        List&lt;Tile&gt; path = new ArrayList&lt;&gt;();</span>
+
+<span class="pc bpc" id="L291" title="1 of 2 branches missed.">        if (dfs(grid, startRow, startCol, homeRow, homeCol, visited, path)) {</span>
+<span class="fc" id="L292">            return path;</span>
+        } else {
+<span class="nc" id="L294">            return null;</span>
+        }
+    }
+
+    private boolean dfs(Tile[][] grid, int row, int col, int homeRow, int homeCol, boolean[][] visited, List&lt;Tile&gt; path) {
+<span class="fc" id="L299">        int rows = grid.length;</span>
+<span class="fc" id="L300">        int cols = grid[0].length;</span>
+
+        // Check if the current position is out of bounds, an obstacle, or already visited
+<span class="pc bpc" id="L303" title="4 of 12 branches missed.">        if (row &lt; 0 || row &gt;= rows || col &lt; 0 || col &gt;= cols || grid[row][col].canEnemyWalk() == false || visited[row][col]) {</span>
+<span class="fc" id="L304">            return false;</span>
+        }
+
+        // Mark the current cell as visited
+<span class="fc" id="L308">        visited[row][col] = true;</span>
+
+        // Add the current cell to the path
+<span class="fc" id="L311">        path.add(grid[row][col]);</span>
+
+        // Check if we have reached the end point
+<span class="fc bfc" id="L314" title="All 4 branches covered.">        if (row == homeRow &amp;&amp; col == homeCol) {</span>
+<span class="fc" id="L315">            return true; // Return true to indicate that the destination is reached</span>
+        }
+
+        // Define possible moves (right, down, left, up)
+<span class="fc" id="L319">        int[][] moves = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};</span>
+
+        // Explore all possible moves
+<span class="pc bpc" id="L322" title="1 of 2 branches missed.">        for (int[] move : moves) {</span>
+<span class="fc" id="L323">            int newRow = row + move[0];</span>
+<span class="fc" id="L324">            int newCol = col + move[1];</span>
+
+            // Recursively explore the next cell
+<span class="fc bfc" id="L327" title="All 2 branches covered.">            if (dfs(grid, newRow, newCol, homeCol, homeRow, visited, path)) {</span>
+<span class="fc" id="L328">                return true; // Return true if a path is found</span>
+            }
+        }
+
+        // If no path is found, backtrack
+<span class="nc" id="L333">        path.remove(path.size() - 1);</span>
+<span class="nc" id="L334">        return false;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>
