@@ -8,11 +8,11 @@ public class ManaButton extends Button {
     }
 
     public void isClicked() {
-        if (App.initialMana > App.manaPoolSpellInitialCost) {
-            App.initialMana -= App.manaPoolSpellInitialCost;
-            App.manaPoolSpellInitialCost += App.manaPoolSpellCostIncreasePerUse;
-            App.initialManaCap *= App.manaPoolSpellCapMultiplier;
-            App.initialManaGainedPerSecond *= App.manaPoolSpellManaGainedMultiplier;
+        if (App.currentMana > App.manaPoolSpellCost) {
+            App.currentMana -= App.manaPoolSpellCost;
+            App.manaPoolSpellCost += App.manaPoolSpellCostIncreasePerUse;
+            App.currentManaCap *= App.manaPoolSpellCapMultiplier;
+            App.currentManaGainedPerSecond *= App.manaPoolSpellManaGainedMultiplier;
         }
     }
 }

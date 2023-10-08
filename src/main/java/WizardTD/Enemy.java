@@ -17,6 +17,7 @@ public class Enemy extends Entity {
     private float movementSpeed;
     private float armor;
     private float manaGainedOnKill;
+    private boolean isPlayingDeathAnimation;
     private boolean isAlive;
     private float timer;
 
@@ -45,6 +46,7 @@ public class Enemy extends Entity {
         this.movementSpeed = 1;
         this.armor = (float) 0.5;
         this.manaGainedOnKill = 10;
+        this.isPlayingDeathAnimation = false;
         this.isAlive = true;
         this.timer = 0;
     }
@@ -59,6 +61,10 @@ public class Enemy extends Entity {
 
     public float getMaxHitPoints() {
         return maxHitPoints;
+    }
+
+    public boolean isPlayingDeathAnimation() {
+        return isPlayingDeathAnimation;
     }
 
     public boolean isAlive() {
@@ -111,6 +117,7 @@ public class Enemy extends Entity {
     public void tick() {
         this.move();
         if (currentHitPoints <= 0) {
+            isPlayingDeathAnimation = true;
             movementSpeed = 0;
             timer += 1 * App.gameSpeed;
             if (timer >= 4 && spriteIndex < spriteSheet.size()) {

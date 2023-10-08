@@ -56,7 +56,8 @@ public class App extends PApplet {
     public int homeCol;
     public int homeRow;
     public ArrayList<Enemy> enemyList = new ArrayList<Enemy>();
-    public ArrayList<Enemy> enemiesToRemove = new ArrayList<>();
+    public ArrayList<Enemy> enemiesPlayingDeathAnimation = new ArrayList<Enemy>();
+    public ArrayList<Enemy> enemiesDead = new ArrayList<>();
     public ArrayList<Tile> spawnTiles = new ArrayList<Tile>();
     public ArrayList<List<Tile>> pathsList = new ArrayList<List<Tile>>();
     public ArrayList<Tower> towerList = new ArrayList<Tower>();
@@ -103,11 +104,11 @@ public class App extends PApplet {
     public static float initialTowerRange;
     public static float initialTowerSpeed;
     public static float initialTowerDamage;
-    public static float initialMana;
-    public static float initialManaCap;
-    public static float initialManaGainedPerSecond;
+    public static float currentMana;
+    public static float currentManaCap;
+    public static float currentManaGainedPerSecond;
     public static float towerCost;
-    public static float manaPoolSpellInitialCost;
+    public static float manaPoolSpellCost;
     public static float manaPoolSpellCostIncreasePerUse;
     public static float manaPoolSpellCapMultiplier;
     public static float manaPoolSpellManaGainedMultiplier;
@@ -203,11 +204,11 @@ public class App extends PApplet {
         initialTowerRange = json.getFloat("initial_tower_range");
         initialTowerSpeed = json.getFloat("initial_tower_firing_speed");
         initialTowerDamage = json.getFloat("initial_tower_damage");
-        initialMana = json.getFloat("initial_mana");
-        initialManaCap = json.getFloat("initial_mana_cap");
-        initialManaGainedPerSecond = json.getFloat("initial_mana_gained_per_second");
+        currentMana = json.getFloat("initial_mana");
+        currentManaCap = json.getFloat("initial_mana_cap");
+        currentManaGainedPerSecond = json.getFloat("initial_mana_gained_per_second");
         towerCost = json.getFloat("tower_cost");
-        manaPoolSpellInitialCost = json.getFloat("mana_pool_spell_initial_cost");
+        manaPoolSpellCost = json.getFloat("mana_pool_spell_initial_cost");
         manaPoolSpellCostIncreasePerUse = json.getFloat("mana_pool_spell_cost_increase_per_use");
         manaPoolSpellCapMultiplier = json.getFloat("mana_pool_spell_cap_multiplier");
         manaPoolSpellManaGainedMultiplier = json.getFloat("mana_pool_spell_mana_gained_multiplier");
@@ -516,9 +517,9 @@ public class App extends PApplet {
             }
             // towers have to tick in order to fire fireballs/iceballs
             tower.tick();
-            tower.enemyInRangeRemoveAll(enemiesToRemove);
+            tower.enemyInRangeRemoveAll(enemiesPlayingDeathAnimation);
         }
-        enemiesToRemove.clear();
+        enemiesPlayingDeathAnimation.clear();
 
         image(wizardHomeBackground, homeCol*CELLSIZE, homeRow*CELLSIZE+TOPBAR);
 
@@ -532,12 +533,15 @@ public class App extends PApplet {
             }
             enemy.tick();
             enemy.draw(this);
+            if (enemy.isPlayingDeathAnimation())
+                enemiesPlayingDeathAnimation.add(enemy);
             // this checks if enemies are alive otherwise they will be added to enemiesToRemove and thus be removed from enemyList later.
             if (!enemy.isAlive()) {
-                enemiesToRemove.add(enemy);
+                enemiesDead.add(enemy);
             }
         }
-        enemyList.removeAll(enemiesToRemove);
+        enemyList.removeAll(enemiesDead);
+        enemiesDead.clear();
 
         for(Fireball fireball : fireballList) {
             fireball.tick();
@@ -576,11 +580,12 @@ public class App extends PApplet {
             textSize(12);
             text(b.getLabel(), b.getX()+45, b.getY()+14);
             if (b instanceof ManaButton) {
-                text("cost: " + (int)manaPoolSpellInitialCost, b.getX()+45, b.getY()+34);
+                text("cost: " + (int)manaPoolSpellCost, b.getX()+45, b.getY()+34);
             }
         }
 
     }
+    // this section draws the manabars
 
     public static void main(String[] args) {
         PApplet.main("WizardTD.App");
