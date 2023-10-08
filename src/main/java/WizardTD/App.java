@@ -63,6 +63,9 @@ public class App extends PApplet {
     public static ArrayList<Fireball> fireballList = new ArrayList<Fireball>();
     public ArrayList<Fireball> fireballsToRemove = new ArrayList<Fireball>();
     public ArrayList<Button> buttonList = new ArrayList<Button>();
+    public ArrayList<PImage> beetleSpriteSheet = new ArrayList<PImage>(6);
+    public ArrayList<PImage> gremlinSpriteSheet = new ArrayList<PImage>(6);
+    public ArrayList<PImage> wormSpriteSheet = new ArrayList<PImage>(6);
 
     public PImage beetleSprite;
     public PImage beetle1Sprite;
@@ -148,6 +151,13 @@ public class App extends PApplet {
         beetle3Sprite = loadImage("src/main/resources/WizardTD/beetle3.png");
         beetle4Sprite = loadImage("src/main/resources/WizardTD/beetle4.png");
         beetle5Sprite = loadImage("src/main/resources/WizardTD/beetle5.png");
+        beetleSpriteSheet.add(beetleSprite);
+        beetleSpriteSheet.add(beetle1Sprite);
+        beetleSpriteSheet.add(beetle2Sprite);
+        beetleSpriteSheet.add(beetle3Sprite);
+        beetleSpriteSheet.add(beetle4Sprite);
+        beetleSpriteSheet.add(beetle5Sprite);
+
         fireballSprite = loadImage("src/main/resources/WizardTD/fireball.png");
         grassSprite = loadImage("src/main/resources/WizardTD/grass.png");
         gremlinSprite = loadImage("src/main/resources/WizardTD/gremlin.png");
@@ -156,6 +166,13 @@ public class App extends PApplet {
         gremlin3Sprite = loadImage("src/main/resources/WizardTD/gremlin3.png");
         gremlin4Sprite = loadImage("src/main/resources/WizardTD/gremlin4.png");
         gremlin5Sprite = loadImage("src/main/resources/WizardTD/gremlin5.png");
+        gremlinSpriteSheet.add(gremlinSprite);
+        gremlinSpriteSheet.add(gremlin1Sprite);
+        gremlinSpriteSheet.add(gremlin2Sprite);
+        gremlinSpriteSheet.add(gremlin3Sprite);
+        gremlinSpriteSheet.add(gremlin4Sprite);
+        gremlinSpriteSheet.add(gremlin5Sprite);
+
         icetower0Sprite = loadImage("src/main/resources/WizardTD/icetower0.png");
         icetower1Sprite = loadImage("src/main/resources/WizardTD/icetower1.png");
         icetower2Sprite = loadImage("src/main/resources/WizardTD/icetower2.png");
@@ -174,7 +191,13 @@ public class App extends PApplet {
         worm3Sprite = loadImage("src/main/resources/WizardTD/worm3.png");
         worm4Sprite = loadImage("src/main/resources/WizardTD/worm4.png");
         worm5Sprite = loadImage("src/main/resources/WizardTD/worm5.png");
-        
+        wormSpriteSheet.add(wormSprite);
+        wormSpriteSheet.add(worm1Sprite);
+        wormSpriteSheet.add(worm2Sprite);
+        wormSpriteSheet.add(worm3Sprite);
+        wormSpriteSheet.add(worm4Sprite);
+        wormSpriteSheet.add(worm5Sprite);
+
         // in this section of code I am loading all json variables that aren't inside JSONArrays
         json = loadJSONObject(configPath);
         initialTowerRange = json.getFloat("initial_tower_range");
@@ -301,7 +324,7 @@ public class App extends PApplet {
 
     wizardHomeBackground = grassSprite;
     for (List<Tile> path : pathsList) {
-        enemyList.add(new Enemy(wormSprite, path));
+        enemyList.add(new Enemy(beetleSpriteSheet, path));
     }
 
     Button fastForward = new GameSpeedButton(650, 55, "FF", "2x speed", isFastForward);
@@ -495,6 +518,7 @@ public class App extends PApplet {
             tower.tick();
             tower.enemyInRangeRemoveAll(enemiesToRemove);
         }
+        enemiesToRemove.clear();
 
         image(wizardHomeBackground, homeCol*CELLSIZE, homeRow*CELLSIZE+TOPBAR);
 
@@ -503,9 +527,12 @@ public class App extends PApplet {
             fill(255, 0, 0);
             rect(enemy.getX()-3, enemy.getY()-6, 26, 3);
             fill(0, 255, 0);
-            rect(enemy.getX()-3, enemy.getY()-6, (enemy.getCurrentHitPoints()/enemy.getMaxHitPoints())*26, 3);
+            if (enemy.getCurrentHitPoints() > 0) {
+                rect(enemy.getX()-3, enemy.getY()-6, (enemy.getCurrentHitPoints()/enemy.getMaxHitPoints())*26, 3);
+            }
             enemy.tick();
             enemy.draw(this);
+            // this checks if enemies are alive otherwise they will be added to enemiesToRemove and thus be removed from enemyList later.
             if (!enemy.isAlive()) {
                 enemiesToRemove.add(enemy);
             }
@@ -520,6 +547,7 @@ public class App extends PApplet {
             }
         }
         fireballList.removeAll(fireballsToRemove);
+        fireballsToRemove.clear();
 
         gameMap[homeRow][homeCol].draw(this);
 
