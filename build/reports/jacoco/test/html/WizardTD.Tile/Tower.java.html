@@ -1,13 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Tower.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">info1113</a> &gt; <a href="index.source.html" class="el_package">WizardTD.Tile</a> &gt; <span class="el_source">Tower.java</span></div><h1>Tower.java</h1><pre class="source lang-java linenums">package WizardTD.Tile;
 
-import processing.core.PImage;
+import java.util.ArrayList;
+
+import WizardTD.App;
+import WizardTD.Enemy;
+import WizardTD.Fireball;
 
 public class Tower extends Tile {
-    public Tower(float x, float y, PImage sprite) {
-<span class="nc" id="L7">        super(x, y, sprite);</span>
+<span class="nc" id="L10">    private ArrayList&lt;Enemy&gt; enemyInRange = new ArrayList&lt;&gt;();</span>
+    private float range;
+    private float speed;
+    private float damage;
+    private int rangeLevel;
+    private int speedLevel;
+    private int damageLevel;
+    private float timer;
 
-<span class="nc" id="L9">        isTowerPlaceable = false;</span>
-<span class="nc" id="L10">        canEnemyWalk = false;</span>
-<span class="nc" id="L11">    }</span>
+    public Tower(float x, float y) {
+<span class="nc" id="L20">        super(x, y);</span>
+<span class="nc" id="L21">        this.sprite = App.tower0Sprite;</span>
+<span class="nc" id="L22">        this.rangeLevel = 0;</span>
+<span class="nc" id="L23">        this.speedLevel = 0;</span>
+<span class="nc" id="L24">        this.damageLevel = 0;</span>
+<span class="nc" id="L25">        this.range = App.initialTowerRange;</span>
+<span class="nc" id="L26">        this.speed = App.initialTowerSpeed;</span>
+<span class="nc" id="L27">        this.damage = App.initialTowerDamage;</span>
+
+<span class="nc" id="L29">        isTowerPlaceable = false;</span>
+<span class="nc" id="L30">        canEnemyWalk = false;</span>
+<span class="nc" id="L31">    }</span>
+    
+    public ArrayList&lt;Enemy&gt; getEnemyInRange() {
+<span class="nc" id="L34">        return enemyInRange;</span>
+    }
+
+    public boolean enemyInRangeContains(Enemy enemy) {
+<span class="nc" id="L38">        return enemyInRange.contains(enemy);</span>
+    }
+
+    public void enemyInRangeAdd(Enemy enemy) {
+<span class="nc" id="L42">        enemyInRange.add(enemy);</span>
+<span class="nc" id="L43">    }</span>
+
+    public void enemyInRangeRemove(Enemy enemy) {
+<span class="nc" id="L46">        enemyInRange.remove(enemy);</span>
+<span class="nc" id="L47">    }</span>
+
+    public void enemyInRangeRemoveAll(ArrayList&lt;Enemy&gt; enemiesToRemove) {
+<span class="nc" id="L50">        enemyInRange.removeAll(enemiesToRemove);</span>
+<span class="nc" id="L51">    }</span>
+
+    public float getRange() {
+<span class="nc" id="L54">        return range;</span>
+    }
+
+    public void upgradeRange() {
+<span class="nc bnc" id="L58" title="All 4 branches missed.">        if (rangeLevel &lt; 3 &amp;&amp; App.currentMana &gt; 20 + 10*rangeLevel) {</span>
+<span class="nc" id="L59">            rangeLevel += 1;</span>
+<span class="nc" id="L60">            range += 32;</span>
+<span class="nc" id="L61">            changeTowerSprite();</span>
+        }
+<span class="nc" id="L63">    }</span>
+
+    public void upgradeSpeed() {
+<span class="nc bnc" id="L66" title="All 4 branches missed.">        if (speedLevel &lt; 3 &amp;&amp; App.currentMana &gt; 20 + 10*speedLevel)  {</span>
+<span class="nc" id="L67">            speedLevel += 1;</span>
+<span class="nc" id="L68">            speed += 0.5;</span>
+<span class="nc" id="L69">            changeTowerSprite();</span>
+        }
+<span class="nc" id="L71">    }</span>
+
+    public void upgradeDamage() {
+<span class="nc bnc" id="L74" title="All 4 branches missed.">        if (damageLevel &lt; 3 &amp;&amp; App.currentMana &gt; 20 + 10*damageLevel)  {</span>
+<span class="nc" id="L75">            damageLevel += 1;</span>
+<span class="nc" id="L76">            damage += (damage/2);</span>
+<span class="nc" id="L77">            changeTowerSprite();</span>
+        }
+<span class="nc" id="L79">    }</span>
+
+    public int getRangeLevel() {
+<span class="nc" id="L82">        return rangeLevel;</span>
+    }
+
+    public int getSpeedLevel() {
+<span class="nc" id="L86">        return speedLevel;</span>
+    }
+
+    public int getDamageLevel() {
+<span class="nc" id="L90">        return damageLevel;</span>
+    }
+
+    public int getBaseLevel() {
+<span class="nc bnc" id="L94" title="All 6 branches missed.">        if (rangeLevel &gt;= 2 &amp;&amp; speedLevel &gt;= 2 &amp;&amp; damageLevel &gt;= 2) {</span>
+<span class="nc" id="L95">            return 2;</span>
+<span class="nc bnc" id="L96" title="All 6 branches missed.">        } else if (rangeLevel &gt;= 1 &amp;&amp; speedLevel &gt;= 1 &amp;&amp; damageLevel &gt;= 1) {</span>
+<span class="nc" id="L97">            return 1;</span>
+        } else {
+<span class="nc" id="L99">            return 0;</span>
+        }
+    }
+
+    public void changeTowerSprite() {
+<span class="nc bnc" id="L104" title="All 2 branches missed.">        if (this.getBaseLevel() == 2) {</span>
+<span class="nc" id="L105">            this.sprite = App.tower2Sprite;</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">        } else if (this.getBaseLevel() == 1) {</span>
+<span class="nc" id="L107">            this.sprite = App.tower1Sprite;</span>
+        } else {
+<span class="nc" id="L109">            this.sprite = App.tower0Sprite;</span>
+        }
+<span class="nc" id="L111">    }</span>
+
+    public void tick() {
+<span class="nc bnc" id="L114" title="All 2 branches missed.">        if (enemyInRange.size() == 0) {</span>
+<span class="nc" id="L115">            timer = 60/speed;</span>
+        }
+<span class="nc bnc" id="L117" title="All 2 branches missed.">        if (enemyInRange.size() != 0) {</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">            if (timer &gt;= 60/speed) {</span>
+<span class="nc" id="L119">                timer = 0;</span>
+<span class="nc" id="L120">                App.fireballList.add(new Fireball(this.x+16, this.y+16, enemyInRange.get(0), damage));</span>
+            }
+<span class="nc" id="L122">            timer += 1*App.gameSpeed;</span>
+        }
+<span class="nc" id="L124">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Enemy.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">info1113</a> &gt; <a href="index.source.html" class="el_package">WizardTD</a> &gt; <span class="el_source">Enemy.java</span></div><h1>Enemy.java</h1><pre class="source lang-java linenums">package WizardTD;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import WizardTD.Tile.Tile;
@@ -7,47 +8,128 @@ import processing.core.PImage;
 
 public class Enemy extends Entity {
 
-<span class="fc" id="L10">    private int i = 1;</span>
+<span class="fc" id="L11">    private int pathIndex = 1;</span>
+<span class="fc" id="L12">    private int spriteIndex = 0;</span>
     private List&lt;Tile&gt; path;
+    private ArrayList&lt;PImage&gt; spriteSheet;
+    private float currentHitPoints;
+    private float maxHitPoints;
+    private float movementSpeed;
+    private float armor;
+    private float manaGainedOnKill;
+    private boolean isPlayingDeathAnimation;
+    private boolean isAlive;
+    private float timer;
 
-<span class="fc" id="L13">    public Enemy(PImage sprite, List&lt;Tile&gt; path) {</span>
-<span class="fc" id="L14">        this.x = path.get(0).getX()+6;</span>
-<span class="fc" id="L15">        this.y = path.get(0).getY()+6;</span>
-<span class="fc" id="L16">        this.sprite = sprite;</span>
-<span class="fc" id="L17">        this.path = path;</span>
-<span class="fc" id="L18">    }</span>
+<span class="fc" id="L24">    public Enemy(ArrayList&lt;PImage&gt; spriteSheet, List&lt;Tile&gt; path) {</span>
+<span class="fc" id="L25">        int yOffset = 0;</span>
+<span class="fc" id="L26">        int xOffset = 0;</span>
+<span class="fc bfc" id="L27" title="All 2 branches covered.">        if (path.get(0).getRow() == 0) {</span>
+<span class="fc" id="L28">            yOffset = -32;</span>
+        }
+<span class="fc bfc" id="L30" title="All 2 branches covered.">        if (path.get(0).getRow() == 19) {</span>
+<span class="fc" id="L31">            yOffset = 32;</span>
+        }
+<span class="pc bpc" id="L33" title="1 of 2 branches missed.">        if (path.get(0).getCol() == 0) {</span>
+<span class="nc" id="L34">            xOffset = -32;</span>
+        }
+<span class="fc bfc" id="L36" title="All 2 branches covered.">        if (path.get(0).getCol() == 19) {</span>
+<span class="fc" id="L37">            xOffset = 32;</span>
+        }
+<span class="fc" id="L39">        this.x = path.get(0).getX() + 6 + xOffset;</span>
+<span class="fc" id="L40">        this.y = path.get(0).getY() + 6 + yOffset;</span>
+<span class="fc" id="L41">        this.spriteSheet = spriteSheet;</span>
+<span class="fc" id="L42">        this.sprite = spriteSheet.get(spriteIndex);</span>
+<span class="fc" id="L43">        this.path = path;</span>
+<span class="fc" id="L44">        this.currentHitPoints = 100;</span>
+<span class="fc" id="L45">        this.maxHitPoints = 100;</span>
+<span class="fc" id="L46">        this.movementSpeed = 1;</span>
+<span class="fc" id="L47">        this.armor = (float) 0.5;</span>
+<span class="fc" id="L48">        this.manaGainedOnKill = 10;</span>
+<span class="fc" id="L49">        this.isPlayingDeathAnimation = false;</span>
+<span class="fc" id="L50">        this.isAlive = true;</span>
+<span class="fc" id="L51">        this.timer = 0;</span>
+<span class="fc" id="L52">    }</span>
 
-    public void tick() {
-<span class="pc bpc" id="L21" title="1 of 2 branches missed.">        if (i == path.size()-1) {</span>
-<span class="nc bnc" id="L22" title="All 2 branches missed.">            if (x &lt; path.get(i).getX()+14){</span>
-<span class="nc" id="L23">                x++;</span>
-            }
-<span class="nc bnc" id="L25" title="All 2 branches missed.">            if (x &gt; path.get(i).getX()+14){</span>
-<span class="nc" id="L26">                x--;</span>
-            }
-<span class="nc bnc" id="L28" title="All 2 branches missed.">            if (y &lt; path.get(i).getY()+14){</span>
-<span class="nc" id="L29">                y++;</span>
-            }
-<span class="nc bnc" id="L31" title="All 2 branches missed.">            if (y &gt; path.get(i).getY()+14){</span>
-<span class="nc" id="L32">                y--;</span>
+    public void takeDamage(float damage) {
+<span class="nc" id="L55">        currentHitPoints -= damage * armor;</span>
+<span class="nc" id="L56">    }</span>
+
+    public float getCurrentHitPoints() {
+<span class="nc" id="L59">        return currentHitPoints;</span>
+    }
+
+    public float getMaxHitPoints() {
+<span class="nc" id="L63">        return maxHitPoints;</span>
+    }
+
+    public boolean isPlayingDeathAnimation() {
+<span class="nc" id="L67">        return isPlayingDeathAnimation;</span>
+    }
+
+    public boolean isAlive() {
+<span class="nc" id="L71">        return isAlive;</span>
+    }
+
+    public void move() {
+<span class="nc bnc" id="L75" title="All 2 branches missed.">        if (pathIndex == path.size() - 1) {</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">            if (Math.abs(x - (path.get(pathIndex).getX() + 14)) &lt;= movementSpeed &amp;&amp;</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">                Math.abs(y - (path.get(pathIndex).getY() + 14)) &lt;= movementSpeed) {</span>
+<span class="nc" id="L78">                x = path.get(pathIndex).getX() + 14;</span>
+<span class="nc" id="L79">                y = path.get(pathIndex).getY() + 14;</span>
+            } else {
+<span class="nc bnc" id="L81" title="All 2 branches missed.">                if (x &lt; path.get(pathIndex).getX() + 14) {</span>
+<span class="nc" id="L82">                    x += movementSpeed * App.gameSpeed;</span>
+                }
+<span class="nc bnc" id="L84" title="All 2 branches missed.">                if (x &gt; path.get(pathIndex).getX() + 14) {</span>
+<span class="nc" id="L85">                    x -= movementSpeed * App.gameSpeed;</span>
+                }
+<span class="nc bnc" id="L87" title="All 2 branches missed.">                if (y &lt; path.get(pathIndex).getY() + 14) {</span>
+<span class="nc" id="L88">                    y += movementSpeed * App.gameSpeed;</span>
+                }
+<span class="nc bnc" id="L90" title="All 2 branches missed.">                if (y &gt; path.get(pathIndex).getY() + 14) {</span>
+<span class="nc" id="L91">                    y -= movementSpeed * App.gameSpeed;</span>
+                }
             }
         } else {
-<span class="pc bpc" id="L35" title="1 of 2 branches missed.">            if (x &lt; path.get(i).getX()+6){</span>
-<span class="nc" id="L36">                x++;</span>
-            }
-<span class="pc bpc" id="L38" title="1 of 2 branches missed.">            if (x &gt; path.get(i).getX()+6){</span>
-<span class="nc" id="L39">                x--;</span>
-            }
-<span class="pc bpc" id="L41" title="1 of 2 branches missed.">            if (y &lt; path.get(i).getY()+6){</span>
-<span class="fc" id="L42">                y++;</span>
-            }
-<span class="pc bpc" id="L44" title="1 of 2 branches missed.">            if (y &gt; path.get(i).getY()+6){</span>
-<span class="nc" id="L45">                y--;</span>
-            }
-<span class="pc bpc" id="L47" title="3 of 4 branches missed.">            if (y == path.get(i).getY()+6 &amp;&amp; x == path.get(i).getX()+6){</span>
-<span class="nc" id="L48">                i++;</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">            if (Math.abs(x - (path.get(pathIndex).getX() + 6)) &lt;= movementSpeed &amp;&amp;</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">                Math.abs(y - (path.get(pathIndex).getY() + 6)) &lt;= movementSpeed) {</span>
+<span class="nc" id="L97">                x = path.get(pathIndex).getX() + 6;</span>
+<span class="nc" id="L98">                y = path.get(pathIndex).getY() + 6;</span>
+<span class="nc" id="L99">                pathIndex++;</span>
+            } else {
+<span class="nc bnc" id="L101" title="All 2 branches missed.">                if (x &lt; path.get(pathIndex).getX() + 6) {</span>
+<span class="nc" id="L102">                    x += movementSpeed * App.gameSpeed;</span>
+                }
+<span class="nc bnc" id="L104" title="All 2 branches missed.">                if (x &gt; path.get(pathIndex).getX() + 6) {</span>
+<span class="nc" id="L105">                    x -= movementSpeed * App.gameSpeed;</span>
+                }
+<span class="nc bnc" id="L107" title="All 2 branches missed.">                if (y &lt; path.get(pathIndex).getY() + 6) {</span>
+<span class="nc" id="L108">                    y += movementSpeed * App.gameSpeed;</span>
+                }
+<span class="nc bnc" id="L110" title="All 2 branches missed.">                if (y &gt; path.get(pathIndex).getY() + 6) {</span>
+<span class="nc" id="L111">                    y -= movementSpeed * App.gameSpeed;</span>
+                }
             }
         }
-<span class="fc" id="L51">    }</span>
+<span class="nc" id="L115">    }</span>
+
+    public void tick() {
+<span class="nc" id="L118">        this.move();</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">        if (currentHitPoints &lt;= 0) {</span>
+<span class="nc" id="L120">            isPlayingDeathAnimation = true;</span>
+<span class="nc" id="L121">            movementSpeed = 0;</span>
+<span class="nc" id="L122">            timer += 1 * App.gameSpeed;</span>
+<span class="nc bnc" id="L123" title="All 4 branches missed.">            if (timer &gt;= 4 &amp;&amp; spriteIndex &lt; spriteSheet.size()) {</span>
+<span class="nc" id="L124">                sprite = spriteSheet.get(spriteIndex);</span>
+<span class="nc" id="L125">                timer = 0;</span>
+<span class="nc" id="L126">                spriteIndex++;</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">                if (spriteIndex &gt;= spriteSheet.size()) {</span>
+<span class="nc" id="L128">                    App.currentMana += manaGainedOnKill;</span>
+<span class="nc" id="L129">                    isAlive = false;</span>
+                }
+            }
+        }
+<span class="nc" id="L133">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>

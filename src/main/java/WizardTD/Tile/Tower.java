@@ -55,7 +55,7 @@ public class Tower extends Tile {
     }
 
     public void upgradeRange() {
-        if (rangeLevel < 3 && App.currentMana > 20 + 10*rangeLevel) {
+        if (App.currentMana > 20 + 10*rangeLevel) {
             rangeLevel += 1;
             range += 32;
             changeTowerSprite();
@@ -63,7 +63,7 @@ public class Tower extends Tile {
     }
 
     public void upgradeSpeed() {
-        if (speedLevel < 3 && App.currentMana > 20 + 10*speedLevel)  {
+        if (App.currentMana > 20 + 10*speedLevel)  {
             speedLevel += 1;
             speed += 0.5;
             changeTowerSprite();
@@ -71,7 +71,7 @@ public class Tower extends Tile {
     }
 
     public void upgradeDamage() {
-        if (damageLevel < 3 && App.currentMana > 20 + 10*damageLevel)  {
+        if (App.currentMana > 20 + 10*damageLevel)  {
             damageLevel += 1;
             damage += (damage/2);
             changeTowerSprite();

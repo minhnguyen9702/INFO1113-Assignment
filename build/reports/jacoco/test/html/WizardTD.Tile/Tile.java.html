@@ -13,20 +13,25 @@ public abstract class Tile extends Entity {
 <span class="fc" id="L13">        this.sprite = sprite;</span>
 <span class="fc" id="L14">    }</span>
 
+<span class="nc" id="L16">    public Tile(float x, float y) {</span>
+<span class="nc" id="L17">        this.x = x;</span>
+<span class="nc" id="L18">        this.y = y;</span>
+<span class="nc" id="L19">    }</span>
+
     public boolean isTowerPlaceable(){
-<span class="nc" id="L17">        return isTowerPlaceable;</span>
+<span class="nc" id="L22">        return isTowerPlaceable;</span>
     }
 
     public boolean canEnemyWalk(){
-<span class="fc" id="L21">        return canEnemyWalk;</span>
+<span class="fc" id="L26">        return canEnemyWalk;</span>
     }
 
-    public float getRow() {
-<span class="fc" id="L25">        return (y-40)/32;</span>
+    public int getRow() {
+<span class="fc" id="L30">        return (int)(y-40)/32;</span>
     }
 
-    public float getCol() {
-<span class="fc" id="L29">        return x/32;</span>
+    public int getCol() {
+<span class="fc" id="L34">        return (int)x/32;</span>
     }
 }
 

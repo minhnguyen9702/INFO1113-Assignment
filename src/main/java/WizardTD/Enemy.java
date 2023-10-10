@@ -15,7 +15,7 @@ public class Enemy extends Entity {
     private float currentHitPoints;
     private float maxHitPoints;
     private float movementSpeed;
-    private float armor;
+    private float armour;
     private float manaGainedOnKill;
     private boolean isPlayingDeathAnimation;
     private boolean isAlive;
@@ -44,7 +44,7 @@ public class Enemy extends Entity {
         this.currentHitPoints = 100;
         this.maxHitPoints = 100;
         this.movementSpeed = 1;
-        this.armor = (float) 0.5;
+        this.armour = (float)0.5;
         this.manaGainedOnKill = 10;
         this.isPlayingDeathAnimation = false;
         this.isAlive = true;
@@ -52,7 +52,7 @@ public class Enemy extends Entity {
     }
 
     public void takeDamage(float damage) {
-        currentHitPoints -= damage * armor;
+        currentHitPoints -= damage * armour;
     }
 
     public float getCurrentHitPoints() {

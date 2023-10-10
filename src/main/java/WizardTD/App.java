@@ -14,6 +14,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -30,6 +31,7 @@ import WizardTD.Tile.Tower;
 import WizardTD.Tile.WizardHome;
 import processing.core.PApplet;
 import processing.core.PImage;
+import processing.data.JSONArray;
 import processing.data.JSONObject;
 import processing.event.MouseEvent;
 
@@ -49,6 +51,8 @@ public class App extends PApplet {
     public String configPath;
 
     JSONObject json;
+    JSONArray wavesArray;
+    ArrayList<Wave> waves = new ArrayList<Wave>();
 
     public static float gameSpeed;
     public Tile[][] gameMap = new Tile[20][20];
@@ -67,6 +71,11 @@ public class App extends PApplet {
     public ArrayList<PImage> beetleSpriteSheet = new ArrayList<PImage>(6);
     public ArrayList<PImage> gremlinSpriteSheet = new ArrayList<PImage>(6);
     public ArrayList<PImage> wormSpriteSheet = new ArrayList<PImage>(6);
+    public HashMap<String, ArrayList<PImage>> enemySpriteMap = new HashMap<String, ArrayList<PImage>>();
+    public Wave currentWave;
+
+    private int enemySpawnTimer;
+    private int waveIndex;
 
     public PImage beetleSprite;
     public PImage beetle1Sprite;
@@ -143,9 +152,11 @@ public class App extends PApplet {
      */
 	@Override
     public void setup() {
+        enemySpawnTimer = 0;
         gameSpeed = 1;
         frameRate(FPS);
 
+        // this section loads all of the images into the game as sprites
         beetleSprite = loadImage("src/main/resources/WizardTD/beetle.png");
         beetle1Sprite = loadImage("src/main/resources/WizardTD/beetle1.png");
         beetle2Sprite = loadImage("src/main/resources/WizardTD/beetle2.png");
@@ -199,6 +210,11 @@ public class App extends PApplet {
         wormSpriteSheet.add(worm4Sprite);
         wormSpriteSheet.add(worm5Sprite);
 
+        // adding all of the spritesheets to a HashMap so that Enemy objects can easily access them later
+        enemySpriteMap.put("beetle", beetleSpriteSheet);
+        enemySpriteMap.put("gremlin", gremlinSpriteSheet);
+        enemySpriteMap.put("worm", wormSpriteSheet);
+
         // in this section of code I am loading all json variables that aren't inside JSONArrays
         json = loadJSONObject(configPath);
         initialTowerRange = json.getFloat("initial_tower_range");
@@ -213,7 +229,7 @@ public class App extends PApplet {
         manaPoolSpellCapMultiplier = json.getFloat("mana_pool_spell_cap_multiplier");
         manaPoolSpellManaGainedMultiplier = json.getFloat("mana_pool_spell_mana_gained_multiplier");
 
-        // intializing the booleans the buttons control;
+        // intializing the booleans which the buttons control;
         isFastForward = false;
         isPaused = false;
         isBuildTower = false;
@@ -222,6 +238,36 @@ public class App extends PApplet {
         isUpgradeSpeed = false;
         isUpgradeDamage = false;
         isUpgradeMana = false;
+
+        waveIndex = 0;
+        wavesArray = json.getJSONArray("waves");
+        for (int i = 0; i < wavesArray.size(); i++) {
+            JSONObject waveObject = wavesArray.getJSONObject(i);
+
+            float duration = waveObject.getInt("duration") * 60;
+            float preWavePause = waveObject.getFloat("pre_wave_pause") * 60;
+
+            Wave wave = new Wave(duration, preWavePause);
+
+            JSONArray monstersArray = waveObject.getJSONArray("monsters");
+
+            for (int j = 0; j < monstersArray.size(); j++) {
+                JSONObject monsterObject = monstersArray.getJSONObject(j);
+
+                String type = monsterObject.getString("type");
+                float hp = monsterObject.getInt("hp");
+                float speed = monsterObject.getFloat("speed");
+                float armour = monsterObject.getFloat("armour");
+                float manaGainedOnKill = monsterObject.getInt("mana_gained_on_kill");
+                int quantity = monsterObject.getInt("quantity");
+                wave.addTotalNumberOfMonsters(quantity);
+
+                MonsterData monsterData = new MonsterData(type, hp, speed, armour, manaGainedOnKill, quantity);
+                wave.addMonster(monsterData);
+            }
+            waves.add(wave);
+        }
+        currentWave = waves.get(waveIndex);
 
         // The section of code below loads the level layout by reading the JSON file which gives it the path to the level.txt file.
         String levelPath = json.getString("layout");
@@ -325,7 +371,7 @@ public class App extends PApplet {
 
     wizardHomeBackground = grassSprite;
     for (List<Tile> path : pathsList) {
-        enemyList.add(new Enemy(beetleSpriteSheet, path));
+        enemyList.add(new Enemy(enemySpriteMap.get("beetle"), path));
     }
 
     Button fastForward = new GameSpeedButton(650, 55, "FF", "2x speed", isFastForward);
@@ -471,6 +517,27 @@ public class App extends PApplet {
      */
 	@Override
     public void draw() {
+        if (gameSpeed > 0) {
+            if (currentWave.getPreWavePause() > 0) {
+                currentWave.setPreWavePause(currentWave.getPreWavePause() - gameSpeed);
+                System.out.println(currentWave.getPreWavePause());
+            } else if (currentWave.getDuration() > 0) {
+                currentWave.setDuration(currentWave.getDuration() - gameSpeed);
+                enemySpawnTimer++;
+                if (enemySpawnTimer == currentWave.getOriginalDuration() / currentWave.getTotalNumberOfMonsters()) {
+                    enemySpawnTimer = 0;
+                    enemyList.add(new Enemy(enemySpriteMap.get("beetle"), pathsList.get(0)));
+                }
+                System.out.println(currentWave.getDuration());
+            } else {
+                if (waveIndex < waves.size() - 1) {
+                    enemySpawnTimer = 0;
+                    waveIndex++;
+                    currentWave = waves.get(waveIndex);
+                }
+            }
+        }
+
         // the entire game map is drawn and towers can be placed if isTowerPlaceable() == true
         for (int i = 0; i < gameMap.length; i++) {
             for(int j = 0; j < gameMap[i].length; j++) {
@@ -557,7 +624,7 @@ public class App extends PApplet {
 
         gameMap[homeRow][homeCol].draw(this);
 
-        // draws topbar and sidebar
+    // draws topbar and sidebar
         noStroke();
         fill(210, 180, 140);
         rect(0, 0, 760, 40);
@@ -641,6 +708,18 @@ public class App extends PApplet {
         return result;
     }
 
+        /**
+     * Finds a path between two points on a grid using Depth-First Search (DFS).
+     *
+     * @param grid       The 2D grid of tiles representing the environment.
+     * @param startRow   The row index of the starting tile.
+     * @param startCol   The column index of the starting tile.
+     * @param homeRow    The row index of the destination tile.
+     * @param homeCol    The column index of the destination tile.
+     * @return A list of tiles representing the path from the starting tile to the destination tile if a path exists,
+     *         or null if no path is found.
+     */
+
     public List<Tile> findPath(Tile[][] grid, int startRow, int startCol, int homeRow, int homeCol) {
         int rows = grid.length;
         int cols = grid[0].length;
@@ -657,6 +736,19 @@ public class App extends PApplet {
             return null;
         }
     }
+
+    /**
+     * A recursive helper function for DFS pathfinding.
+     *
+     * @param grid       The 2D grid of tiles representing the environment.
+     * @param row        The current row index.
+     * @param col        The current column index.
+     * @param homeRow    The row index of the destination tile.
+     * @param homeCol    The column index of the destination tile.
+     * @param visited    A boolean array tracking visited cells.
+     * @param path       A list of tiles representing the current path being explored.
+     * @return true if a path from the current position to the destination is found, false otherwise.
+     */
 
     private boolean dfs(Tile[][] grid, int row, int col, int homeRow, int homeCol, boolean[][] visited, List<Tile> path) {
         int rows = grid.length;
