@@ -125,7 +125,7 @@ public class Enemy extends Entity {
                 timer = 0;
                 spriteIndex++;
                 if (spriteIndex >= spriteSheet.size()) {
-                    App.initialMana += manaGainedOnKill;
+                    App.currentMana += manaGainedOnKill;
                     isAlive = false;
                 }
             }

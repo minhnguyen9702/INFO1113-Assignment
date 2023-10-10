@@ -361,11 +361,13 @@ public class App extends PApplet {
         if (key == 'F' || key == 'f') {
             buttonList.get(0).isClicked();
             isFastForward = buttonList.get(0).getIsClicked();
+            ((GameSpeedButton)buttonList.get(0)).changeGameSpeed();
         }
 
         if (key == 'P' || key == 'p') {
             buttonList.get(1).isClicked();
-            isFastForward = buttonList.get(1).getIsClicked();
+            isPaused = buttonList.get(1).getIsClicked();
+            ((GameSpeedButton)buttonList.get(1)).changeGameSpeed();
         }
 
         if (key == 'T' || key == 't') {
@@ -583,9 +585,19 @@ public class App extends PApplet {
                 text("cost: " + (int)manaPoolSpellCost, b.getX()+45, b.getY()+34);
             }
         }
+    // this section draws the manabar
+        stroke(0, 0, 0);
+        fill(255, 255, 255);
+        rect(400, 4, 340, 28);
+        fill(0, 255, 255);
+        rect(400, 4, (currentMana/currentManaCap)*340, 28);
+        fill(0, 0, 0);
 
+        textSize(24);
+        text("MANA:", 320, 28);
+        text((int)currentMana+" / "+(int)currentManaCap, 560, 28);
     }
-    // this section draws the manabars
+
 
     public static void main(String[] args) {
         PApplet.main("WizardTD.App");
