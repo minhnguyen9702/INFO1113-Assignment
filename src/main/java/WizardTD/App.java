@@ -52,7 +52,7 @@ public class App extends PApplet {
 
     JSONObject json;
     JSONArray wavesArray;
-    ArrayList<Wave> waves = new ArrayList<Wave>();
+    
 
     public static float gameSpeed;
     public Tile[][] gameMap = new Tile[20][20];
@@ -71,9 +71,9 @@ public class App extends PApplet {
     public ArrayList<PImage> beetleSpriteSheet = new ArrayList<PImage>(6);
     public ArrayList<PImage> gremlinSpriteSheet = new ArrayList<PImage>(6);
     public ArrayList<PImage> wormSpriteSheet = new ArrayList<PImage>(6);
-    public HashMap<String, ArrayList<PImage>> enemySpriteMap = new HashMap<String, ArrayList<PImage>>();
+    public static HashMap<String, ArrayList<PImage>> enemySpriteMap = new HashMap<String, ArrayList<PImage>>();
+    public ArrayList<Wave> waves = new ArrayList<Wave>();
     public Wave currentWave;
-
     private int enemySpawnTimer;
     private int waveIndex;
 
@@ -370,9 +370,6 @@ public class App extends PApplet {
         }
 
     wizardHomeBackground = grassSprite;
-    for (List<Tile> path : pathsList) {
-        enemyList.add(new Enemy(enemySpriteMap.get("beetle"), path));
-    }
 
     Button fastForward = new GameSpeedButton(650, 55, "FF", "2x speed", isFastForward);
     Button pause = new GameSpeedButton(650, 110, "P", "PAUSE", isPaused);
@@ -520,15 +517,18 @@ public class App extends PApplet {
         if (gameSpeed > 0) {
             if (currentWave.getPreWavePause() > 0) {
                 currentWave.setPreWavePause(currentWave.getPreWavePause() - gameSpeed);
-                System.out.println(currentWave.getPreWavePause());
             } else if (currentWave.getDuration() > 0) {
                 currentWave.setDuration(currentWave.getDuration() - gameSpeed);
-                enemySpawnTimer++;
-                if (enemySpawnTimer == currentWave.getOriginalDuration() / currentWave.getTotalNumberOfMonsters()) {
+                enemySpawnTimer += gameSpeed;
+                if (enemySpawnTimer >= currentWave.getOriginalDuration() / currentWave.getTotalNumberOfMonsters()) {
                     enemySpawnTimer = 0;
-                    enemyList.add(new Enemy(enemySpriteMap.get("beetle"), pathsList.get(0)));
+                    MonsterData randomMonsterData = 
+                    currentWave.getMonsterDataList().get(Math.round(random(0, 
+                                                        currentWave.getMonsterDataList().size() -1)));
+
+                    List<Tile> randomPath = pathsList.get(Math.round(random(0, pathsList.size()-1)));
+                    enemyList.add(new Enemy(randomMonsterData, randomPath));;
                 }
-                System.out.println(currentWave.getDuration());
             } else {
                 if (waveIndex < waves.size() - 1) {
                     enemySpawnTimer = 0;

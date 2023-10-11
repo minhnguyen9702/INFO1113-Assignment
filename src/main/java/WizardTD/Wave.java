@@ -47,4 +47,8 @@ public class Wave {
     public void addTotalNumberOfMonsters(int quantity){
         totalNumberOfMonsters += quantity;
     }
+
+    public ArrayList<MonsterData> getMonsterDataList() {
+        return monsterDataList;
+    }
 }

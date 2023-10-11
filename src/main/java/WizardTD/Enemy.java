@@ -21,7 +21,7 @@ public class Enemy extends Entity {
     private boolean isAlive;
     private float timer;
 
-    public Enemy(ArrayList<PImage> spriteSheet, List<Tile> path) {
+    public Enemy(MonsterData monsterData, List<Tile> path) {
         int yOffset = 0;
         int xOffset = 0;
         if (path.get(0).getRow() == 0) {
@@ -38,14 +38,15 @@ public class Enemy extends Entity {
         }
         this.x = path.get(0).getX() + 6 + xOffset;
         this.y = path.get(0).getY() + 6 + yOffset;
-        this.spriteSheet = spriteSheet;
-        this.sprite = spriteSheet.get(spriteIndex);
         this.path = path;
-        this.currentHitPoints = 100;
-        this.maxHitPoints = 100;
-        this.movementSpeed = 1;
-        this.armour = (float)0.5;
-        this.manaGainedOnKill = 10;
+
+        this.spriteSheet = App.enemySpriteMap.get(monsterData.getType());
+        this.sprite = spriteSheet.get(spriteIndex);
+        this.currentHitPoints = monsterData.getHP();
+        this.maxHitPoints = monsterData.getHP();
+        this.movementSpeed = monsterData.getSpeed();
+        this.armour = monsterData.getArmour();
+        this.manaGainedOnKill = monsterData.getManaGainedOnKill();
         this.isPlayingDeathAnimation = false;
         this.isAlive = true;
         this.timer = 0;
@@ -73,8 +74,8 @@ public class Enemy extends Entity {
 
     public void move() {
         if (pathIndex == path.size() - 1) {
-            if (Math.abs(x - (path.get(pathIndex).getX() + 14)) <= movementSpeed &&
-                Math.abs(y - (path.get(pathIndex).getY() + 14)) <= movementSpeed) {
+            if (Math.abs(x - (path.get(pathIndex).getX() + 14)) <= movementSpeed * App.gameSpeed &&
+                Math.abs(y - (path.get(pathIndex).getY() + 14)) <= movementSpeed * App.gameSpeed) {
                 x = path.get(pathIndex).getX() + 14;
                 y = path.get(pathIndex).getY() + 14;
             } else {
@@ -92,8 +93,8 @@ public class Enemy extends Entity {
                 }
             }
         } else {
-            if (Math.abs(x - (path.get(pathIndex).getX() + 6)) <= movementSpeed &&
-                Math.abs(y - (path.get(pathIndex).getY() + 6)) <= movementSpeed) {
+            if (Math.abs(x - (path.get(pathIndex).getX() + 6)) <= movementSpeed * App.gameSpeed &&
+                Math.abs(y - (path.get(pathIndex).getY() + 6)) <= movementSpeed * App.gameSpeed) {
                 x = path.get(pathIndex).getX() + 6;
                 y = path.get(pathIndex).getY() + 6;
                 pathIndex++;
@@ -125,7 +126,11 @@ public class Enemy extends Entity {
                 timer = 0;
                 spriteIndex++;
                 if (spriteIndex >= spriteSheet.size()) {
-                    App.currentMana += manaGainedOnKill;
+                    if (App.currentMana + manaGainedOnKill < App.currentManaCap) {
+                        App.currentMana += manaGainedOnKill;
+                    } else if (App.currentMana + manaGainedOnKill > App.currentManaCap) {
+                        App.currentMana = App.currentManaCap;
+                    }
                     isAlive = false;
                 }
             }
