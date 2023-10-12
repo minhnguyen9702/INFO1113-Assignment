@@ -59,7 +59,7 @@ public class App extends PApplet {
     public PImage wizardHomeBackground;
     public int homeCol;
     public int homeRow;
-    public ArrayList<Enemy> enemyList = new ArrayList<Enemy>();
+    public static ArrayList<Enemy> enemyList = new ArrayList<Enemy>();
     public ArrayList<Enemy> enemiesPlayingDeathAnimation = new ArrayList<Enemy>();
     public ArrayList<Enemy> enemiesDead = new ArrayList<>();
     public ArrayList<Tile> spawnTiles = new ArrayList<Tile>();
@@ -72,11 +72,12 @@ public class App extends PApplet {
     public ArrayList<PImage> gremlinSpriteSheet = new ArrayList<PImage>(6);
     public ArrayList<PImage> wormSpriteSheet = new ArrayList<PImage>(6);
     public static HashMap<String, ArrayList<PImage>> enemySpriteMap = new HashMap<String, ArrayList<PImage>>();
-    public ArrayList<Wave> waves = new ArrayList<Wave>();
+    public static ArrayList<Wave> waves = new ArrayList<Wave>();
     public Wave currentWave;
     private int enemySpawnTimer;
     private int manaGainedTimer;
     private int waveIndex;
+    public static GameState gameState;
 
     public PImage beetleSprite;
     public PImage beetle1Sprite;
@@ -155,6 +156,7 @@ public class App extends PApplet {
     public void setup() {
         manaGainedTimer = 0;
         enemySpawnTimer = 0;
+        gameState = GameState.GAMENORMAL;
         gameSpeed = 1;
         frameRate(FPS);
 
@@ -403,46 +405,48 @@ public class App extends PApplet {
      */
 	@Override
     public void keyPressed(){
-        if (key == 'F' || key == 'f') {
-            buttonList.get(0).isClicked();
-            isFastForward = buttonList.get(0).getIsClicked();
-            ((GameSpeedButton)buttonList.get(0)).changeGameSpeed();
-        }
+        if (gameState == GameState.GAMENORMAL) {
+            if (key == 'F' || key == 'f') {
+                buttonList.get(0).isClicked();
+                isFastForward = buttonList.get(0).getIsClicked();
+                ((GameSpeedButton)buttonList.get(0)).changeGameSpeed();
+            }
 
-        if (key == 'P' || key == 'p') {
-            buttonList.get(1).isClicked();
-            isPaused = buttonList.get(1).getIsClicked();
-            ((GameSpeedButton)buttonList.get(1)).changeGameSpeed();
-        }
+            if (key == 'P' || key == 'p') {
+                buttonList.get(1).isClicked();
+                isPaused = buttonList.get(1).getIsClicked();
+                ((GameSpeedButton)buttonList.get(1)).changeGameSpeed();
+            }
 
-        if (key == 'T' || key == 't') {
-            buttonList.get(2).isClicked();
-            isBuildTower = buttonList.get(2).getIsClicked();
-        }
+            if (key == 'T' || key == 't') {
+                buttonList.get(2).isClicked();
+                isBuildTower = buttonList.get(2).getIsClicked();
+            }
 
-        if (key == 'I' || key == 'i') {
-            buttonList.get(3).isClicked();
-            isBuildIceTower = buttonList.get(3).getIsClicked();
-        }
+            if (key == 'I' || key == 'i') {
+                buttonList.get(3).isClicked();
+                isBuildIceTower = buttonList.get(3).getIsClicked();
+            }
 
-        if (key == '1') {
-            buttonList.get(4).isClicked();
-            isUpgradeRange = buttonList.get(4).getIsClicked();
-        }
+            if (key == '1') {
+                buttonList.get(4).isClicked();
+                isUpgradeRange = buttonList.get(4).getIsClicked();
+            }
 
-        if (key == '2') {
-            buttonList.get(5).isClicked();
-            isUpgradeSpeed = buttonList.get(5).getIsClicked();
-        }
+            if (key == '2') {
+                buttonList.get(5).isClicked();
+                isUpgradeSpeed = buttonList.get(5).getIsClicked();
+            }
 
-        if (key == '3') {
-            buttonList.get(6).isClicked();
-            isUpgradeDamage = buttonList.get(6).getIsClicked();
-        }
+            if (key == '3') {
+                buttonList.get(6).isClicked();
+                isUpgradeDamage = buttonList.get(6).getIsClicked();
+            }
 
-        if (key == 'M' || key == 'm') {
-            buttonList.get(7).isClicked();
-            isUpgradeMana = buttonList.get(7).getIsClicked();
+            if (key == 'M' || key == 'm') {
+                buttonList.get(7).isClicked();
+                isUpgradeMana = buttonList.get(7).getIsClicked();
+            }
         }
     }
 
@@ -457,45 +461,47 @@ public class App extends PApplet {
     @Override
     public void mousePressed(MouseEvent e) {
         // for building towers and icetowers
-        for (int i = 0; i < gameMap.length; i++) {
-            for(int j = 0; j < gameMap[i].length; j++) {
-                if (mouseX > gameMap[i][j].getX() && mouseX < gameMap[i][j].getX() + 32 && mouseY > gameMap[i][j].getY() && mouseY < gameMap[i][j].getY() + 32) {
-                    if (gameMap[i][j].isTowerPlaceable() && isBuildTower && currentMana > towerCost) {
-                        gameMap[i][j] = new Tower(gameMap[i][j].getX(), gameMap[i][j].getY());
-                        towerList.add((Tower)gameMap[i][j]);
+        if (gameState == GameState.GAMENORMAL) {
+            for (int i = 0; i < gameMap.length; i++) {
+                for(int j = 0; j < gameMap[i].length; j++) {
+                    if (mouseX > gameMap[i][j].getX() && mouseX < gameMap[i][j].getX() + 32 && mouseY > gameMap[i][j].getY() && mouseY < gameMap[i][j].getY() + 32) {
+                        if (gameMap[i][j].isTowerPlaceable() && isBuildTower && currentMana > towerCost) {
+                            gameMap[i][j] = new Tower(gameMap[i][j].getX(), gameMap[i][j].getY());
+                            towerList.add((Tower)gameMap[i][j]);
+                        }
                     }
                 }
             }
-        }
-        
-        //checking if buttons are pressed;
-        for (Button b : buttonList) {
-            if (mouseX > b.getX() && mouseX < b.getX() + 40 && mouseY > b.getY() && mouseY < b.getY() + 40) {
-                b.isClicked();
-                isFastForward = buttonList.get(0).getIsClicked();
-                isPaused = buttonList.get(1).getIsClicked();
-                isBuildTower = buttonList.get(2).getIsClicked();
-                isBuildIceTower = buttonList.get(3).getIsClicked();
-                isUpgradeRange = buttonList.get(4).getIsClicked();
-                isUpgradeSpeed = buttonList.get(5).getIsClicked();
-                isUpgradeDamage = buttonList.get(6).getIsClicked();
-                isUpgradeMana = buttonList.get(7).getIsClicked();
-                if (b instanceof GameSpeedButton) {
-                    ((GameSpeedButton)b).changeGameSpeed();
+            
+            //checking if buttons are pressed;
+            for (Button b : buttonList) {
+                if (mouseX > b.getX() && mouseX < b.getX() + 40 && mouseY > b.getY() && mouseY < b.getY() + 40) {
+                    b.isClicked();
+                    isFastForward = buttonList.get(0).getIsClicked();
+                    isPaused = buttonList.get(1).getIsClicked();
+                    isBuildTower = buttonList.get(2).getIsClicked();
+                    isBuildIceTower = buttonList.get(3).getIsClicked();
+                    isUpgradeRange = buttonList.get(4).getIsClicked();
+                    isUpgradeSpeed = buttonList.get(5).getIsClicked();
+                    isUpgradeDamage = buttonList.get(6).getIsClicked();
+                    isUpgradeMana = buttonList.get(7).getIsClicked();
+                    if (b instanceof GameSpeedButton) {
+                        ((GameSpeedButton)b).changeGameSpeed();
+                    }
                 }
             }
-        }
 
-        for (Tower tower : towerList) {
-            if (mouseX > tower.getX() && mouseX < tower.getX() + 32 && mouseY > tower.getY() && mouseY < tower.getY() + 32) {
-                if (isUpgradeRange) {
-                    tower.upgradeRange();
-                } 
-                if (isUpgradeSpeed) {
-                    tower.upgradeSpeed();
-                } 
-                if (isUpgradeDamage) {
-                    tower.upgradeDamage();
+            for (Tower tower : towerList) {
+                if (mouseX > tower.getX() && mouseX < tower.getX() + 32 && mouseY > tower.getY() && mouseY < tower.getY() + 32) {
+                    if (isUpgradeRange) {
+                        tower.upgradeRange();
+                    } 
+                    if (isUpgradeSpeed) {
+                        tower.upgradeSpeed();
+                    } 
+                    if (isUpgradeDamage) {
+                        tower.upgradeDamage();
+                    }
                 }
             }
         }
@@ -504,6 +510,28 @@ public class App extends PApplet {
     @Override
     public void mouseReleased(MouseEvent e) {
 
+    }
+
+    public static void changeGameState() {
+        if (currentMana < 0) {
+            gameState = GameState.GAMEOVER;
+            gameSpeed = 0;
+        } if (waves.get(waves.size() - 1).getDuration() <= 0 && enemyList.isEmpty()) {
+            gameState = GameState.GAMEWIN;
+            gameSpeed = 0;
+        }
+    }
+
+    public void gainManaPerSecond() {
+        manaGainedTimer += gameSpeed;
+        if (manaGainedTimer >= 30) {
+            manaGainedTimer = 0;
+            if (currentMana + (currentManaGainedPerSecond/2) < currentManaCap) {
+                currentMana += currentManaGainedPerSecond/2;
+            } else if (currentMana + (currentManaGainedPerSecond/2) > currentManaCap) {
+                currentMana = currentManaCap;
+            }
+        }
     }
 
     public void moveWaveForwards() {
@@ -539,16 +567,7 @@ public class App extends PApplet {
      */
 	@Override
     public void draw() {
-        manaGainedTimer += gameSpeed;
-        if (manaGainedTimer >= 30) {
-            manaGainedTimer = 0;
-            if (currentMana + (currentManaGainedPerSecond/2) < currentManaCap) {
-                currentMana += currentManaGainedPerSecond/2;
-            } else if (currentMana + (currentManaGainedPerSecond/2) > currentManaCap) {
-                currentMana = currentManaCap;
-            }
-        }
-
+        gainManaPerSecond();
         moveWaveForwards();
 
         // the entire game map is drawn and towers can be placed if isTowerPlaceable() == true
@@ -670,12 +689,19 @@ public class App extends PApplet {
         fill(255, 255, 255);
         rect(400, 4, 340, 28);
         fill(0, 255, 255);
-        rect(400, 4, (currentMana/currentManaCap)*340, 28);
+        if (currentMana > 0) {
+            rect(400, 4, (currentMana/currentManaCap)*340, 28);
+        }
         fill(0, 0, 0);
 
         textSize(24);
         text("MANA:", 320, 28);
-        text(Math.round(currentMana)+" / "+Math.round(currentManaCap), 560, 28);
+        if (currentMana > 0) {
+            text(Math.round(currentMana)+" / "+Math.round(currentManaCap), 560, 28);
+        } else {
+            text("0 / "+Math.round(currentManaCap), 560, 28);
+        }
+        
 
     // this section draws the timer
         int waveDisplay;
