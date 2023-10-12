@@ -8,6 +8,8 @@ import processing.core.PImage;
 
 public class Enemy extends Entity {
 
+    private int yOffset = 0;
+    private int xOffset = 0;
     private int pathIndex = 1;
     private int spriteIndex = 0;
     private List<Tile> path;
@@ -22,8 +24,6 @@ public class Enemy extends Entity {
     private float timer;
 
     public Enemy(MonsterData monsterData, List<Tile> path) {
-        int yOffset = 0;
-        int xOffset = 0;
         if (path.get(0).getRow() == 0) {
             yOffset = -32;
         }
@@ -50,6 +50,7 @@ public class Enemy extends Entity {
         this.isPlayingDeathAnimation = false;
         this.isAlive = true;
         this.timer = 0;
+        monsterData.quantityDecrement();
     }
 
     public void takeDamage(float damage) {
@@ -72,12 +73,20 @@ public class Enemy extends Entity {
         return isAlive;
     }
 
+    public void banish() {
+        this.x = path.get(0).getX() + 6 + xOffset;
+        this.y = path.get(0).getY() + 6 + yOffset;
+        pathIndex = 1;
+        App.currentMana -= currentHitPoints;
+    }
+
     public void move() {
         if (pathIndex == path.size() - 1) {
             if (Math.abs(x - (path.get(pathIndex).getX() + 14)) <= movementSpeed * App.gameSpeed &&
                 Math.abs(y - (path.get(pathIndex).getY() + 14)) <= movementSpeed * App.gameSpeed) {
                 x = path.get(pathIndex).getX() + 14;
                 y = path.get(pathIndex).getY() + 14;
+                banish();
             } else {
                 if (x < path.get(pathIndex).getX() + 14) {
                     x += movementSpeed * App.gameSpeed;

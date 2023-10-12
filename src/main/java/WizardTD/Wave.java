@@ -8,6 +8,7 @@ public class Wave {
     private float preWavePause;
     private int totalNumberOfMonsters;
     private ArrayList<MonsterData> monsterDataList = new ArrayList<MonsterData>();
+    private ArrayList<MonsterData> monsterDataToRemove = new ArrayList<MonsterData>();
 
     public Wave(float duration, float preWavePause) {
         this.duration = duration;
@@ -50,5 +51,15 @@ public class Wave {
 
     public ArrayList<MonsterData> getMonsterDataList() {
         return monsterDataList;
+    }
+
+    public void updateMonsterData() {
+        for (MonsterData monsterData : monsterDataList) {
+            if (monsterData.getQuantity() == 0) {
+                monsterDataToRemove.add(monsterData);
+            }
+        }
+        monsterDataList.removeAll(monsterDataToRemove);
+        monsterDataToRemove.clear();
     }
 }

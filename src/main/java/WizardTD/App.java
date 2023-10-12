@@ -75,6 +75,7 @@ public class App extends PApplet {
     public ArrayList<Wave> waves = new ArrayList<Wave>();
     public Wave currentWave;
     private int enemySpawnTimer;
+    private int manaGainedTimer;
     private int waveIndex;
 
     public PImage beetleSprite;
@@ -152,6 +153,7 @@ public class App extends PApplet {
      */
 	@Override
     public void setup() {
+        manaGainedTimer = 0;
         enemySpawnTimer = 0;
         gameSpeed = 1;
         frameRate(FPS);
@@ -458,7 +460,7 @@ public class App extends PApplet {
         for (int i = 0; i < gameMap.length; i++) {
             for(int j = 0; j < gameMap[i].length; j++) {
                 if (mouseX > gameMap[i][j].getX() && mouseX < gameMap[i][j].getX() + 32 && mouseY > gameMap[i][j].getY() && mouseY < gameMap[i][j].getY() + 32) {
-                    if (gameMap[i][j].isTowerPlaceable() && isBuildTower) {
+                    if (gameMap[i][j].isTowerPlaceable() && isBuildTower && currentMana > towerCost) {
                         gameMap[i][j] = new Tower(gameMap[i][j].getX(), gameMap[i][j].getY());
                         towerList.add((Tower)gameMap[i][j]);
                     }
@@ -504,16 +506,7 @@ public class App extends PApplet {
 
     }
 
-    /*@Override
-    public void mouseDragged(MouseEvent e) {
-
-    }*/
-
-    /**
-     * Draw all elements in the game by current frame.
-     */
-	@Override
-    public void draw() {
+    public void moveWaveForwards() {
         if (gameSpeed > 0) {
             if (currentWave.getPreWavePause() > 0) {
                 currentWave.setPreWavePause(currentWave.getPreWavePause() - gameSpeed);
@@ -522,11 +515,14 @@ public class App extends PApplet {
                 enemySpawnTimer += gameSpeed;
                 if (enemySpawnTimer >= currentWave.getOriginalDuration() / currentWave.getTotalNumberOfMonsters()) {
                     enemySpawnTimer = 0;
+                    currentWave.updateMonsterData();
+
                     MonsterData randomMonsterData = 
-                    currentWave.getMonsterDataList().get(Math.round(random(0, 
-                                                        currentWave.getMonsterDataList().size() -1)));
+                    currentWave.getMonsterDataList().get(Math.round(
+                        random(0, currentWave.getMonsterDataList().size() -1)));
 
                     List<Tile> randomPath = pathsList.get(Math.round(random(0, pathsList.size()-1)));
+
                     enemyList.add(new Enemy(randomMonsterData, randomPath));;
                 }
             } else {
@@ -537,6 +533,23 @@ public class App extends PApplet {
                 }
             }
         }
+    }
+    /**
+     * Draw all elements in the game by current frame.
+     */
+	@Override
+    public void draw() {
+        manaGainedTimer += gameSpeed;
+        if (manaGainedTimer >= 30) {
+            manaGainedTimer = 0;
+            if (currentMana + (currentManaGainedPerSecond/2) < currentManaCap) {
+                currentMana += currentManaGainedPerSecond/2;
+            } else if (currentMana + (currentManaGainedPerSecond/2) > currentManaCap) {
+                currentMana = currentManaCap;
+            }
+        }
+
+        moveWaveForwards();
 
         // the entire game map is drawn and towers can be placed if isTowerPlaceable() == true
         for (int i = 0; i < gameMap.length; i++) {
@@ -649,7 +662,7 @@ public class App extends PApplet {
             textSize(12);
             text(b.getLabel(), b.getX()+45, b.getY()+14);
             if (b instanceof ManaButton) {
-                text("cost: " + (int)manaPoolSpellCost, b.getX()+45, b.getY()+34);
+                text("cost: " + Math.round(manaPoolSpellCost), b.getX()+45, b.getY()+34);
             }
         }
     // this section draws the manabar
@@ -662,9 +675,21 @@ public class App extends PApplet {
 
         textSize(24);
         text("MANA:", 320, 28);
-        text((int)currentMana+" / "+(int)currentManaCap, 560, 28);
-    }
+        text(Math.round(currentMana)+" / "+Math.round(currentManaCap), 560, 28);
 
+    // this section draws the timer
+        int waveDisplay;
+        float timeLeftTillWave;
+        if (currentWave.getPreWavePause() > 0) {
+            waveDisplay = waveIndex + 1;
+            timeLeftTillWave = currentWave.getPreWavePause();
+            text("Wave " + waveDisplay + " starts: " + Math.round(timeLeftTillWave/60), 5, 28);
+        } else if (waveIndex < waves.size() - 1) {
+            waveDisplay = waveIndex + 2;
+            timeLeftTillWave = currentWave.getDuration() + waves.get(waveIndex + 1).getPreWavePause();
+            text("Wave " + waveDisplay + " starts: " + Math.round(timeLeftTillWave/60), 5, 28);
+        }
+    }
 
     public static void main(String[] args) {
         PApplet.main("WizardTD.App");

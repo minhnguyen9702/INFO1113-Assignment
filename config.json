@@ -11,7 +11,15 @@
           "speed": 1,
           "armour": 0.5,
           "mana_gained_on_kill": 10,
-          "quantity": 10
+          "quantity": 5
+        },
+        {
+          "type": "beetle",
+          "hp": 100,
+          "speed": 1,
+          "armour": 0.5,
+          "mana_gained_on_kill": 10,
+          "quantity": 5
         }
 	  ]
     },

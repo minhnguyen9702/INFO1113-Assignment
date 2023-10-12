@@ -28,6 +28,7 @@ public class Tower extends Tile {
 
         isTowerPlaceable = false;
         canEnemyWalk = false;
+        App.currentMana -= App.towerCost;
     }
     
     public ArrayList<Enemy> getEnemyInRange() {
