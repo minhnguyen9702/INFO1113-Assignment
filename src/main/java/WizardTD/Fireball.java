@@ -1,11 +1,11 @@
 package WizardTD;
 
 public class Fireball extends Entity {
-    private Enemy target;
-    private float targetX;
-    private float targetY;
-    private float damage;
-    private boolean isCollided;
+    protected Enemy target;
+    protected float targetX;
+    protected float targetY;
+    protected float damage;
+    protected boolean isCollided;
 
     public Fireball (float startX, float startY, Enemy target, float damage) {
         this.sprite = App.fireballSprite;

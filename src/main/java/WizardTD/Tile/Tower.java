@@ -7,14 +7,14 @@ import WizardTD.Enemy;
 import WizardTD.Fireball;
 
 public class Tower extends Tile {
-    private ArrayList<Enemy> enemyInRange = new ArrayList<>();
-    private float range;
-    private float speed;
-    private float damage;
-    private int rangeLevel;
-    private int speedLevel;
-    private int damageLevel;
-    private float timer;
+    protected ArrayList<Enemy> enemyInRange = new ArrayList<>();
+    protected float range;
+    protected float speed;
+    protected float damage;
+    protected int rangeLevel;
+    protected int speedLevel;
+    protected int damageLevel;
+    protected float timer;
 
     public Tower(float x, float y) {
         super(x, y);

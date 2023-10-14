@@ -1,6 +1,6 @@
 package WizardTD.Button;
 
-public class Button {
+public abstract class Button {
     protected float x;
     protected float y;
     protected boolean isClicked;

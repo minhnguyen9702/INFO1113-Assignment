@@ -1,10 +1,5 @@
 // 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
-// do the mana button properly;
-// make it so towers are upgradeable and display the right sprite;
-// implement keyboard hotkeys;
-// read json file for enemy data.
-// do enemy deaths.
-// do enemy healthbars and mana bars
+// 
 
 package WizardTD;
 
@@ -16,7 +11,6 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 import java.util.Scanner;
 
 import WizardTD.Button.Button;
@@ -25,6 +19,7 @@ import WizardTD.Button.ManaButton;
 import WizardTD.Button.TowerButton;
 import WizardTD.Button.UpgradeButton;
 import WizardTD.Tile.Grass;
+import WizardTD.Tile.IceTower;
 import WizardTD.Tile.PathTile;
 import WizardTD.Tile.Shrub;
 import WizardTD.Tile.SpawnTile;
@@ -98,6 +93,7 @@ public class App extends PApplet {
     public static PImage icetower0Sprite;
     public static PImage icetower1Sprite;
     public static PImage icetower2Sprite;
+    public static PImage iceballSprite;
     public PImage path0Sprite;
     public PImage path1Sprite;
     public PImage path2Sprite;
@@ -134,8 +130,6 @@ public class App extends PApplet {
     public static boolean isUpgradeSpeed;
     public static boolean isUpgradeDamage;
     public static boolean isUpgradeMana;
-
-    public Random random = new Random();
 	
 	// Feel free to add any additional methods or attributes you want. Please put classes in different files.
 
@@ -204,6 +198,7 @@ public class App extends PApplet {
         icetower0Sprite = loadImage("src/main/resources/WizardTD/icetower0.png");
         icetower1Sprite = loadImage("src/main/resources/WizardTD/icetower1.png");
         icetower2Sprite = loadImage("src/main/resources/WizardTD/icetower2.png");
+        iceballSprite = loadImage("src/main/resources/WizardTD/iceball.png");
         path0Sprite = loadImage("src/main/resources/WizardTD/path0.png");
         path1Sprite = loadImage("src/main/resources/WizardTD/path1.png");
         path2Sprite = loadImage("src/main/resources/WizardTD/path2.png");
@@ -486,6 +481,9 @@ public class App extends PApplet {
                         if (gameMap[i][j].isTowerPlaceable() && isBuildTower && currentMana > towerCost) {
                             gameMap[i][j] = new Tower(gameMap[i][j].getX(), gameMap[i][j].getY());
                             towerList.add((Tower)gameMap[i][j]);
+                        } else if (gameMap[i][j].isTowerPlaceable() && isBuildIceTower && currentMana > towerCost) {
+                            gameMap[i][j] = new IceTower(gameMap[i][j].getX(), gameMap[i][j].getY());
+                            towerList.add((IceTower)gameMap[i][j]);
                         }
                     }
                 }
@@ -552,6 +550,13 @@ public class App extends PApplet {
         }
     }
 
+    public void drawCostIndicator(float buttonX, float buttonY, float cost) {
+        fill(255, 255, 255);
+        rect(buttonX-70, buttonY+10, 60, 20);
+        fill(0, 0, 0);
+        text("cost: " + Math.round(cost), buttonX-65, buttonY+25);
+    }
+
     public void moveWaveForwards() {
         if (gameSpeed > 0) {
             if (currentWave.getPreWavePause() > 0) {
@@ -559,7 +564,7 @@ public class App extends PApplet {
             } else if (currentWave.getDuration() > 0) {
                 currentWave.setDuration(currentWave.getDuration() - gameSpeed);
                 enemySpawnTimer += gameSpeed;
-                if (enemySpawnTimer >= currentWave.getOriginalDuration() / currentWave.getTotalNumberOfMonsters()) {
+                if (enemySpawnTimer >= Math.floor(currentWave.getOriginalDuration() / currentWave.getTotalNumberOfMonsters())) {
                     enemySpawnTimer = 0;
                     currentWave.updateMonsterData();
 
@@ -685,10 +690,22 @@ public class App extends PApplet {
         for (Button b : buttonList) {
     
             stroke(0, 0, 0);
-            if (b.getIsClicked()) {
+            if (mouseX > b.getX() && mouseX < b.getX() + 40 && mouseY > b.getY() && mouseY < b.getY() + 40) {
+                // this section draws the cost indicators by calling the drawcost indicator function
+                if (b instanceof TowerButton) {
+                    TowerButton towerB = (TowerButton)b;
+                    drawCostIndicator(b.getX(), b.getY(), towerB.getTowerPrice());
+                } if (b instanceof ManaButton) {
+                    drawCostIndicator(b.getX(), b.getY(), manaPoolSpellCost);
+                }
+                // this section of code changes the color of the button based on whether it is being hovered on or not
+                if (b.getIsClicked()) {
+                    fill(255, 255, 0);
+                } else {
+                    fill(255, 255, 255);
+                }
+            } else if (b.getIsClicked()) {
                 fill(255, 255, 0);
-            } else if (mouseX > b.getX() && mouseX < b.getX() + 40 && mouseY > b.getY() && mouseY < b.getY() + 40) {
-                fill(255, 255, 255);
             } else {
                 noFill();
             }
