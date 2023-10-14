@@ -15,6 +15,7 @@ public class Tower extends Tile {
     protected int speedLevel;
     protected int damageLevel;
     protected float timer;
+    protected float towerCost;
 
     public Tower(float x, float y) {
         super(x, y);
@@ -25,10 +26,11 @@ public class Tower extends Tile {
         this.range = App.initialTowerRange;
         this.speed = App.initialTowerSpeed;
         this.damage = App.initialTowerDamage;
+        this.towerCost = App.towerCost;
 
         isTowerPlaceable = false;
         canEnemyWalk = false;
-        App.currentMana -= App.towerCost;
+        purchaseTower();
     }
     
     public ArrayList<Enemy> getEnemyInRange() {
@@ -102,6 +104,10 @@ public class Tower extends Tile {
         } else {
             return 0;
         }
+    }
+
+    public void purchaseTower() {
+        App.currentMana -= towerCost;
     }
 
     public void changeTowerSprite() {

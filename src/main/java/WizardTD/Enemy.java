@@ -16,12 +16,15 @@ public class Enemy extends Entity {
     private ArrayList<PImage> spriteSheet;
     private float currentHitPoints;
     private float maxHitPoints;
+    private float initialMovementSpeed;
     private float movementSpeed;
     private float armour;
     private float manaGainedOnKill;
     private boolean isPlayingDeathAnimation;
     private boolean isAlive;
-    private float timer;
+    private boolean isFrozen;
+    private float animationTimer;
+    private float freezeTimer;
 
     public Enemy(MonsterData monsterData, List<Tile> path) {
         if (path.get(0).getRow() == 0) {
@@ -44,12 +47,14 @@ public class Enemy extends Entity {
         this.sprite = spriteSheet.get(spriteIndex);
         this.currentHitPoints = monsterData.getHP();
         this.maxHitPoints = monsterData.getHP();
+        this.initialMovementSpeed = monsterData.getSpeed();
         this.movementSpeed = monsterData.getSpeed();
         this.armour = monsterData.getArmour();
         this.manaGainedOnKill = monsterData.getManaGainedOnKill();
         this.isPlayingDeathAnimation = false;
         this.isAlive = true;
-        this.timer = 0;
+        this.isFrozen = false;
+        this.animationTimer = 0;
         monsterData.quantityDecrement();
     }
 
@@ -124,15 +129,28 @@ public class Enemy extends Entity {
         }
     }
 
+    public void freeze() {
+        isFrozen = true;
+    }
+
     public void tick() {
         this.move();
+        if (isFrozen) {
+            movementSpeed = (initialMovementSpeed / 3);
+            freezeTimer += 1 * App.gameSpeed;
+            if (freezeTimer >= 70) {
+                isFrozen = false;
+                movementSpeed = initialMovementSpeed;
+                freezeTimer = 0;
+            }
+        }
         if (currentHitPoints <= 0) {
             isPlayingDeathAnimation = true;
             movementSpeed = 0;
-            timer += 1 * App.gameSpeed;
-            if (timer >= 4 && spriteIndex < spriteSheet.size()) {
+            animationTimer += 1 * App.gameSpeed;
+            if (animationTimer >= 4 && spriteIndex < spriteSheet.size()) {
                 sprite = spriteSheet.get(spriteIndex);
-                timer = 0;
+                animationTimer = 0;
                 spriteIndex++;
                 if (spriteIndex >= spriteSheet.size()) {
                     if (App.currentMana + manaGainedOnKill < App.currentManaCap) {

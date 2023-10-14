@@ -385,7 +385,7 @@ public class App extends PApplet {
     Button fastForward = new GameSpeedButton(650, 55, "FF", "2x speed", isFastForward);
     Button pause = new GameSpeedButton(650, 110, "P", "PAUSE", isPaused);
     Button buildTower = new TowerButton(650, 165, "T", "Build\nTower", isBuildTower);
-    Button buildIceTower = new TowerButton(650, 220, "I", "Build\nIce Tower", isBuildIceTower);
+    Button buildIceTower = new TowerButton(650, 220, "I", "Build\nIce Tower", isBuildIceTower, 75);
     Button upgradeRange = new UpgradeButton(650, 275, "U1", "Upgrade\nRange", isUpgradeRange);
     Button upgradeSpeed = new UpgradeButton(650, 330, "U2", "Upgrade\nSpeed", isUpgradeSpeed);
     Button upgradeDamage = new UpgradeButton(650, 385, "U3", "Upgrade\nDamage", isUpgradeDamage);
