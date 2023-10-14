@@ -78,7 +78,6 @@ public class Enemy extends Entity {
         this.y = path.get(0).getY() + 6 + yOffset;
         pathIndex = 1;
         App.currentMana -= currentHitPoints;
-        App.changeGameState();
     }
 
     public void move() {

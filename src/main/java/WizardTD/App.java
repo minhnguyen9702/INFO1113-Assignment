@@ -22,6 +22,8 @@ import java.util.Scanner;
 import WizardTD.Button.Button;
 import WizardTD.Button.GameSpeedButton;
 import WizardTD.Button.ManaButton;
+import WizardTD.Button.TowerButton;
+import WizardTD.Button.UpgradeButton;
 import WizardTD.Tile.Grass;
 import WizardTD.Tile.PathTile;
 import WizardTD.Tile.Shrub;
@@ -59,7 +61,7 @@ public class App extends PApplet {
     public PImage wizardHomeBackground;
     public int homeCol;
     public int homeRow;
-    public static ArrayList<Enemy> enemyList = new ArrayList<Enemy>();
+    public ArrayList<Enemy> enemyList = new ArrayList<Enemy>();
     public ArrayList<Enemy> enemiesPlayingDeathAnimation = new ArrayList<Enemy>();
     public ArrayList<Enemy> enemiesDead = new ArrayList<>();
     public ArrayList<Tile> spawnTiles = new ArrayList<Tile>();
@@ -72,12 +74,12 @@ public class App extends PApplet {
     public ArrayList<PImage> gremlinSpriteSheet = new ArrayList<PImage>(6);
     public ArrayList<PImage> wormSpriteSheet = new ArrayList<PImage>(6);
     public static HashMap<String, ArrayList<PImage>> enemySpriteMap = new HashMap<String, ArrayList<PImage>>();
-    public static ArrayList<Wave> waves = new ArrayList<Wave>();
+    public ArrayList<Wave> waves = new ArrayList<Wave>();
     public Wave currentWave;
     private int enemySpawnTimer;
     private int manaGainedTimer;
     private int waveIndex;
-    public static GameState gameState;
+    public GameState gameState;
 
     public PImage beetleSprite;
     public PImage beetle1Sprite;
@@ -154,10 +156,20 @@ public class App extends PApplet {
      */
 	@Override
     public void setup() {
+        // reset the game;
         manaGainedTimer = 0;
         enemySpawnTimer = 0;
         gameState = GameState.GAMENORMAL;
         gameSpeed = 1;
+        enemyList.clear();
+        enemiesPlayingDeathAnimation.clear();
+        enemiesDead.clear();
+        spawnTiles.clear();
+        pathsList.clear();
+        towerList.clear();
+        fireballList.clear();
+        buttonList.clear();
+        waves.clear();
         frameRate(FPS);
 
         // this section loads all of the images into the game as sprites
@@ -377,11 +389,11 @@ public class App extends PApplet {
 
     Button fastForward = new GameSpeedButton(650, 55, "FF", "2x speed", isFastForward);
     Button pause = new GameSpeedButton(650, 110, "P", "PAUSE", isPaused);
-    Button buildTower = new Button(650, 165, "T", "Build\nTower", isBuildTower);
-    Button buildIceTower = new Button(650, 220, "I", "Build\nIce Tower", isBuildIceTower);
-    Button upgradeRange = new Button(650, 275, "U1", "Upgrade\nRange", isUpgradeRange);
-    Button upgradeSpeed = new Button(650, 330, "U2", "Upgrade\nSpeed", isUpgradeSpeed);
-    Button upgradeDamage = new Button(650, 385, "U3", "Upgrade\nDamage", isUpgradeDamage);
+    Button buildTower = new TowerButton(650, 165, "T", "Build\nTower", isBuildTower);
+    Button buildIceTower = new TowerButton(650, 220, "I", "Build\nIce Tower", isBuildIceTower);
+    Button upgradeRange = new UpgradeButton(650, 275, "U1", "Upgrade\nRange", isUpgradeRange);
+    Button upgradeSpeed = new UpgradeButton(650, 330, "U2", "Upgrade\nSpeed", isUpgradeSpeed);
+    Button upgradeDamage = new UpgradeButton(650, 385, "U3", "Upgrade\nDamage", isUpgradeDamage);
     Button upgradeMana = new ManaButton(650, 440, "M", "Mana Pool", isUpgradeMana);
     buttonList.add(fastForward);
     buttonList.add(pause);
@@ -391,6 +403,8 @@ public class App extends PApplet {
     buttonList.add(upgradeSpeed);
     buttonList.add(upgradeDamage);
     buttonList.add(upgradeMana);
+    
+    // this is needed for the game needs to be restarted when the player loses
 
         // Load images during setup
 		// Eg:
@@ -447,6 +461,10 @@ public class App extends PApplet {
                 buttonList.get(7).isClicked();
                 isUpgradeMana = buttonList.get(7).getIsClicked();
             }
+        }
+
+        if (key == 'R' || key == 'r' && gameState == GameState.GAMEOVER) {
+            setup();
         }
     }
 
@@ -512,11 +530,11 @@ public class App extends PApplet {
 
     }
 
-    public static void changeGameState() {
+    public void checkGameState() {
         if (currentMana < 0) {
             gameState = GameState.GAMEOVER;
             gameSpeed = 0;
-        } if (waves.get(waves.size() - 1).getDuration() <= 0 && enemyList.isEmpty()) {
+        } if (waves.get(2).getDuration() <= 0 && enemyList.isEmpty()) {
             gameState = GameState.GAMEWIN;
             gameSpeed = 0;
         }
@@ -569,6 +587,7 @@ public class App extends PApplet {
     public void draw() {
         gainManaPerSecond();
         moveWaveForwards();
+        checkGameState();
 
         // the entire game map is drawn and towers can be placed if isTowerPlaceable() == true
         for (int i = 0; i < gameMap.length; i++) {
@@ -714,6 +733,16 @@ public class App extends PApplet {
             waveDisplay = waveIndex + 2;
             timeLeftTillWave = currentWave.getDuration() + waves.get(waveIndex + 1).getPreWavePause();
             text("Wave " + waveDisplay + " starts: " + Math.round(timeLeftTillWave/60), 5, 28);
+        }
+    // this section of draw() draws the gameover / gamewin text
+        textSize(72);
+        fill(0, 255, 255);
+        if (gameState == GameState.GAMEOVER) {
+            text("GAME OVER :(", 125, 320);
+            textSize(36);
+            text("Press \"R\" to Restart", 125, 372);
+        } if (gameState == GameState.GAMEWIN) {
+            text("YOU WON!", 175, 320);
         }
     }
 
