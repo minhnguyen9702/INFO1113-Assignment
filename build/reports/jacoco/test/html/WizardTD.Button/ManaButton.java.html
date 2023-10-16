@@ -12,7 +12,7 @@ public class ManaButton extends Button {
 <span class="nc" id="L12">            App.currentMana -= App.manaPoolSpellCost;</span>
 <span class="nc" id="L13">            App.manaPoolSpellCost += App.manaPoolSpellCostIncreasePerUse;</span>
 <span class="nc" id="L14">            App.currentManaCap *= App.manaPoolSpellCapMultiplier;</span>
-<span class="nc" id="L15">            App.currentManaGainedPerSecond *= App.manaPoolSpellManaGainedMultiplier;</span>
+<span class="nc" id="L15">            App.currentManaGainedPerSecond = Math.round(App.currentManaGainedPerSecond*App.manaPoolSpellManaGainedMultiplier*10)/10;</span>
         }
 <span class="nc" id="L17">    }</span>
 }

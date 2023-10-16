@@ -1,5 +1,5 @@
 {
-  "layout": "level1.txt",
+  "layout": "level2.txt",
   "waves": [
     {
       "duration": 8,
@@ -28,7 +28,7 @@
       "pre_wave_pause": 10,
       "monsters": [
         {
-          "type": "gremlin",
+          "type": "worm",
           "hp": 50,
           "speed": 2.5,
           "armour": 0.7,

@@ -147,7 +147,8 @@ public class App extends PApplet {
     }
 
     /**
-     * Load all resources such as images. Initialise the elements such as the player, enemies and map elements.
+     * Initialize the game by loading resources such as images and setting up game elements, including the player, enemies, and map elements.
+     * This method resets the game state and loads various resources at the beginning of the game.
      */
 	@Override
     public void setup() {
@@ -412,7 +413,9 @@ public class App extends PApplet {
     }   
 
     /**
-     * Receive key pressed signal from the keyboard.
+     * Handles key press events, triggering specific actions based on the pressed keys and the current game state.
+     * This method responds to key presses and performs actions such as changing game speed, pausing the game,
+     * building towers, upgrading towers, and restarting the game when appropriate.
      */
 	@Override
     public void keyPressed(){
@@ -474,7 +477,11 @@ public class App extends PApplet {
     }
 
     /**
-     * Receive mouse pressed signal from mouse.
+     * Handles mouse click events, performing various actions based on the game's state and user interactions.
+     * This method responds to mouse clicks and triggers actions, including building towers, selecting game buttons,
+     * upgrading tower properties, and adjusting the game speed.
+     *
+     * @param e The MouseEvent object representing the mouse click event.
      */
     @Override
     public void mousePressed(MouseEvent e) {
@@ -482,11 +489,12 @@ public class App extends PApplet {
         if (gameState == GameState.GAMENORMAL) {
             for (int i = 0; i < gameMap.length; i++) {
                 for(int j = 0; j < gameMap[i].length; j++) {
-                    if (mouseX > gameMap[i][j].getX() && mouseX < gameMap[i][j].getX() + 32 && mouseY > gameMap[i][j].getY() && mouseY < gameMap[i][j].getY() + 32) {
-                        if (gameMap[i][j].isTowerPlaceable() && isBuildTower && currentMana > towerCost) {
+                    if (mouseX > gameMap[i][j].getX() && mouseX < gameMap[i][j].getX() + 32 && mouseY > gameMap[i][j].getY() && mouseY < gameMap[i][j].getY() + 32 
+                    && gameMap[i][j].isTowerPlaceable()) {
+                        if (isBuildTower && currentMana > towerCost) {
                             gameMap[i][j] = new Tower(gameMap[i][j].getX(), gameMap[i][j].getY());
                             towerList.add((Tower)gameMap[i][j]);
-                        } else if (gameMap[i][j].isTowerPlaceable() && isBuildIceTower && currentMana > iceTowerCost) {
+                        } else if (isBuildIceTower && currentMana > iceTowerCost) {
                             System.out.println(iceTowerCost);
                             gameMap[i][j] = new IceTower(gameMap[i][j].getX(), gameMap[i][j].getY());
                             towerList.add((IceTower)gameMap[i][j]);
@@ -533,7 +541,11 @@ public class App extends PApplet {
     public void mouseReleased(MouseEvent e) {
 
     }
-
+    /**
+     * Checks the current game state, determining whether the player has won or lost the game.
+     * If the player's current mana is less than 0 then the GameState is set to Game Over.
+     * Else if all waves have been completed and the all enemies killed than the game is won.
+     */
     public void checkGameState() {
         if (currentMana < 0) {
             gameState = GameState.GAMEOVER;
@@ -543,7 +555,10 @@ public class App extends PApplet {
             gameSpeed = 0;
         }
     }
-
+    /**
+    * Increases the player's current mana over time, based on manaGainedPerSecond and game speed.
+    * It ensures that mana does not exceed the mana cap when it is gained through manaGainedPerSecond.
+    */
     public void gainManaPerSecond() {
         manaGainedTimer += gameSpeed;
         if (manaGainedTimer >= 30) {
@@ -555,7 +570,15 @@ public class App extends PApplet {
             }
         }
     }
-
+    /**
+     * Draws a cost indicator next to a game button to display the associated cost.
+     * The cost is rendered as a white background with black text, providing a visual representation
+     * of the resource cost required for the associated game action.
+     *
+     * @param buttonX The button's X-coordinate on the screen.
+     * @param buttonY The button's Y-coordinate on the screen.
+     * @param cost The action's mana cost, displayed next to the button.
+     */
     public void drawCostIndicator(float buttonX, float buttonY, float cost) {
         fill(255, 255, 255);
         rect(buttonX-70, buttonY+10, 60, 20);
@@ -563,6 +586,10 @@ public class App extends PApplet {
         text("cost: " + Math.round(cost), buttonX-65, buttonY+25);
     }
 
+    /**
+     * Progresses the current wave forward by reducing the current wave's prewavepause and then duration.
+     * Also manages enemy spawning
+     */
     public void moveWaveForwards() {
         if (gameSpeed > 0) {
             if (currentWave.getPreWavePause() > 0) {
@@ -593,6 +620,8 @@ public class App extends PApplet {
     }
     /**
      * Draw all elements in the game by current frame.
+     * updates the game state, draws various game elements, including the Gamemap, towers, enemies,
+     * buttons, mana bar, timer, and Gameover/Gamewin text on the screen.
      */
 	@Override
     public void draw() {
@@ -633,7 +662,8 @@ public class App extends PApplet {
             strokeWeight(1);
             stroke(0, 0, 0);
             noFill();
-            if (mouseX > tower.getX() && mouseX < tower.getX() + 32 && mouseY > tower.getY() && mouseY < tower.getY() + 32) {
+            if (mouseX > tower.getX() && mouseX < tower.getX() + 32 && mouseY > tower.getY() && mouseY < tower.getY() + 32 &&
+                gameState == GameState.GAMENORMAL) {
                 ellipse(tower.getX()+16, tower.getY()+16, tower.getRange()*2, tower.getRange()*2);
             }
             // this section of code checks if enemies are in range of the tower
@@ -863,10 +893,8 @@ public class App extends PApplet {
         int rows = grid.length;
         int cols = grid[0].length;
 
-        // Initialize visited array to keep track of visited cells
         boolean[][] visited = new boolean[rows][cols];
 
-        // Initialize the path
         List<Tile> path = new ArrayList<>();
 
         if (dfs(grid, startRow, startCol, homeRow, homeCol, visited, path)) {
@@ -892,38 +920,26 @@ public class App extends PApplet {
     private boolean dfs(Tile[][] grid, int row, int col, int homeRow, int homeCol, boolean[][] visited, List<Tile> path) {
         int rows = grid.length;
         int cols = grid[0].length;
-
-        // Check if the current position is out of bounds, an obstacle, or already visited
         if (row < 0 || row >= rows || col < 0 || col >= cols || grid[row][col].canEnemyWalk() == false || visited[row][col]) {
             return false;
         }
 
-        // Mark the current cell as visited
         visited[row][col] = true;
-
-        // Add the current cell to the path
         path.add(grid[row][col]);
 
-        // Check if we have reached the end point
         if (row == homeRow && col == homeCol) {
             return true; // Return true to indicate that the destination is reached
         }
 
-        // Define possible moves (right, down, left, up)
         int[][] moves = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
-
-        // Explore all possible moves
         for (int[] move : moves) {
             int newRow = row + move[0];
             int newCol = col + move[1];
-
-            // Recursively explore the next cell
             if (dfs(grid, newRow, newCol, homeRow, homeCol, visited, path)) {
                 return true; // Return true if a path is found
             }
         }
 
-        // If no path is found, backtrack
         path.remove(path.size() - 1);
         return false;
     }

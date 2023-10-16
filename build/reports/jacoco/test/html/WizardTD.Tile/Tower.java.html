@@ -7,14 +7,14 @@ import WizardTD.Enemy;
 import WizardTD.Fireball;
 
 public class Tower extends Tile {
-<span class="nc" id="L10">    private ArrayList&lt;Enemy&gt; enemyInRange = new ArrayList&lt;&gt;();</span>
-    private float range;
-    private float speed;
-    private float damage;
-    private int rangeLevel;
-    private int speedLevel;
-    private int damageLevel;
-    private float timer;
+<span class="nc" id="L10">    protected ArrayList&lt;Enemy&gt; enemyInRange = new ArrayList&lt;&gt;();</span>
+    protected float range;
+    protected float speed;
+    protected float damage;
+    protected int rangeLevel;
+    protected int speedLevel;
+    protected int damageLevel;
+    protected float timer;
 
     public Tower(float x, float y) {
 <span class="nc" id="L20">        super(x, y);</span>
@@ -28,99 +28,127 @@ public class Tower extends Tile {
 
 <span class="nc" id="L29">        isTowerPlaceable = false;</span>
 <span class="nc" id="L30">        canEnemyWalk = false;</span>
-<span class="nc" id="L31">    }</span>
+<span class="nc" id="L31">        purchaseTower();</span>
+<span class="nc" id="L32">    }</span>
     
     public ArrayList&lt;Enemy&gt; getEnemyInRange() {
-<span class="nc" id="L34">        return enemyInRange;</span>
+<span class="nc" id="L35">        return enemyInRange;</span>
     }
 
     public boolean enemyInRangeContains(Enemy enemy) {
-<span class="nc" id="L38">        return enemyInRange.contains(enemy);</span>
+<span class="nc" id="L39">        return enemyInRange.contains(enemy);</span>
     }
 
     public void enemyInRangeAdd(Enemy enemy) {
-<span class="nc" id="L42">        enemyInRange.add(enemy);</span>
-<span class="nc" id="L43">    }</span>
+<span class="nc" id="L43">        enemyInRange.add(enemy);</span>
+<span class="nc" id="L44">    }</span>
 
     public void enemyInRangeRemove(Enemy enemy) {
-<span class="nc" id="L46">        enemyInRange.remove(enemy);</span>
-<span class="nc" id="L47">    }</span>
+<span class="nc" id="L47">        enemyInRange.remove(enemy);</span>
+<span class="nc" id="L48">    }</span>
 
     public void enemyInRangeRemoveAll(ArrayList&lt;Enemy&gt; enemiesToRemove) {
-<span class="nc" id="L50">        enemyInRange.removeAll(enemiesToRemove);</span>
-<span class="nc" id="L51">    }</span>
+<span class="nc" id="L51">        enemyInRange.removeAll(enemiesToRemove);</span>
+<span class="nc" id="L52">    }</span>
 
     public float getRange() {
-<span class="nc" id="L54">        return range;</span>
+<span class="nc" id="L55">        return range;</span>
+    }
+
+    public float getSpeed() {
+<span class="nc" id="L59">        return speed;</span>
+    }
+
+        public float getDamage() {
+<span class="nc" id="L63">        return damage;</span>
     }
 
     public void upgradeRange() {
-<span class="nc bnc" id="L58" title="All 4 branches missed.">        if (rangeLevel &lt; 3 &amp;&amp; App.currentMana &gt; 20 + 10*rangeLevel) {</span>
-<span class="nc" id="L59">            rangeLevel += 1;</span>
-<span class="nc" id="L60">            range += 32;</span>
-<span class="nc" id="L61">            changeTowerSprite();</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">        if (App.currentMana &gt; this.getRangeCost()) {</span>
+<span class="nc" id="L68">            App.currentMana -= this.getRangeCost();</span>
+<span class="nc" id="L69">            rangeLevel += 1;</span>
+<span class="nc" id="L70">            range += 32;</span>
+<span class="nc" id="L71">            changeTowerSprite();</span>
         }
-<span class="nc" id="L63">    }</span>
+<span class="nc" id="L73">    }</span>
 
     public void upgradeSpeed() {
-<span class="nc bnc" id="L66" title="All 4 branches missed.">        if (speedLevel &lt; 3 &amp;&amp; App.currentMana &gt; 20 + 10*speedLevel)  {</span>
-<span class="nc" id="L67">            speedLevel += 1;</span>
-<span class="nc" id="L68">            speed += 0.5;</span>
-<span class="nc" id="L69">            changeTowerSprite();</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">        if (App.currentMana &gt; this.getSpeedCost())  {</span>
+<span class="nc" id="L77">            App.currentMana -= this.getSpeedCost();</span>
+<span class="nc" id="L78">            speedLevel += 1;</span>
+<span class="nc" id="L79">            speed += 0.5;</span>
+<span class="nc" id="L80">            changeTowerSprite();</span>
         }
-<span class="nc" id="L71">    }</span>
+<span class="nc" id="L82">    }</span>
 
     public void upgradeDamage() {
-<span class="nc bnc" id="L74" title="All 4 branches missed.">        if (damageLevel &lt; 3 &amp;&amp; App.currentMana &gt; 20 + 10*damageLevel)  {</span>
-<span class="nc" id="L75">            damageLevel += 1;</span>
-<span class="nc" id="L76">            damage += (damage/2);</span>
-<span class="nc" id="L77">            changeTowerSprite();</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">        if (App.currentMana &gt; this.getDamageCost())  {</span>
+<span class="nc" id="L86">            App.currentMana -= this.getDamageCost();</span>
+<span class="nc" id="L87">            damageLevel += 1;</span>
+<span class="nc" id="L88">            damage += (damage/2);</span>
+<span class="nc" id="L89">            changeTowerSprite();</span>
         }
-<span class="nc" id="L79">    }</span>
+<span class="nc" id="L91">    }</span>
 
     public int getRangeLevel() {
-<span class="nc" id="L82">        return rangeLevel;</span>
+<span class="nc" id="L94">        return rangeLevel;</span>
     }
 
     public int getSpeedLevel() {
-<span class="nc" id="L86">        return speedLevel;</span>
+<span class="nc" id="L98">        return speedLevel;</span>
     }
 
     public int getDamageLevel() {
-<span class="nc" id="L90">        return damageLevel;</span>
+<span class="nc" id="L102">        return damageLevel;</span>
+    }
+
+    public float getRangeCost() {
+<span class="nc" id="L106">        return 20 + 10*rangeLevel;</span>
+    }
+
+    public float getSpeedCost() {
+<span class="nc" id="L110">        return 20 + 10*speedLevel;</span>
+    }
+
+    public float getDamageCost() {
+<span class="nc" id="L114">        return 20 + 10*damageLevel;</span>
     }
 
     public int getBaseLevel() {
-<span class="nc bnc" id="L94" title="All 6 branches missed.">        if (rangeLevel &gt;= 2 &amp;&amp; speedLevel &gt;= 2 &amp;&amp; damageLevel &gt;= 2) {</span>
-<span class="nc" id="L95">            return 2;</span>
-<span class="nc bnc" id="L96" title="All 6 branches missed.">        } else if (rangeLevel &gt;= 1 &amp;&amp; speedLevel &gt;= 1 &amp;&amp; damageLevel &gt;= 1) {</span>
-<span class="nc" id="L97">            return 1;</span>
+<span class="nc bnc" id="L118" title="All 6 branches missed.">        if (rangeLevel &gt;= 2 &amp;&amp; speedLevel &gt;= 2 &amp;&amp; damageLevel &gt;= 2) {</span>
+<span class="nc" id="L119">            return 2;</span>
+<span class="nc bnc" id="L120" title="All 6 branches missed.">        } else if (rangeLevel &gt;= 1 &amp;&amp; speedLevel &gt;= 1 &amp;&amp; damageLevel &gt;= 1) {</span>
+<span class="nc" id="L121">            return 1;</span>
         } else {
-<span class="nc" id="L99">            return 0;</span>
+<span class="nc" id="L123">            return 0;</span>
         }
     }
 
+    public void purchaseTower() {
+<span class="nc" id="L128">        App.currentMana -= App.towerCost;</span>
+<span class="nc" id="L129">    }</span>
+
     public void changeTowerSprite() {
-<span class="nc bnc" id="L104" title="All 2 branches missed.">        if (this.getBaseLevel() == 2) {</span>
-<span class="nc" id="L105">            this.sprite = App.tower2Sprite;</span>
-<span class="nc bnc" id="L106" title="All 2 branches missed.">        } else if (this.getBaseLevel() == 1) {</span>
-<span class="nc" id="L107">            this.sprite = App.tower1Sprite;</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">        if (this.getBaseLevel() == 2) {</span>
+<span class="nc" id="L133">            this.sprite = App.tower2Sprite;</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">        } else if (this.getBaseLevel() == 1) {</span>
+<span class="nc" id="L135">            this.sprite = App.tower1Sprite;</span>
         } else {
-<span class="nc" id="L109">            this.sprite = App.tower0Sprite;</span>
+<span class="nc" id="L137">            this.sprite = App.tower0Sprite;</span>
         }
-<span class="nc" id="L111">    }</span>
+<span class="nc" id="L139">    }</span>
 
     public void tick() {
-<span class="nc bnc" id="L114" title="All 2 branches missed.">        if (enemyInRange.size() == 0) {</span>
-<span class="nc" id="L115">            timer = 60/speed;</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">        if (enemyInRange.size() == 0) {</span>
+<span class="nc" id="L143">            timer = 60/speed;</span>
         }
-<span class="nc bnc" id="L117" title="All 2 branches missed.">        if (enemyInRange.size() != 0) {</span>
-<span class="nc bnc" id="L118" title="All 2 branches missed.">            if (timer &gt;= 60/speed) {</span>
-<span class="nc" id="L119">                timer = 0;</span>
-<span class="nc" id="L120">                App.fireballList.add(new Fireball(this.x+16, this.y+16, enemyInRange.get(0), damage));</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">        if (enemyInRange.size() != 0) {</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">            if (timer &gt;= 60/speed) {</span>
+<span class="nc" id="L147">                timer = 0;</span>
+<span class="nc" id="L148">                App.fireballList.add(new Fireball(this.x+16, this.y+16, enemyInRange.get(0), damage));</span>
             }
-<span class="nc" id="L122">            timer += 1*App.gameSpeed;</span>
+<span class="nc" id="L150">            timer += 1*App.gameSpeed;</span>
         }
-<span class="nc" id="L124">    }</span>
+<span class="nc" id="L152">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>

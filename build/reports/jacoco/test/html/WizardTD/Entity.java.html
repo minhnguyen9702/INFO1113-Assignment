@@ -2,26 +2,49 @@
 
 import processing.core.PApplet;
 import processing.core.PImage;
-
-<span class="fc" id="L6">public abstract class Entity {</span>
+/**
+ * The abstract base class for all entities that have a sprite in the WizardTD.
+ */
+<span class="fc" id="L8">public abstract class Entity {</span>
     protected float x;
     protected float y;
     protected PImage sprite;
 
+
+    /**
+     * Changes the entity's sprite (image).
+     *
+     * @param sprite The PImage object that visually represents the entity.
+     */
     public void setSprite(PImage sprite) {
-<span class="fc" id="L12">        this.sprite = sprite;</span>
-<span class="fc" id="L13">    }</span>
+<span class="fc" id="L20">        this.sprite = sprite;</span>
+<span class="fc" id="L21">    }</span>
 
+    /**
+     * Draws the entity onscreen using its sprite, x position and y position.
+     *
+     * @param app The PApplet object responsible for rendering the game.
+     */
     public void draw(PApplet app) {
-<span class="nc" id="L16">        app.image(sprite, x, y);</span>
-<span class="nc" id="L17">    }</span>
+<span class="fc" id="L29">        app.image(sprite, x, y);</span>
+<span class="fc" id="L30">    }</span>
 
+    /**
+     * Returns the entity's X-coordinate in the game.
+     *
+     * @return The entity's X-coordinate.
+     */
     public float getX() {
-<span class="fc" id="L20">        return x;</span>
+<span class="nc" id="L38">        return x;</span>
     }
 
+        /**
+     * Returns the entity's Y-coordinate in the game.
+     *
+     * @return The entity's Y-coordinate.
+     */
     public float getY() {
-<span class="fc" id="L24">        return y;</span>
+<span class="nc" id="L47">        return y;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>
