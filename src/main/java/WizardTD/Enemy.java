@@ -133,12 +133,16 @@ public class Enemy extends Entity {
         isFrozen = true;
     }
 
+    public boolean isFreeze() {
+        return isFrozen;
+    }
+
     public void tick() {
         this.move();
         if (isFrozen) {
             movementSpeed = (initialMovementSpeed / 3);
             freezeTimer += 1 * App.gameSpeed;
-            if (freezeTimer >= 70) {
+            if (freezeTimer >= 60) {
                 isFrozen = false;
                 movementSpeed = initialMovementSpeed;
                 freezeTimer = 0;

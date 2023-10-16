@@ -117,6 +117,7 @@ public class App extends PApplet {
     public static float currentManaCap;
     public static float currentManaGainedPerSecond;
     public static float towerCost;
+    public static float iceTowerCost;
     public static float manaPoolSpellCost;
     public static float manaPoolSpellCostIncreasePerUse;
     public static float manaPoolSpellCapMultiplier;
@@ -150,7 +151,7 @@ public class App extends PApplet {
      */
 	@Override
     public void setup() {
-        // reset the game;
+        // reset the game by clearing all lists so they can be filled again and restating the gamestate enum;
         manaGainedTimer = 0;
         enemySpawnTimer = 0;
         gameState = GameState.GAMENORMAL;
@@ -235,6 +236,7 @@ public class App extends PApplet {
         currentManaCap = json.getFloat("initial_mana_cap");
         currentManaGainedPerSecond = json.getFloat("initial_mana_gained_per_second");
         towerCost = json.getFloat("tower_cost");
+        iceTowerCost = towerCost*3/4;
         manaPoolSpellCost = json.getFloat("mana_pool_spell_initial_cost");
         manaPoolSpellCostIncreasePerUse = json.getFloat("mana_pool_spell_cost_increase_per_use");
         manaPoolSpellCapMultiplier = json.getFloat("mana_pool_spell_cap_multiplier");
@@ -385,7 +387,7 @@ public class App extends PApplet {
     Button fastForward = new GameSpeedButton(650, 55, "FF", "2x speed", isFastForward);
     Button pause = new GameSpeedButton(650, 110, "P", "PAUSE", isPaused);
     Button buildTower = new TowerButton(650, 165, "T", "Build\nTower", isBuildTower);
-    Button buildIceTower = new TowerButton(650, 220, "I", "Build\nIce Tower", isBuildIceTower, 75);
+    Button buildIceTower = new TowerButton(650, 220, "I", "Build\nIce Tower", isBuildIceTower, iceTowerCost);
     Button upgradeRange = new UpgradeButton(650, 275, "U1", "Upgrade\nRange", isUpgradeRange);
     Button upgradeSpeed = new UpgradeButton(650, 330, "U2", "Upgrade\nSpeed", isUpgradeSpeed);
     Button upgradeDamage = new UpgradeButton(650, 385, "U3", "Upgrade\nDamage", isUpgradeDamage);
@@ -471,6 +473,9 @@ public class App extends PApplet {
 
     }
 
+    /**
+     * Receive mouse pressed signal from mouse.
+     */
     @Override
     public void mousePressed(MouseEvent e) {
         // for building towers and icetowers
@@ -481,7 +486,8 @@ public class App extends PApplet {
                         if (gameMap[i][j].isTowerPlaceable() && isBuildTower && currentMana > towerCost) {
                             gameMap[i][j] = new Tower(gameMap[i][j].getX(), gameMap[i][j].getY());
                             towerList.add((Tower)gameMap[i][j]);
-                        } else if (gameMap[i][j].isTowerPlaceable() && isBuildIceTower && currentMana > towerCost) {
+                        } else if (gameMap[i][j].isTowerPlaceable() && isBuildIceTower && currentMana > iceTowerCost) {
+                            System.out.println(iceTowerCost);
                             gameMap[i][j] = new IceTower(gameMap[i][j].getX(), gameMap[i][j].getY());
                             towerList.add((IceTower)gameMap[i][j]);
                         }
@@ -652,8 +658,12 @@ public class App extends PApplet {
             // this checks if enemies are alive otherwise they are removed from enemyList
             fill(255, 0, 0);
             rect(enemy.getX()-3, enemy.getY()-6, 26, 3);
-            fill(0, 255, 0);
             if (enemy.getCurrentHitPoints() > 0) {
+                if (enemy.isFreeze()) {
+                    fill(0, 255, 255);
+                } else {
+                    fill(0, 255, 0);
+                }
                 rect(enemy.getX()-3, enemy.getY()-6, (enemy.getCurrentHitPoints()/enemy.getMaxHitPoints())*26, 3);
             }
             enemy.tick();
@@ -685,6 +695,37 @@ public class App extends PApplet {
         fill(210, 180, 140);
         rect(0, 0, 760, 40);
         rect(640, 40,120, 640);
+
+        for (Tower tower : towerList) {
+            if (mouseX > tower.getX() && mouseX < tower.getX() + 32 && mouseY > tower.getY() && mouseY < tower.getY() + 32) {
+                int rangeCost = 0;
+                int speedCost = 0;
+                int damageCost = 0;
+                if (isUpgradeRange || isUpgradeDamage || isUpgradeSpeed) {
+                    fill(255, 255, 255);
+                    stroke(0, 0 ,0);
+                    rect(650, 500 , 90, 18);
+                    rect(650, 518 , 90, 62);
+                    rect(650, 580 , 90, 18);
+                    fill(0, 0, 0);
+                    textSize(12);
+                    text("Upgrade Cost:", 652, 514);
+                    if (isUpgradeRange) {
+                        rangeCost = Math.round(tower.getRangeCost());
+                        text("Range: " + rangeCost, 652, 534);
+                    }
+                    if (isUpgradeSpeed) {
+                        speedCost = Math.round(tower.getSpeedCost());
+                        text("Speed: " + speedCost, 652, 554);
+                    }
+                    if (isUpgradeDamage) {
+                        damageCost = Math.round(tower.getDamageCost());
+                        text("Damage: " + damageCost, 652, 574);
+                    }
+                    text("Total: " + (rangeCost + speedCost + damageCost), 652, 594);
+                }
+            }
+        }
 
     // this section of code draws the buttons and their labels.
         for (Button b : buttonList) {
@@ -755,11 +796,12 @@ public class App extends PApplet {
         textSize(72);
         fill(0, 255, 255);
         if (gameState == GameState.GAMEOVER) {
-            text("GAME OVER :(", 125, 320);
+            text("GAME OVER!", 130, 340);
             textSize(36);
-            text("Press \"R\" to Restart", 125, 372);
+            text("Press \"R\" to Restart :(", 130, 392);
         } if (gameState == GameState.GAMEWIN) {
-            text("YOU WON!", 175, 320);
+            text("YOU WON !", 170, 320);
+            text("BAZINGA !", 170, 392);
         }
     }
 

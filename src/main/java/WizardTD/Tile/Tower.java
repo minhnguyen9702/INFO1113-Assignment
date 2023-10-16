@@ -15,7 +15,6 @@ public class Tower extends Tile {
     protected int speedLevel;
     protected int damageLevel;
     protected float timer;
-    protected float towerCost;
 
     public Tower(float x, float y) {
         super(x, y);
@@ -26,7 +25,6 @@ public class Tower extends Tile {
         this.range = App.initialTowerRange;
         this.speed = App.initialTowerSpeed;
         this.damage = App.initialTowerDamage;
-        this.towerCost = App.towerCost;
 
         isTowerPlaceable = false;
         canEnemyWalk = false;
@@ -58,8 +56,8 @@ public class Tower extends Tile {
     }
 
     public void upgradeRange() {
-        if (App.currentMana > 20 + 10*rangeLevel) {
-            App.currentMana -= 20 + 10*rangeLevel;
+        if (App.currentMana > this.getRangeCost()) {
+            App.currentMana -= this.getRangeCost();
             rangeLevel += 1;
             range += 32;
             changeTowerSprite();
@@ -67,8 +65,8 @@ public class Tower extends Tile {
     }
 
     public void upgradeSpeed() {
-        if (App.currentMana > 20 + 10*speedLevel)  {
-            App.currentMana -= 20 + 10*speedLevel;
+        if (App.currentMana > this.getSpeedCost())  {
+            App.currentMana -= this.getSpeedCost();
             speedLevel += 1;
             speed += 0.5;
             changeTowerSprite();
@@ -76,8 +74,8 @@ public class Tower extends Tile {
     }
 
     public void upgradeDamage() {
-        if (App.currentMana > 20 + 10*damageLevel)  {
-            App.currentMana -= 20 + 10*damageLevel;
+        if (App.currentMana > this.getDamageCost())  {
+            App.currentMana -= this.getDamageCost();
             damageLevel += 1;
             damage += (damage/2);
             changeTowerSprite();
@@ -96,6 +94,18 @@ public class Tower extends Tile {
         return damageLevel;
     }
 
+    public float getRangeCost() {
+        return 20 + 10*rangeLevel;
+    }
+
+    public float getSpeedCost() {
+        return 20 + 10*speedLevel;
+    }
+
+    public float getDamageCost() {
+        return 20 + 10*damageLevel;
+    }
+
     public int getBaseLevel() {
         if (rangeLevel >= 2 && speedLevel >= 2 && damageLevel >= 2) {
             return 2;
@@ -107,7 +117,7 @@ public class Tower extends Tile {
     }
 
     public void purchaseTower() {
-        App.currentMana -= towerCost;
+        App.currentMana -= App.towerCost;
     }
 
     public void changeTowerSprite() {

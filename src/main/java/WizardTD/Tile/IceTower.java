@@ -14,16 +14,16 @@ public class IceTower extends Tower {
         this.speedLevel = 0;
         this.damageLevel = 0;
         this.range = App.initialTowerRange - 32;
-        this.speed = App.initialTowerSpeed / 2;
+        this.speed = App.initialTowerSpeed *2/3;
         this.damage = App.initialTowerDamage / 2;
 
         isTowerPlaceable = false;
         canEnemyWalk = false;
     }
 
+    @Override
     public void purchaseTower() {
-        this.towerCost = App.towerCost * 3/4;
-        App.currentMana -= this.towerCost;
+        App.currentMana -= App.iceTowerCost;;
     }
 
     public void changeTowerSprite() {
