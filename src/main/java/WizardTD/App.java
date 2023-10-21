@@ -627,122 +627,132 @@ public class App extends PApplet {
         }
 
         // a second for loop is needed in order to draw tower ranges :( I couldn't figure out a more efficent way of doing this.
-        for (Tower tower : towerList) {
-            // this part is for drawing tower upgrades
-            strokeWeight(1);
-            stroke(255, 0, 255);
-            noFill();
+        if (towerList != null) {
+            for (Tower tower : towerList) {
+                // this part is for drawing tower upgrades
+                strokeWeight(1);
+                stroke(255, 0, 255);
+                noFill();
 
-            for (int i = 0; i < tower.getRangeLevel() - tower.getBaseLevel(); i++) {
-                ellipse(tower.getX()+4+(i*8), tower.getY()+4, 8, 8);
-            }
-
-            for (int i = 0; i < tower.getDamageLevel() - tower.getBaseLevel(); i++) {
-                line(tower.getX()+(8*i), tower.getY()+24, tower.getX()+8+(8*i), tower.getY()+32);
-                line(tower.getX()+8+(8*i), tower.getY()+24, tower.getX()+(8*i), tower.getY()+32);
-            }
-
-            stroke(0, 255, 255);
-            strokeWeight((float)(tower.getSpeedLevel()-tower.getBaseLevel()));
-            if(tower.getSpeedLevel() > 0) {
-                rect(tower.getX()+6, tower.getY()+6, 20, 20);
-            }
-
-            // this section of code is for draing the tower's ranges
-            strokeWeight(1);
-            stroke(0, 0, 0);
-            noFill();
-            if (mouseX > tower.getX() && mouseX < tower.getX() + 32 && mouseY > tower.getY() && mouseY < tower.getY() + 32 &&
-                gameState == GameState.GAMENORMAL) {
-                ellipse(tower.getX()+16, tower.getY()+16, tower.getRange()*2, tower.getRange()*2);
-            }
-            // this section of code checks if enemies are in range of the tower
-            for (Enemy enemy : enemyList) {
-                if (dist(enemy.getX()+10, enemy.getY()+10, tower.getX()+16, tower.getY()+16) < tower.getRange()) {
-                    if (!tower.enemyInRangeContains(enemy)) {
-                        tower.enemyInRangeAdd(enemy);
-                    }
-                } else {
-                    tower.enemyInRangeRemove(enemy);
+                for (int i = 0; i < tower.getRangeLevel() - tower.getBaseLevel(); i++) {
+                    ellipse(tower.getX()+4+(i*8), tower.getY()+4, 8, 8);
                 }
-            }
-            // towers have to tick in order to fire fireballs/iceballs
-            tower.tick();
-            tower.enemyInRangeRemoveAll(enemiesPlayingDeathAnimation);
-        }
-        enemiesPlayingDeathAnimation.clear();
 
+                for (int i = 0; i < tower.getDamageLevel() - tower.getBaseLevel(); i++) {
+                    line(tower.getX()+(8*i), tower.getY()+24, tower.getX()+8+(8*i), tower.getY()+32);
+                    line(tower.getX()+8+(8*i), tower.getY()+24, tower.getX()+(8*i), tower.getY()+32);
+                }
+
+                stroke(0, 255, 255);
+                strokeWeight((float)(tower.getSpeedLevel()-tower.getBaseLevel()));
+                if(tower.getSpeedLevel() > 0) {
+                    rect(tower.getX()+6, tower.getY()+6, 20, 20);
+                }
+
+                // this section of code is for draing the tower's ranges
+                strokeWeight(1);
+                stroke(0, 0, 0);
+                noFill();
+                if (mouseX > tower.getX() && mouseX < tower.getX() + 32 && mouseY > tower.getY() && mouseY < tower.getY() + 32 &&
+                    gameState == GameState.GAMENORMAL) {
+                    ellipse(tower.getX()+16, tower.getY()+16, tower.getRange()*2, tower.getRange()*2);
+                }
+                // this section of code checks if enemies are in range of the tower
+                for (Enemy enemy : enemyList) {
+                    if (dist(enemy.getX()+10, enemy.getY()+10, tower.getX()+16, tower.getY()+16) < tower.getRange()) {
+                        if (!tower.enemyInRangeContains(enemy)) {
+                            tower.enemyInRangeAdd(enemy);
+                        }
+                    } else {
+                        tower.enemyInRangeRemove(enemy);
+                    }
+                }
+                // towers have to tick in order to fire fireballs/iceballs
+                tower.tick();
+                tower.enemyInRangeRemoveAll(enemiesPlayingDeathAnimation);
+            }
+            enemiesPlayingDeathAnimation.clear();
+        }
+
+        // this draws the grass behind wizardHome
         image(wizardHomeBackground, homeCol*CELLSIZE, homeRow*CELLSIZE+TOPBAR);
 
-        for (Enemy enemy : enemyList) {
-            // this checks if enemies are alive otherwise they are removed from enemyList
-            fill(255, 0, 0);
-            rect(enemy.getX()-3, enemy.getY()-6, 26, 3);
-            if (enemy.getCurrentHitPoints() > 0) {
-                if (enemy.isFreeze()) {
-                    fill(0, 255, 255);
-                } else {
-                    fill(0, 255, 0);
+        if (enemyList != null) {
+            for (Enemy enemy : enemyList) {
+                // this checks if enemies are alive otherwise they are removed from enemyList
+                fill(255, 0, 0);
+                rect(enemy.getX()-3, enemy.getY()-6, 26, 3);
+                if (enemy.getCurrentHitPoints() > 0) {
+                    if (enemy.isFreeze()) {
+                        fill(0, 255, 255);
+                    } else {
+                        fill(0, 255, 0);
+                    }
+                    rect(enemy.getX()-3, enemy.getY()-6, (enemy.getCurrentHitPoints()/enemy.getMaxHitPoints())*26, 3);
                 }
-                rect(enemy.getX()-3, enemy.getY()-6, (enemy.getCurrentHitPoints()/enemy.getMaxHitPoints())*26, 3);
+                enemy.tick();
+                enemy.draw(this);
+                if (enemy.isPlayingDeathAnimation())
+                    enemiesPlayingDeathAnimation.add(enemy);
+                // this checks if enemies are alive otherwise they will be added to enemiesToRemove and thus be removed from enemyList later.
+                if (!enemy.isAlive()) {
+                    enemiesDead.add(enemy);
+                }
             }
-            enemy.tick();
-            enemy.draw(this);
-            if (enemy.isPlayingDeathAnimation())
-                enemiesPlayingDeathAnimation.add(enemy);
-            // this checks if enemies are alive otherwise they will be added to enemiesToRemove and thus be removed from enemyList later.
-            if (!enemy.isAlive()) {
-                enemiesDead.add(enemy);
-            }
+            enemyList.removeAll(enemiesDead);
+            enemiesDead.clear();
         }
-        enemyList.removeAll(enemiesDead);
-        enemiesDead.clear();
 
-        for(Fireball fireball : fireballList) {
-            fireball.tick();
-            fireball.draw(this);
-            if (fireball.getIsCollided()) {
-                fireballsToRemove.add(fireball);
+        if (fireballList != null) {
+            for(Fireball fireball : fireballList) {
+                fireball.tick();
+                fireball.draw(this);
+                if (fireball.getIsCollided()) {
+                    fireballsToRemove.add(fireball);
+                }
             }
+            fireballList.removeAll(fireballsToRemove);
+            fireballsToRemove.clear();
         }
-        fireballList.removeAll(fireballsToRemove);
-        fireballsToRemove.clear();
 
         gameMap[homeRow][homeCol].draw(this);
 
-    // draws topbar and sidebar
+        // draws topbar and sidebar
         noStroke();
         fill(210, 180, 140);
         rect(0, 0, 760, 40);
         rect(640, 40,120, 640);
 
-        for (Tower tower : towerList) {
-            if (mouseX > tower.getX() && mouseX < tower.getX() + 32 && mouseY > tower.getY() && mouseY < tower.getY() + 32) {
-                int rangeCost = 0;
-                int speedCost = 0;
-                int damageCost = 0;
-                if (isUpgradeRange || isUpgradeDamage || isUpgradeSpeed) {
-                    fill(255, 255, 255);
-                    stroke(0, 0 ,0);
-                    rect(650, 500 , 90, 18);
-                    rect(650, 518 , 90, 62);
-                    rect(650, 580 , 90, 18);
-                    fill(0, 0, 0);
-                    textSize(12);
-                    text("Upgrade Cost:", 652, 514);
-                    if (isUpgradeRange) {
-                        rangeCost = Math.round(tower.getRangeCost());
-                        text("Range: " + rangeCost, 652, 534);
+        // this section draws the tooltips for the tower upgrade costs
+        if (towerList != null) {
+            for (Tower tower : towerList) {
+                if (mouseX > tower.getX() && mouseX < tower.getX() + 32 && mouseY > tower.getY() && mouseY < tower.getY() + 32) {
+                    int rangeCost = 0;
+                    int speedCost = 0;
+                    int damageCost = 0;
+                    if (isUpgradeRange || isUpgradeDamage || isUpgradeSpeed) {
+                        fill(255, 255, 255);
+                        stroke(0, 0 ,0);
+                        rect(650, 500 , 90, 18);
+                        rect(650, 518 , 90, 62);
+                        rect(650, 580 , 90, 18);
+                        fill(0, 0, 0);
+                        textSize(12);
+                        text("Upgrade Cost:", 652, 514);
+                        if (isUpgradeRange) {
+                            rangeCost = Math.round(tower.getRangeCost());
+                            text("Range: " + rangeCost, 652, 534);
+                        }
+                        if (isUpgradeSpeed) {
+                            speedCost = Math.round(tower.getSpeedCost());
+                            text("Speed: " + speedCost, 652, 554);
+                        }
+                        if (isUpgradeDamage) {
+                            damageCost = Math.round(tower.getDamageCost());
+                            text("Damage: " + damageCost, 652, 574);
+                        }
+                        text("Total: " + (rangeCost + speedCost + damageCost), 652, 594);
                     }
-                    if (isUpgradeSpeed) {
-                        speedCost = Math.round(tower.getSpeedCost());
-                        text("Speed: " + speedCost, 652, 554);
-                    }
-                    if (isUpgradeDamage) {
-                        damageCost = Math.round(tower.getDamageCost());
-                        text("Damage: " + damageCost, 652, 574);
-                    }
-                    text("Total: " + (rangeCost + speedCost + damageCost), 652, 594);
                 }
             }
         }
