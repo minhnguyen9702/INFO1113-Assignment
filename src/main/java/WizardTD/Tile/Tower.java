@@ -240,8 +240,18 @@ public class Tower extends Tile {
     }
 
     /**
+     * Shoots a projectile (fireball) at the first enemy in range.
+     * Creates a new Fireball object and adds it to the list of fireballs in the game.
+     *
+     * @see Fireball
+     */
+    public void shootProjectile() {
+        App.fireballList.add(new Fireball(this.x+16, this.y+16, enemyInRange.get(0), damage));
+    }
+
+    /**
      * Updates the tower's behavior and attacks enemies within its range with fireballs
-     * depending on the tower's attack speed.
+     * depending on the tower's attack speed by calling shootProjectile().
      */
     public void tick() {
         if (enemyInRange.size() == 0) {
@@ -250,7 +260,7 @@ public class Tower extends Tile {
         if (enemyInRange.size() != 0) {
             if (timer >= 60/speed) {
                 timer = 0;
-                App.fireballList.add(new Fireball(this.x+16, this.y+16, enemyInRange.get(0), damage));
+                shootProjectile();
             }
             timer += 1*App.gameSpeed;
         }

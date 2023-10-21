@@ -38,7 +38,7 @@ public abstract class Entity {
         return x;
     }
 
-        /**
+    /**
      * Returns the entity's Y-coordinate in the game.
      *
      * @return The entity's Y-coordinate.

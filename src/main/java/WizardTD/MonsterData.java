@@ -21,7 +21,8 @@ public class MonsterData {
      * @param manaGainedOnKill  The amount of mana gained by the player upon killing this monster.
      * @param quantity          The quantity of this type of monster in the Wave.
      */
-    public MonsterData (String type, float hp, float speed, float armour, float manaGainedOnKill, int quantity) {
+    public MonsterData (String type, float hp, float speed, 
+        float armour, float manaGainedOnKill, int quantity) {
         this.type = type;
         this.hp = hp;
         this.speed = speed;
@@ -80,7 +81,7 @@ public class MonsterData {
      *
      * @return The quantity of this type of monster.
      */
-    public float getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 

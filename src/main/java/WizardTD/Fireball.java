@@ -43,7 +43,7 @@ public class Fireball extends Entity {
     public void move() {
         targetX = target.getX()+10;
         targetY = target.getY()+10;
-        float speed = 5*App.gameSpeed;    
+        float speed = 5*App.gameSpeed;
 
         float directionX = targetX - this.x;
         float directionY = targetY - this.y;
@@ -58,6 +58,16 @@ public class Fireball extends Entity {
     }
 
     /**
+     * Inflicts damage on the target Enemy and marks the fireball as collided.
+     * This method is called when the fireball hits its intended target.
+     */
+
+    public void hitEnemy() {
+        target.takeDamage(damage);
+        isCollided = true;
+    }
+    
+    /**
     * Updates the position using the move() function and
     * checks if the fireball has collided with the target
     * every game tick.
@@ -66,8 +76,7 @@ public class Fireball extends Entity {
         move();
         if(this.x > (targetX-10) && this.x < (targetX-10) + 20){
 	        if(this.y > (targetY-10) && this.y < (targetY-10) + 20){
-                target.takeDamage(damage);
-                isCollided = true;
+                hitEnemy();
 	        }
         }
     }

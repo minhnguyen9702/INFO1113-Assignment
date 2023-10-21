@@ -2,20 +2,36 @@
 
 import WizardTD.App;
 
+/**
+ * The GameSpeedButton class extends the button class and allows the player to change the game's speed.
+ */
 public class GameSpeedButton extends Button {
+    
+    /**
+     * Creates a new GameSpeedButton instance with the specified coordinates, shortHand, label, and initial click state.
+     *
+     * @param x         The x-coordinate of the button.
+     * @param y         The y-coordinate of the button.
+     * @param shortHand The short-hand identifier for the button.
+     * @param label     The label or text associated with the button.
+     * @param isClicked The initial click state of the button.
+     */
     public GameSpeedButton(float x, float y, String shortHand, String label, boolean isClicked) {
-<span class="fc" id="L7">        super(x, y, shortHand, label, isClicked);</span>
-<span class="fc" id="L8">    }</span>
+<span class="fc" id="L20">        super(x, y, shortHand, label, isClicked);</span>
+<span class="fc" id="L21">    }</span>
 
+    /**
+     * Changes the game speed based on the current game speed state (paused, fast forward, or normal speed).
+     * It updates the gameSpeed variable in the App class.
+     */
     public void changeGameSpeed() {
-<span class="nc bnc" id="L11" title="All 2 branches missed.">        if (App.isPaused) {</span>
-<span class="nc" id="L12">            App.gameSpeed = 0;</span>
-<span class="nc bnc" id="L13" title="All 2 branches missed.">        } else if (App.isFastForward) {</span>
-<span class="nc" id="L14">            App.gameSpeed = 2;</span>
+<span class="nc bnc" id="L28" title="All 2 branches missed.">        if (App.isPaused) {</span>
+<span class="nc" id="L29">            App.gameSpeed = 0;</span>
+<span class="nc bnc" id="L30" title="All 2 branches missed.">        } else if (App.isFastForward) {</span>
+<span class="nc" id="L31">            App.gameSpeed = 2;</span>
         } else {
-<span class="nc" id="L16">            App.gameSpeed = 1;</span>
+<span class="nc" id="L33">            App.gameSpeed = 1;</span>
         }
-<span class="nc" id="L18">        System.out.println(App.gameSpeed);</span>
-<span class="nc" id="L19">    }</span>
+<span class="nc" id="L35">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>

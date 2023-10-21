@@ -21,18 +21,14 @@ public class Iceball extends Fireball {
     }
 
     /**
-     * Updates the position of the iceball in every game tick by calling move().
-     * Applies freezing effects to the target upon collision.
+     * Inflicts damage on the target Enemy, marks the Iceball as collided
+     * and causes the enemy to freeze. This method is called when the 
+     * Iceball hits its intended target.
      */
     @Override
-    public void tick() {
-        move();
-        if(this.x > (targetX-10) && this.x < (targetX-10) + 20){
-	        if(this.y > (targetY-10) && this.y < (targetY-10) + 20){
-                target.freeze();
-                target.takeDamage(damage);
-                isCollided = true;
-	        }
-        }
+    public void hitEnemy() {
+        target.freeze();
+        target.takeDamage(damage);
+        isCollided = true;
     }
 }

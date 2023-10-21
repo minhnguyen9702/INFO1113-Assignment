@@ -1,6 +1,7 @@
 package WizardTD.Tile;
 
 import WizardTD.App;
+import WizardTD.Fireball;
 import WizardTD.Iceball;
 import java.util.Random;;
 
@@ -24,7 +25,7 @@ public class IceTower extends Tower {
         this.speedLevel = 0;
         this.damageLevel = 0;
         this.range = App.initialTowerRange - 32;
-        this.speed = App.initialTowerSpeed *2/3;
+        this.speed = App.initialTowerSpeed *3/2;
         this.damage = App.initialTowerDamage *2/3;
 
         isTowerPlaceable = false;
@@ -55,20 +56,13 @@ public class IceTower extends Tower {
     }
 
     /**
-     * Updates the IceTower's behavior and attacks enemies within its range with iceballs
-     * depending on the tower's attack speed.
+     * Shoots a projectile (Iceball) at a random enemy in range.
+     * Creates a new Iceball object and adds it to the list of fireballs in the game.
+     *
+     * @see Iceball
      */
     @Override
-    public void tick() {
-        if (enemyInRange.size() == 0) {
-            timer = 60/speed;
-        }
-        if (enemyInRange.size() != 0) {
-            if (timer >= 60/speed) {
-                timer = 0;
-                App.fireballList.add(new Iceball(this.x+16, this.y+16, enemyInRange.get(random.nextInt(enemyInRange.size())), damage));
-            }
-            timer += 1*App.gameSpeed;
-        }
+    public void shootProjectile() {
+        App.fireballList.add(new Iceball(this.x+16, this.y+16, enemyInRange.get(random.nextInt(enemyInRange.size())), damage));
     }
 }

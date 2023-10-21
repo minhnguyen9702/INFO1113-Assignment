@@ -3,35 +3,73 @@
 import WizardTD.Entity;
 import processing.core.PImage;
 
+/**
+ * The Tile class represents a tile in the GameMap, which can be used for
+ * towers to be placed on or enemies to walk on.
+ */
 public abstract class Tile extends Entity {
     protected boolean isTowerPlaceable;
     protected boolean canEnemyWalk;
 
-<span class="fc" id="L10">    public Tile(float x, float y, PImage sprite) {</span>
-<span class="fc" id="L11">        this.x = x;</span>
-<span class="fc" id="L12">        this.y = y;</span>
-<span class="fc" id="L13">        this.sprite = sprite;</span>
-<span class="fc" id="L14">    }</span>
+    /**
+     * Creates a new Tile instance with the specified coordinates and sprite.
+     *
+     * @param x      The x-coordinate of the tile.
+     * @param y      The y-coordinate of the tile.
+     * @param sprite The PImage object acting as the tile's sprite.
+     */
+<span class="fc" id="L21">    public Tile(float x, float y, PImage sprite) {</span>
+<span class="fc" id="L22">        this.x = x;</span>
+<span class="fc" id="L23">        this.y = y;</span>
+<span class="fc" id="L24">        this.sprite = sprite;</span>
+<span class="fc" id="L25">    }</span>
 
-<span class="nc" id="L16">    public Tile(float x, float y) {</span>
-<span class="nc" id="L17">        this.x = x;</span>
-<span class="nc" id="L18">        this.y = y;</span>
-<span class="nc" id="L19">    }</span>
+     /**
+     * Creates a new Tile instance with the specified coordinates.
+     *
+     * @param x The x-coordinate of the tile.
+     * @param y The y-coordinate of the tile.
+     */
+<span class="nc" id="L33">    public Tile(float x, float y) {</span>
+<span class="nc" id="L34">        this.x = x;</span>
+<span class="nc" id="L35">        this.y = y;</span>
+<span class="nc" id="L36">    }</span>
 
+    /**
+     * Checks if a tower can be placed on this tile.
+     *
+     * @return true if a tower can be placed on this tile; otherwise, false.
+     */
     public boolean isTowerPlaceable(){
-<span class="nc" id="L22">        return isTowerPlaceable;</span>
+<span class="nc" id="L44">        return isTowerPlaceable;</span>
     }
 
+    /**
+     * Checks if an enemy can walk on this tile.
+     *
+     * @return true if an enemy can walk on this tile; otherwise, false.
+     */
     public boolean canEnemyWalk(){
-<span class="fc" id="L26">        return canEnemyWalk;</span>
+<span class="fc" id="L53">        return canEnemyWalk;</span>
     }
 
+    /**
+     * Returns the row index of the tile within the gameMap array.
+     *
+     * @return The row index of the tile.
+     */
     public int getRow() {
-<span class="fc" id="L30">        return (int)(y-40)/32;</span>
+<span class="fc" id="L62">        return (int)(y-40)/32;</span>
     }
 
+
+    /**
+     * Returns the column index of the tile within the gameMap array.
+     *
+     * @return The column index of the tile.
+     */
     public int getCol() {
-<span class="fc" id="L34">        return (int)x/32;</span>
+<span class="fc" id="L72">        return (int)x/32;</span>
     }
 }
 

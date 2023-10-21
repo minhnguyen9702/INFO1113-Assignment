@@ -469,14 +469,6 @@ public class App extends PApplet {
     }
 
     /**
-     * Receive key released signal from the keyboard.
-     */
-	@Override
-    public void keyReleased(){
-
-    }
-
-    /**
      * Handles mouse click events, performing various actions based on the game's state and user interactions.
      * This method responds to mouse clicks and triggers actions, including building towers, selecting game buttons,
      * upgrading tower properties, and adjusting the game speed.
@@ -537,10 +529,6 @@ public class App extends PApplet {
         }
     }
 
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
     /**
      * Checks the current game state, determining whether the player has won or lost the game.
      * If the player's current mana is less than 0 then the GameState is set to Game Over.
@@ -555,6 +543,7 @@ public class App extends PApplet {
             gameSpeed = 0;
         }
     }
+    
     /**
     * Increases the player's current mana over time, based on manaGainedPerSecond and game speed.
     * It ensures that mana does not exceed the mana cap when it is gained through manaGainedPerSecond.

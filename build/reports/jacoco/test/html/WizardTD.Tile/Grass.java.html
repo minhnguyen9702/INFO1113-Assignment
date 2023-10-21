@@ -2,12 +2,24 @@
 
 import processing.core.PImage;
 
+/**
+ * The Grass class extends the Tile class and is suitable for tower placement
+ * but not for enemy movement.
+ */
 public class Grass extends Tile {
-    public Grass(float x, float y, PImage sprite) {
-<span class="fc" id="L7">        super(x, y, sprite);</span>
 
-<span class="fc" id="L9">        isTowerPlaceable = true;</span>
-<span class="fc" id="L10">        canEnemyWalk = false;</span>
-<span class="fc" id="L11">    }</span>
+    /**
+     * Creates a new Grass tile instance with the specified coordinates and sprite.
+     *
+     * @param x      The x-coordinate of the Grass tile.
+     * @param y      The y-coordinate of the Grass tile.
+     * @param sprite The PImage object acting as the tile's sprite.
+     */
+    public Grass(float x, float y, PImage sprite) {
+<span class="fc" id="L19">        super(x, y, sprite);</span>
+
+<span class="fc" id="L21">        isTowerPlaceable = true;</span>
+<span class="fc" id="L22">        canEnemyWalk = false;</span>
+<span class="fc" id="L23">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>

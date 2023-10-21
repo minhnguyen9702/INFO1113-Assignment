@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Fireball.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">info1113</a> &gt; <a href="index.source.html" class="el_package">WizardTD</a> &gt; <span class="el_source">Fireball.java</span></div><h1>Fireball.java</h1><pre class="source lang-java linenums">package WizardTD;
 
+/**
+ * The Fireball class is projectile that is fired at a target of the Enemy class.
+ * It tracks the target and inflicts damage when it collides with it.
+ */
 public class Fireball extends Entity {
     protected Enemy target;
     protected float targetX;
@@ -7,41 +11,65 @@ public class Fireball extends Entity {
     protected float damage;
     protected boolean isCollided;
 
-<span class="nc" id="L10">    public Fireball (float startX, float startY, Enemy target, float damage) {</span>
-<span class="nc" id="L11">        this.sprite = App.fireballSprite;</span>
-<span class="nc" id="L12">        this.target = target;</span>
-<span class="nc" id="L13">        this.x = startX;</span>
-<span class="nc" id="L14">        this.y = startY;</span>
-<span class="nc" id="L15">        this.damage = damage;</span>
-<span class="nc" id="L16">        isCollided = false;</span>
-<span class="nc" id="L17">    }</span>
+    /**
+     * Creates a new Fireball instance with the specified attributes.
+     *
+     * @param startX  The starting X-coordinate of the fireball.
+     * @param startY  The starting Y-coordinate of the fireball.
+     * @param target  The enemy target that the fireball is directed towards.
+     * @param damage  The amount of damage the fireball will inflict upon collision.
+     */
+<span class="nc" id="L22">    public Fireball (float startX, float startY, Enemy target, float damage) {</span>
+<span class="nc" id="L23">        this.sprite = App.fireballSprite;</span>
+<span class="nc" id="L24">        this.target = target;</span>
+<span class="nc" id="L25">        this.x = startX;</span>
+<span class="nc" id="L26">        this.y = startY;</span>
+<span class="nc" id="L27">        this.damage = damage;</span>
+<span class="nc" id="L28">        isCollided = false;</span>
+<span class="nc" id="L29">    }</span>
 
+    /**
+     * Checks if the fireball has collided with the target.
+     *
+     * @return True if the fireball has collided with the target, otherwise false.
+     */
     public boolean getIsCollided() {
-<span class="nc" id="L20">        return isCollided;</span>
+<span class="nc" id="L37">        return isCollided;</span>
     }
 
+    /**
+    * Moves the fireball towards its target;
+    */
+    public void move() {
+<span class="nc" id="L44">        targetX = target.getX()+10;</span>
+<span class="nc" id="L45">        targetY = target.getY()+10;</span>
+<span class="nc" id="L46">        float speed = 5*App.gameSpeed;</span>
+
+<span class="nc" id="L48">        float directionX = targetX - this.x;</span>
+<span class="nc" id="L49">        float directionY = targetY - this.y;</span>
+  
+<span class="nc" id="L51">        float magnitude = (float)Math.sqrt(directionX * directionX + directionY * directionY);</span>
+  
+<span class="nc" id="L53">        float vx = (directionX / magnitude) * speed;</span>
+<span class="nc" id="L54">        float vy = (directionY / magnitude) * speed;</span>
+  
+<span class="nc" id="L56">        this.x += vx;</span>
+<span class="nc" id="L57">        this.y += vy;</span>
+<span class="nc" id="L58">    }</span>
+
+    /**
+    * Updates the position using the move() function and
+    * checks if the fireball has collided with the target
+    * every game tick.
+    */
     public void tick() {
-<span class="nc" id="L24">        targetX = target.getX()+10;</span>
-<span class="nc" id="L25">        targetY = target.getY()+10;</span>
-<span class="nc" id="L26">        float speed = 5*App.gameSpeed;    </span>
-
-<span class="nc" id="L28">        float directionX = targetX - this.x;</span>
-<span class="nc" id="L29">        float directionY = targetY - this.y;</span>
-  
-<span class="nc" id="L31">        float magnitude = (float)Math.sqrt(directionX * directionX + directionY * directionY);</span>
-  
-<span class="nc" id="L33">        float vx = (directionX / magnitude) * speed;</span>
-<span class="nc" id="L34">        float vy = (directionY / magnitude) * speed;</span>
-  
-<span class="nc" id="L36">        this.x += vx;</span>
-<span class="nc" id="L37">        this.y += vy;</span>
-
-<span class="nc bnc" id="L39" title="All 4 branches missed.">        if(this.x &gt; (targetX-10) &amp;&amp; this.x &lt; (targetX-10) + 20){</span>
-<span class="nc bnc" id="L40" title="All 4 branches missed.">	        if(this.y &gt; (targetY-10) &amp;&amp; this.y &lt; (targetY-10) + 20){</span>
-<span class="nc" id="L41">                target.takeDamage(damage);</span>
-<span class="nc" id="L42">                isCollided = true;</span>
+<span class="nc" id="L66">        move();</span>
+<span class="nc bnc" id="L67" title="All 4 branches missed.">        if(this.x &gt; (targetX-10) &amp;&amp; this.x &lt; (targetX-10) + 20){</span>
+<span class="nc bnc" id="L68" title="All 4 branches missed.">	        if(this.y &gt; (targetY-10) &amp;&amp; this.y &lt; (targetY-10) + 20){</span>
+<span class="nc" id="L69">                target.takeDamage(damage);</span>
+<span class="nc" id="L70">                isCollided = true;</span>
 	        }
         }
-<span class="nc" id="L45">    }</span>
+<span class="nc" id="L73">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>

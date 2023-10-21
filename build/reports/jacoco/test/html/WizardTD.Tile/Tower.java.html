@@ -6,8 +6,12 @@ import WizardTD.App;
 import WizardTD.Enemy;
 import WizardTD.Fireball;
 
+/**
+ * The Tower class represents a tower in the game, which can attack enemies within its range.
+ * It extends the Tile class. Towers cannot be placed on it and enemies cannot walk on it.
+ */
 public class Tower extends Tile {
-<span class="nc" id="L10">    protected ArrayList&lt;Enemy&gt; enemyInRange = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L14">    protected ArrayList&lt;Enemy&gt; enemyInRange = new ArrayList&lt;&gt;();</span>
     protected float range;
     protected float speed;
     protected float damage;
@@ -16,139 +20,240 @@ public class Tower extends Tile {
     protected int damageLevel;
     protected float timer;
 
+    /**
+     * Creates a new Tower instance at the specified coordinates.
+     *
+     * @param x The x-coordinate of the Tower.
+     * @param y The y-coordinate of the Tower.
+     */
     public Tower(float x, float y) {
-<span class="nc" id="L20">        super(x, y);</span>
-<span class="nc" id="L21">        this.sprite = App.tower0Sprite;</span>
-<span class="nc" id="L22">        this.rangeLevel = 0;</span>
-<span class="nc" id="L23">        this.speedLevel = 0;</span>
-<span class="nc" id="L24">        this.damageLevel = 0;</span>
-<span class="nc" id="L25">        this.range = App.initialTowerRange;</span>
-<span class="nc" id="L26">        this.speed = App.initialTowerSpeed;</span>
-<span class="nc" id="L27">        this.damage = App.initialTowerDamage;</span>
+<span class="nc" id="L30">        super(x, y);</span>
+<span class="nc" id="L31">        this.sprite = App.tower0Sprite;</span>
+<span class="nc" id="L32">        this.rangeLevel = 0;</span>
+<span class="nc" id="L33">        this.speedLevel = 0;</span>
+<span class="nc" id="L34">        this.damageLevel = 0;</span>
+<span class="nc" id="L35">        this.range = App.initialTowerRange;</span>
+<span class="nc" id="L36">        this.speed = App.initialTowerSpeed;</span>
+<span class="nc" id="L37">        this.damage = App.initialTowerDamage;</span>
 
-<span class="nc" id="L29">        isTowerPlaceable = false;</span>
-<span class="nc" id="L30">        canEnemyWalk = false;</span>
-<span class="nc" id="L31">        purchaseTower();</span>
-<span class="nc" id="L32">    }</span>
+<span class="nc" id="L39">        isTowerPlaceable = false;</span>
+<span class="nc" id="L40">        canEnemyWalk = false;</span>
+<span class="nc" id="L41">        purchaseTower();</span>
+<span class="nc" id="L42">    }</span>
     
+    /**
+     * Returns the list of enemies within the tower's attack range.
+     *
+     * @return The list of enemies in range of the tower.
+     */
     public ArrayList&lt;Enemy&gt; getEnemyInRange() {
-<span class="nc" id="L35">        return enemyInRange;</span>
+<span class="nc" id="L50">        return enemyInRange;</span>
     }
 
+    /**
+     * Checks if the given enemy is in enemyInRange list.
+     *
+     * @param enemy The enemy to check.
+     * @return true if the enemy is in enemyInRange list; otherwise, false.
+     */
     public boolean enemyInRangeContains(Enemy enemy) {
-<span class="nc" id="L39">        return enemyInRange.contains(enemy);</span>
+<span class="nc" id="L60">        return enemyInRange.contains(enemy);</span>
     }
 
+    /**
+     * Adds an enemy to enemyInRange list.
+     *
+     * @param enemy The enemy to add.
+     */
     public void enemyInRangeAdd(Enemy enemy) {
-<span class="nc" id="L43">        enemyInRange.add(enemy);</span>
-<span class="nc" id="L44">    }</span>
+<span class="nc" id="L69">        enemyInRange.add(enemy);</span>
+<span class="nc" id="L70">    }</span>
 
+    /**
+     * Removes an enemy from the enemyInRange list.
+     *
+     * @param enemy The enemy to remove.
+     */
     public void enemyInRangeRemove(Enemy enemy) {
-<span class="nc" id="L47">        enemyInRange.remove(enemy);</span>
-<span class="nc" id="L48">    }</span>
+<span class="nc" id="L78">        enemyInRange.remove(enemy);</span>
+<span class="nc" id="L79">    }</span>
 
+    /**
+     * Removes a list of enemies from the enemyInRange list.
+     *
+     * @param enemiesToRemove The list of enemies to remove.
+     */
     public void enemyInRangeRemoveAll(ArrayList&lt;Enemy&gt; enemiesToRemove) {
-<span class="nc" id="L51">        enemyInRange.removeAll(enemiesToRemove);</span>
-<span class="nc" id="L52">    }</span>
+<span class="nc" id="L87">        enemyInRange.removeAll(enemiesToRemove);</span>
+<span class="nc" id="L88">    }</span>
 
+    /**
+     * Returns the attack range of the tower.
+     *
+     * @return The attack range of the tower.
+     */
     public float getRange() {
-<span class="nc" id="L55">        return range;</span>
+<span class="nc" id="L96">        return range;</span>
     }
 
+    /**
+     * Returns the attack speed of the tower.
+     *
+     * @return The attack speed of the tower.
+     */
     public float getSpeed() {
-<span class="nc" id="L59">        return speed;</span>
+<span class="nc" id="L105">        return speed;</span>
     }
 
-        public float getDamage() {
-<span class="nc" id="L63">        return damage;</span>
+    /**
+     * Returns the damage dealt by the tower's attacks.
+     *
+     * @return The damage dealt by the tower's attacks.
+     */
+    public float getDamage() {
+<span class="nc" id="L114">        return damage;</span>
     }
 
+    /**
+     * Upgrades the tower's attack range if sufficient mana is available.
+     */
     public void upgradeRange() {
-<span class="nc bnc" id="L67" title="All 2 branches missed.">        if (App.currentMana &gt; this.getRangeCost()) {</span>
-<span class="nc" id="L68">            App.currentMana -= this.getRangeCost();</span>
-<span class="nc" id="L69">            rangeLevel += 1;</span>
-<span class="nc" id="L70">            range += 32;</span>
-<span class="nc" id="L71">            changeTowerSprite();</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">        if (App.currentMana &gt; this.getRangeCost()) {</span>
+<span class="nc" id="L122">            App.currentMana -= this.getRangeCost();</span>
+<span class="nc" id="L123">            rangeLevel += 1;</span>
+<span class="nc" id="L124">            range += 32;</span>
+<span class="nc" id="L125">            changeTowerSprite();</span>
         }
-<span class="nc" id="L73">    }</span>
+<span class="nc" id="L127">    }</span>
 
+    /**
+     * Upgrades the tower's attack speed if sufficient mana is available.
+     */
     public void upgradeSpeed() {
-<span class="nc bnc" id="L76" title="All 2 branches missed.">        if (App.currentMana &gt; this.getSpeedCost())  {</span>
-<span class="nc" id="L77">            App.currentMana -= this.getSpeedCost();</span>
-<span class="nc" id="L78">            speedLevel += 1;</span>
-<span class="nc" id="L79">            speed += 0.5;</span>
-<span class="nc" id="L80">            changeTowerSprite();</span>
-        }
-<span class="nc" id="L82">    }</span>
-
-    public void upgradeDamage() {
-<span class="nc bnc" id="L85" title="All 2 branches missed.">        if (App.currentMana &gt; this.getDamageCost())  {</span>
-<span class="nc" id="L86">            App.currentMana -= this.getDamageCost();</span>
-<span class="nc" id="L87">            damageLevel += 1;</span>
-<span class="nc" id="L88">            damage += (damage/2);</span>
-<span class="nc" id="L89">            changeTowerSprite();</span>
-        }
-<span class="nc" id="L91">    }</span>
-
-    public int getRangeLevel() {
-<span class="nc" id="L94">        return rangeLevel;</span>
-    }
-
-    public int getSpeedLevel() {
-<span class="nc" id="L98">        return speedLevel;</span>
-    }
-
-    public int getDamageLevel() {
-<span class="nc" id="L102">        return damageLevel;</span>
-    }
-
-    public float getRangeCost() {
-<span class="nc" id="L106">        return 20 + 10*rangeLevel;</span>
-    }
-
-    public float getSpeedCost() {
-<span class="nc" id="L110">        return 20 + 10*speedLevel;</span>
-    }
-
-    public float getDamageCost() {
-<span class="nc" id="L114">        return 20 + 10*damageLevel;</span>
-    }
-
-    public int getBaseLevel() {
-<span class="nc bnc" id="L118" title="All 6 branches missed.">        if (rangeLevel &gt;= 2 &amp;&amp; speedLevel &gt;= 2 &amp;&amp; damageLevel &gt;= 2) {</span>
-<span class="nc" id="L119">            return 2;</span>
-<span class="nc bnc" id="L120" title="All 6 branches missed.">        } else if (rangeLevel &gt;= 1 &amp;&amp; speedLevel &gt;= 1 &amp;&amp; damageLevel &gt;= 1) {</span>
-<span class="nc" id="L121">            return 1;</span>
-        } else {
-<span class="nc" id="L123">            return 0;</span>
-        }
-    }
-
-    public void purchaseTower() {
-<span class="nc" id="L128">        App.currentMana -= App.towerCost;</span>
-<span class="nc" id="L129">    }</span>
-
-    public void changeTowerSprite() {
-<span class="nc bnc" id="L132" title="All 2 branches missed.">        if (this.getBaseLevel() == 2) {</span>
-<span class="nc" id="L133">            this.sprite = App.tower2Sprite;</span>
-<span class="nc bnc" id="L134" title="All 2 branches missed.">        } else if (this.getBaseLevel() == 1) {</span>
-<span class="nc" id="L135">            this.sprite = App.tower1Sprite;</span>
-        } else {
-<span class="nc" id="L137">            this.sprite = App.tower0Sprite;</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">        if (App.currentMana &gt; this.getSpeedCost())  {</span>
+<span class="nc" id="L134">            App.currentMana -= this.getSpeedCost();</span>
+<span class="nc" id="L135">            speedLevel += 1;</span>
+<span class="nc" id="L136">            speed += 0.5;</span>
+<span class="nc" id="L137">            changeTowerSprite();</span>
         }
 <span class="nc" id="L139">    }</span>
 
+    /**
+     * Upgrades the tower's attack damage if sufficient mana is available.
+     */
+    public void upgradeDamage() {
+<span class="nc bnc" id="L145" title="All 2 branches missed.">        if (App.currentMana &gt; this.getDamageCost())  {</span>
+<span class="nc" id="L146">            App.currentMana -= this.getDamageCost();</span>
+<span class="nc" id="L147">            damageLevel += 1;</span>
+<span class="nc" id="L148">            damage += (damage/2);</span>
+<span class="nc" id="L149">            changeTowerSprite();</span>
+        }
+<span class="nc" id="L151">    }</span>
+
+    /**
+     * Returns the current level of the tower's attack range.
+     *
+     * @return The current range level.
+     */
+    public int getRangeLevel() {
+<span class="nc" id="L159">        return rangeLevel;</span>
+    }
+
+    /**
+     * Returns the current level of the tower's attack speed.
+     *
+     * @return The current speed level.
+     */
+    public int getSpeedLevel() {
+<span class="nc" id="L168">        return speedLevel;</span>
+    }
+
+    /**
+     * Returns the current level of the tower's attack damage.
+     *
+     * @return The current damage level.
+     */
+    public int getDamageLevel() {
+<span class="nc" id="L177">        return damageLevel;</span>
+    }
+
+    /**
+     * Returns the mana cost of upgrading the tower's attack range.
+     *
+     * @return The mana cost of upgrading range.
+     */
+    public float getRangeCost() {
+<span class="nc" id="L186">        return 20 + 10*rangeLevel;</span>
+    }
+
+    /**
+     * Returns the mana cost of upgrading the tower's attack speed.
+     *
+     * @return The mana cost of upgrading speed.
+     */
+    public float getSpeedCost() {
+<span class="nc" id="L195">        return 20 + 10*speedLevel;</span>
+    }
+
+    /**
+     * Returns the mana cost of upgrading the tower's attack damage.
+     *
+     * @return The mana cost of upgrading damage.
+     */
+    public float getDamageCost() {
+<span class="nc" id="L204">        return 20 + 10*damageLevel;</span>
+    }
+
+    /**
+     * Returns the base level of the tower (the lowest level that all three upgrades are at).
+     *
+     * @return The base level of the tower.
+     */
+    public int getBaseLevel() {
+<span class="nc bnc" id="L213" title="All 6 branches missed.">        if (rangeLevel &gt;= 2 &amp;&amp; speedLevel &gt;= 2 &amp;&amp; damageLevel &gt;= 2) {</span>
+<span class="nc" id="L214">            return 2;</span>
+<span class="nc bnc" id="L215" title="All 6 branches missed.">        } else if (rangeLevel &gt;= 1 &amp;&amp; speedLevel &gt;= 1 &amp;&amp; damageLevel &gt;= 1) {</span>
+<span class="nc" id="L216">            return 1;</span>
+        } else {
+<span class="nc" id="L218">            return 0;</span>
+        }
+    }
+
+    /**
+     * Deducts the cost of purchasing a tower from the player's mana when a tower is created.
+     */
+    public void purchaseTower() {
+<span class="nc" id="L226">        App.currentMana -= App.towerCost;</span>
+<span class="nc" id="L227">    }</span>
+
+    /**
+     * Changes the tower's sprite based on its base level.
+     */
+    public void changeTowerSprite() {
+<span class="nc bnc" id="L233" title="All 2 branches missed.">        if (this.getBaseLevel() == 2) {</span>
+<span class="nc" id="L234">            this.sprite = App.tower2Sprite;</span>
+<span class="nc bnc" id="L235" title="All 2 branches missed.">        } else if (this.getBaseLevel() == 1) {</span>
+<span class="nc" id="L236">            this.sprite = App.tower1Sprite;</span>
+        } else {
+<span class="nc" id="L238">            this.sprite = App.tower0Sprite;</span>
+        }
+<span class="nc" id="L240">    }</span>
+
+    /**
+     * Updates the tower's behavior and attacks enemies within its range with fireballs
+     * depending on the tower's attack speed.
+     */
     public void tick() {
-<span class="nc bnc" id="L142" title="All 2 branches missed.">        if (enemyInRange.size() == 0) {</span>
-<span class="nc" id="L143">            timer = 60/speed;</span>
+<span class="nc bnc" id="L247" title="All 2 branches missed.">        if (enemyInRange.size() == 0) {</span>
+<span class="nc" id="L248">            timer = 60/speed;</span>
         }
-<span class="nc bnc" id="L145" title="All 2 branches missed.">        if (enemyInRange.size() != 0) {</span>
-<span class="nc bnc" id="L146" title="All 2 branches missed.">            if (timer &gt;= 60/speed) {</span>
-<span class="nc" id="L147">                timer = 0;</span>
-<span class="nc" id="L148">                App.fireballList.add(new Fireball(this.x+16, this.y+16, enemyInRange.get(0), damage));</span>
+<span class="nc bnc" id="L250" title="All 2 branches missed.">        if (enemyInRange.size() != 0) {</span>
+<span class="nc bnc" id="L251" title="All 2 branches missed.">            if (timer &gt;= 60/speed) {</span>
+<span class="nc" id="L252">                timer = 0;</span>
+<span class="nc" id="L253">                App.fireballList.add(new Fireball(this.x+16, this.y+16, enemyInRange.get(0), damage));</span>
             }
-<span class="nc" id="L150">            timer += 1*App.gameSpeed;</span>
+<span class="nc" id="L255">            timer += 1*App.gameSpeed;</span>
         }
-<span class="nc" id="L152">    }</span>
+<span class="nc" id="L257">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>
