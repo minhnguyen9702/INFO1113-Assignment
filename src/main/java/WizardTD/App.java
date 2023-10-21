@@ -477,6 +477,8 @@ public class App extends PApplet {
      */
     @Override
     public void mousePressed(MouseEvent e) {
+        System.out.println("x:" + mouseX);
+        System.out.println("y:" + mouseY);
         // for building towers and icetowers
         if (gameState == GameState.GAMENORMAL) {
             for (int i = 0; i < gameMap.length; i++) {
@@ -487,7 +489,6 @@ public class App extends PApplet {
                             gameMap[i][j] = new Tower(gameMap[i][j].getX(), gameMap[i][j].getY());
                             towerList.add((Tower)gameMap[i][j]);
                         } else if (isBuildIceTower && currentMana > iceTowerCost) {
-                            System.out.println(iceTowerCost);
                             gameMap[i][j] = new IceTower(gameMap[i][j].getX(), gameMap[i][j].getY());
                             towerList.add((IceTower)gameMap[i][j]);
                         }

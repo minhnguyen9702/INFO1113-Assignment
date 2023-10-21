@@ -240,20 +240,30 @@ public class Tower extends Tile {
 <span class="nc" id="L240">    }</span>
 
     /**
+     * Shoots a projectile (fireball) at the first enemy in range.
+     * Creates a new Fireball object and adds it to the list of fireballs in the game.
+     *
+     * @see Fireball
+     */
+    public void shootProjectile() {
+<span class="nc" id="L249">        App.fireballList.add(new Fireball(this.x+16, this.y+16, enemyInRange.get(0), damage));</span>
+<span class="nc" id="L250">    }</span>
+
+    /**
      * Updates the tower's behavior and attacks enemies within its range with fireballs
-     * depending on the tower's attack speed.
+     * depending on the tower's attack speed by calling shootProjectile().
      */
     public void tick() {
-<span class="nc bnc" id="L247" title="All 2 branches missed.">        if (enemyInRange.size() == 0) {</span>
-<span class="nc" id="L248">            timer = 60/speed;</span>
+<span class="nc bnc" id="L257" title="All 2 branches missed.">        if (enemyInRange.size() == 0) {</span>
+<span class="nc" id="L258">            timer = 60/speed;</span>
         }
-<span class="nc bnc" id="L250" title="All 2 branches missed.">        if (enemyInRange.size() != 0) {</span>
-<span class="nc bnc" id="L251" title="All 2 branches missed.">            if (timer &gt;= 60/speed) {</span>
-<span class="nc" id="L252">                timer = 0;</span>
-<span class="nc" id="L253">                App.fireballList.add(new Fireball(this.x+16, this.y+16, enemyInRange.get(0), damage));</span>
+<span class="nc bnc" id="L260" title="All 2 branches missed.">        if (enemyInRange.size() != 0) {</span>
+<span class="nc bnc" id="L261" title="All 2 branches missed.">            if (timer &gt;= 60/speed) {</span>
+<span class="nc" id="L262">                timer = 0;</span>
+<span class="nc" id="L263">                shootProjectile();</span>
             }
-<span class="nc" id="L255">            timer += 1*App.gameSpeed;</span>
+<span class="nc" id="L265">            timer += 1*App.gameSpeed;</span>
         }
-<span class="nc" id="L257">    }</span>
+<span class="nc" id="L267">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>

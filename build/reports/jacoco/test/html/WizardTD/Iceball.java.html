@@ -21,19 +21,15 @@ public class Iceball extends Fireball {
 <span class="nc" id="L21">    }</span>
 
     /**
-     * Updates the position of the iceball in every game tick by calling move().
-     * Applies freezing effects to the target upon collision.
+     * Inflicts damage on the target Enemy, marks the Iceball as collided
+     * and causes the enemy to freeze. This method is called when the 
+     * Iceball hits its intended target.
      */
     @Override
-    public void tick() {
-<span class="nc" id="L29">        move();</span>
-<span class="nc bnc" id="L30" title="All 4 branches missed.">        if(this.x &gt; (targetX-10) &amp;&amp; this.x &lt; (targetX-10) + 20){</span>
-<span class="nc bnc" id="L31" title="All 4 branches missed.">	        if(this.y &gt; (targetY-10) &amp;&amp; this.y &lt; (targetY-10) + 20){</span>
-<span class="nc" id="L32">                target.freeze();</span>
-<span class="nc" id="L33">                target.takeDamage(damage);</span>
-<span class="nc" id="L34">                isCollided = true;</span>
-	        }
-        }
-<span class="nc" id="L37">    }</span>
+    public void hitEnemy() {
+<span class="nc" id="L30">        target.freeze();</span>
+<span class="nc" id="L31">        target.takeDamage(damage);</span>
+<span class="nc" id="L32">        isCollided = true;</span>
+<span class="nc" id="L33">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>

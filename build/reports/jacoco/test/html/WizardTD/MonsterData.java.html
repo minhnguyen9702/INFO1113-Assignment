@@ -21,14 +21,15 @@ public class MonsterData {
      * @param manaGainedOnKill  The amount of mana gained by the player upon killing this monster.
      * @param quantity          The quantity of this type of monster in the Wave.
      */
-<span class="fc" id="L24">    public MonsterData (String type, float hp, float speed, float armour, float manaGainedOnKill, int quantity) {</span>
-<span class="fc" id="L25">        this.type = type;</span>
-<span class="fc" id="L26">        this.hp = hp;</span>
-<span class="fc" id="L27">        this.speed = speed;</span>
-<span class="fc" id="L28">        this.armour = armour;</span>
-<span class="fc" id="L29">        this.manaGainedOnKill = manaGainedOnKill;</span>
-<span class="fc" id="L30">        this.quantity = quantity;</span>
-<span class="fc" id="L31">    }</span>
+    public MonsterData (String type, float hp, float speed, 
+<span class="fc" id="L25">        float armour, float manaGainedOnKill, int quantity) {</span>
+<span class="fc" id="L26">        this.type = type;</span>
+<span class="fc" id="L27">        this.hp = hp;</span>
+<span class="fc" id="L28">        this.speed = speed;</span>
+<span class="fc" id="L29">        this.armour = armour;</span>
+<span class="fc" id="L30">        this.manaGainedOnKill = manaGainedOnKill;</span>
+<span class="fc" id="L31">        this.quantity = quantity;</span>
+<span class="fc" id="L32">    }</span>
 
     /**
      * Returns the type or name of the monster.
@@ -36,7 +37,7 @@ public class MonsterData {
      * @return The type or name of the monster.
      */
     public String getType() {
-<span class="fc" id="L39">        return type;</span>
+<span class="fc" id="L40">        return type;</span>
     }
 
     /**
@@ -45,7 +46,7 @@ public class MonsterData {
      * @return The hit points of the monster.
      */
     public float getHP() {
-<span class="fc" id="L48">        return hp;</span>
+<span class="fc" id="L49">        return hp;</span>
     }
 
     /**
@@ -54,7 +55,7 @@ public class MonsterData {
      * @return The movement speed of the monster.
      */
     public float getSpeed() {
-<span class="fc" id="L57">        return speed;</span>
+<span class="fc" id="L58">        return speed;</span>
     }
 
     /**
@@ -63,7 +64,7 @@ public class MonsterData {
      * @return The armour of the monster.
      */
     public float getArmour() {
-<span class="fc" id="L66">        return armour;</span>
+<span class="fc" id="L67">        return armour;</span>
     }
 
     /**
@@ -72,7 +73,7 @@ public class MonsterData {
      * @return The amount of mana gained on kill.
      */
     public float getManaGainedOnKill() {
-<span class="fc" id="L75">        return manaGainedOnKill;</span>
+<span class="fc" id="L76">        return manaGainedOnKill;</span>
     }
 
     /**
@@ -80,15 +81,15 @@ public class MonsterData {
      *
      * @return The quantity of this type of monster.
      */
-    public float getQuantity() {
-<span class="fc" id="L84">        return quantity;</span>
+    public int getQuantity() {
+<span class="fc" id="L85">        return quantity;</span>
     }
 
     /**
      * Decrement the quantity of this type of monster by 1.
      */
     public void quantityDecrement() {
-<span class="fc" id="L91">        quantity--;</span>
-<span class="fc" id="L92">    }</span>
+<span class="fc" id="L92">        quantity--;</span>
+<span class="fc" id="L93">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>

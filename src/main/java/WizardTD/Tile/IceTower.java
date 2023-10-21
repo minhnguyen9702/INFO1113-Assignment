@@ -1,7 +1,6 @@
 package WizardTD.Tile;
 
 import WizardTD.App;
-import WizardTD.Fireball;
 import WizardTD.Iceball;
 import java.util.Random;;
 

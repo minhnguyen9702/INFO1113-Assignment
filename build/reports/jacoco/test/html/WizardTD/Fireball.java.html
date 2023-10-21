@@ -58,18 +58,27 @@ public class Fireball extends Entity {
 <span class="nc" id="L58">    }</span>
 
     /**
+     * Inflicts damage on the target Enemy and marks the fireball as collided.
+     * This method is called when the fireball hits its intended target.
+     */
+
+    public void hitEnemy() {
+<span class="nc" id="L66">        target.takeDamage(damage);</span>
+<span class="nc" id="L67">        isCollided = true;</span>
+<span class="nc" id="L68">    }</span>
+    
+    /**
     * Updates the position using the move() function and
     * checks if the fireball has collided with the target
     * every game tick.
     */
     public void tick() {
-<span class="nc" id="L66">        move();</span>
-<span class="nc bnc" id="L67" title="All 4 branches missed.">        if(this.x &gt; (targetX-10) &amp;&amp; this.x &lt; (targetX-10) + 20){</span>
-<span class="nc bnc" id="L68" title="All 4 branches missed.">	        if(this.y &gt; (targetY-10) &amp;&amp; this.y &lt; (targetY-10) + 20){</span>
-<span class="nc" id="L69">                target.takeDamage(damage);</span>
-<span class="nc" id="L70">                isCollided = true;</span>
+<span class="nc" id="L76">        move();</span>
+<span class="nc bnc" id="L77" title="All 4 branches missed.">        if(this.x &gt; (targetX-10) &amp;&amp; this.x &lt; (targetX-10) + 20){</span>
+<span class="nc bnc" id="L78" title="All 4 branches missed.">	        if(this.y &gt; (targetY-10) &amp;&amp; this.y &lt; (targetY-10) + 20){</span>
+<span class="nc" id="L79">                hitEnemy();</span>
 	        }
         }
-<span class="nc" id="L73">    }</span>
+<span class="nc" id="L82">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>

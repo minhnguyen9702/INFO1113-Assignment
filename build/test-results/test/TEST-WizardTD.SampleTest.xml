@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="WizardTD.SampleTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-10-18T10:06:08" hostname="XUBUNTU" time="0.018">
+<testsuite name="WizardTD.SampleTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-10-21T11:48:46" hostname="XUBUNTU" time="5.978">
   <properties/>
-  <testcase name="simpleTest()" classname="WizardTD.SampleTest" time="0.018"/>
+  <testcase name="testGame()" classname="WizardTD.SampleTest" time="5.978"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[java.lang.NullPointerException
-	at processing.awt.PGraphicsJava2D.imageImpl(PGraphicsJava2D.java:1574)
-	at processing.core.PGraphics.image(PGraphics.java:3773)
-	at processing.core.PApplet.image(PApplet.java:12611)
-	at WizardTD.Entity.draw(Entity.java:29)
-	at WizardTD.App.draw(App.java:624)
+	at sun.java2d.pipe.GlyphListLoopPipe.drawGlyphList(GlyphListLoopPipe.java:50)
+	at sun.java2d.pipe.GlyphListPipe.drawGlyphVector(GlyphListPipe.java:137)
+	at sun.java2d.SunGraphics2D.drawGlyphVector(SunGraphics2D.java:3008)
+	at sun.font.ExtendedTextSourceLabel.handleDraw(ExtendedTextSourceLabel.java:193)
+	at sun.font.Decoration.drawTextAndDecorations(Decoration.java:122)
+	at sun.font.ExtendedTextSourceLabel.draw(ExtendedTextSourceLabel.java:197)
+	at java.awt.font.TextLine.draw(TextLine.java:776)
+	at java.awt.font.TextLayout.draw(TextLayout.java:2647)
+	at sun.java2d.SunGraphics2D.drawChars(SunGraphics2D.java:3037)
+	at processing.awt.PGraphicsJava2D.textLineImpl(PGraphicsJava2D.java:2061)
+	at processing.core.PGraphics.textLineAlignImpl(PGraphics.java:4981)
+	at processing.core.PGraphics.text(PGraphics.java:4654)
+	at processing.core.PGraphics.text(PGraphics.java:4605)
+	at processing.core.PApplet.text(PApplet.java:13031)
+	at WizardTD.App.draw(App.java:787)
 	at processing.core.PApplet.handleDraw(PApplet.java:2426)
 	at processing.awt.PSurfaceAWT$12.callDraw(PSurfaceAWT.java:1557)
 	at processing.core.PSurfaceNone$AnimationThread.run(PSurfaceNone.java:316)

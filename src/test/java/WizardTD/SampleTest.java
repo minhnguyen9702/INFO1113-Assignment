@@ -2,26 +2,31 @@ package WizardTD;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import java.awt.Robot;
-import java.awt.event.KeyEvent;
-import java.awt.AWTException;
+
+import org.checkerframework.checker.units.qual.A;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import WizardTD.Tile.Tower;
 import processing.core.PApplet;
 
 
 public class SampleTest {
-    public static App app;
-
-    @BeforeAll
-    public static void testApp() {
-        app = new App();
+    public App runApp() {
+        App app = new App();
         PApplet.runSketch(new String[] { "App" }, app);
+        app.configPath = "src/test/java/WizardTD/testConfig.json";
         app.setup();
-        while (app.gameState == GameState.GAMENORMAL) {
+        return app;
+    }
+
+    @Test
+    public void testGame() {
+        App app = runApp();
+        while (app.gameState != GameState.GAMEOVER) {
             app.draw();
         }
     }
