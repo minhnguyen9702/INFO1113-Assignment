@@ -19,14 +19,14 @@ public class Fireball extends Entity {
      * @param target  The enemy target that the fireball is directed towards.
      * @param damage  The amount of damage the fireball will inflict upon collision.
      */
-<span class="nc" id="L22">    public Fireball (float startX, float startY, Enemy target, float damage) {</span>
-<span class="nc" id="L23">        this.sprite = App.fireballSprite;</span>
-<span class="nc" id="L24">        this.target = target;</span>
-<span class="nc" id="L25">        this.x = startX;</span>
-<span class="nc" id="L26">        this.y = startY;</span>
-<span class="nc" id="L27">        this.damage = damage;</span>
-<span class="nc" id="L28">        isCollided = false;</span>
-<span class="nc" id="L29">    }</span>
+<span class="fc" id="L22">    public Fireball (float startX, float startY, Enemy target, float damage) {</span>
+<span class="fc" id="L23">        this.sprite = App.fireballSprite;</span>
+<span class="fc" id="L24">        this.target = target;</span>
+<span class="fc" id="L25">        this.x = startX;</span>
+<span class="fc" id="L26">        this.y = startY;</span>
+<span class="fc" id="L27">        this.damage = damage;</span>
+<span class="fc" id="L28">        isCollided = false;</span>
+<span class="fc" id="L29">    }</span>
 
     /**
      * Checks if the fireball has collided with the target.
@@ -34,28 +34,28 @@ public class Fireball extends Entity {
      * @return True if the fireball has collided with the target, otherwise false.
      */
     public boolean getIsCollided() {
-<span class="nc" id="L37">        return isCollided;</span>
+<span class="fc" id="L37">        return isCollided;</span>
     }
 
     /**
     * Moves the fireball towards its target;
     */
     public void move() {
-<span class="nc" id="L44">        targetX = target.getX()+10;</span>
-<span class="nc" id="L45">        targetY = target.getY()+10;</span>
-<span class="nc" id="L46">        float speed = 5*App.gameSpeed;</span>
+<span class="fc" id="L44">        targetX = target.getX()+10;</span>
+<span class="fc" id="L45">        targetY = target.getY()+10;</span>
+<span class="fc" id="L46">        float speed = 5*App.gameSpeed;</span>
 
-<span class="nc" id="L48">        float directionX = targetX - this.x;</span>
-<span class="nc" id="L49">        float directionY = targetY - this.y;</span>
+<span class="fc" id="L48">        float directionX = targetX - this.x;</span>
+<span class="fc" id="L49">        float directionY = targetY - this.y;</span>
   
-<span class="nc" id="L51">        float magnitude = (float)Math.sqrt(directionX * directionX + directionY * directionY);</span>
+<span class="fc" id="L51">        float magnitude = (float)Math.sqrt(directionX * directionX + directionY * directionY);</span>
   
-<span class="nc" id="L53">        float vx = (directionX / magnitude) * speed;</span>
-<span class="nc" id="L54">        float vy = (directionY / magnitude) * speed;</span>
+<span class="fc" id="L53">        float vx = (directionX / magnitude) * speed;</span>
+<span class="fc" id="L54">        float vy = (directionY / magnitude) * speed;</span>
   
-<span class="nc" id="L56">        this.x += vx;</span>
-<span class="nc" id="L57">        this.y += vy;</span>
-<span class="nc" id="L58">    }</span>
+<span class="fc" id="L56">        this.x += vx;</span>
+<span class="fc" id="L57">        this.y += vy;</span>
+<span class="fc" id="L58">    }</span>
 
     /**
      * Inflicts damage on the target Enemy and marks the fireball as collided.
@@ -63,9 +63,9 @@ public class Fireball extends Entity {
      */
 
     public void hitEnemy() {
-<span class="nc" id="L66">        target.takeDamage(damage);</span>
-<span class="nc" id="L67">        isCollided = true;</span>
-<span class="nc" id="L68">    }</span>
+<span class="fc" id="L66">        target.takeDamage(damage);</span>
+<span class="fc" id="L67">        isCollided = true;</span>
+<span class="fc" id="L68">    }</span>
     
     /**
     * Updates the position using the move() function and
@@ -73,12 +73,12 @@ public class Fireball extends Entity {
     * every game tick.
     */
     public void tick() {
-<span class="nc" id="L76">        move();</span>
-<span class="nc bnc" id="L77" title="All 4 branches missed.">        if(this.x &gt; (targetX-10) &amp;&amp; this.x &lt; (targetX-10) + 20){</span>
-<span class="nc bnc" id="L78" title="All 4 branches missed.">	        if(this.y &gt; (targetY-10) &amp;&amp; this.y &lt; (targetY-10) + 20){</span>
-<span class="nc" id="L79">                hitEnemy();</span>
+<span class="fc" id="L76">        move();</span>
+<span class="fc bfc" id="L77" title="All 4 branches covered.">        if(this.x &gt; (targetX-10) &amp;&amp; this.x &lt; (targetX-10) + 20){</span>
+<span class="fc bfc" id="L78" title="All 4 branches covered.">	        if(this.y &gt; (targetY-10) &amp;&amp; this.y &lt; (targetY-10) + 20){</span>
+<span class="fc" id="L79">                hitEnemy();</span>
 	        }
         }
-<span class="nc" id="L82">    }</span>
+<span class="fc" id="L82">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>

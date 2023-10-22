@@ -27,12 +27,12 @@ public class ManaButton extends Button {
      */
     @Override
     public void isClicked() {
-<span class="nc bnc" id="L30" title="All 2 branches missed.">        if (App.currentMana &gt; App.manaPoolSpellCost) {</span>
-<span class="nc" id="L31">            App.currentMana -= App.manaPoolSpellCost;</span>
-<span class="nc" id="L32">            App.manaPoolSpellCost += App.manaPoolSpellCostIncreasePerUse;</span>
-<span class="nc" id="L33">            App.currentManaCap *= App.manaPoolSpellCapMultiplier;</span>
-<span class="nc" id="L34">            App.currentManaGainedPerSecond = Math.round(App.currentManaGainedPerSecond*App.manaPoolSpellManaGainedMultiplier*10)/10;</span>
+<span class="pc bpc" id="L30" title="1 of 2 branches missed.">        if (App.currentMana &gt; App.manaPoolSpellCost) {</span>
+<span class="fc" id="L31">            App.currentMana -= App.manaPoolSpellCost;</span>
+<span class="fc" id="L32">            App.manaPoolSpellCost += App.manaPoolSpellCostIncreasePerUse;</span>
+<span class="fc" id="L33">            App.currentManaCap *= App.manaPoolSpellCapMultiplier;</span>
+<span class="fc" id="L34">            App.currentManaGainedPerSecond = Math.round(App.currentManaGainedPerSecond*App.manaPoolSpellManaGainedMultiplier*10)/10;</span>
         }
-<span class="nc" id="L36">    }</span>
+<span class="fc" id="L36">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>

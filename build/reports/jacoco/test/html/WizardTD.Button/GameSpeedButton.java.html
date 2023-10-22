@@ -25,13 +25,13 @@ public class GameSpeedButton extends Button {
      * It updates the gameSpeed variable in the App class.
      */
     public void changeGameSpeed() {
-<span class="nc bnc" id="L28" title="All 2 branches missed.">        if (App.isPaused) {</span>
-<span class="nc" id="L29">            App.gameSpeed = 0;</span>
-<span class="nc bnc" id="L30" title="All 2 branches missed.">        } else if (App.isFastForward) {</span>
-<span class="nc" id="L31">            App.gameSpeed = 2;</span>
+<span class="fc bfc" id="L28" title="All 2 branches covered.">        if (App.isPaused) {</span>
+<span class="fc" id="L29">            App.gameSpeed = 0;</span>
+<span class="fc bfc" id="L30" title="All 2 branches covered.">        } else if (App.isFastForward) {</span>
+<span class="fc" id="L31">            App.gameSpeed = 2;</span>
         } else {
-<span class="nc" id="L33">            App.gameSpeed = 1;</span>
+<span class="fc" id="L33">            App.gameSpeed = 1;</span>
         }
-<span class="nc" id="L35">    }</span>
+<span class="fc" id="L35">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>

@@ -74,8 +74,8 @@ public class Enemy extends Entity {
      * @param damage The amount of damage dealt to the enemy.
      */
     public void takeDamage(float damage) {
-<span class="nc" id="L77">        currentHitPoints -= damage * armour;</span>
-<span class="nc" id="L78">    }</span>
+<span class="fc" id="L77">        currentHitPoints -= damage * armour;</span>
+<span class="fc" id="L78">    }</span>
 
     /**
      * Returns the current hit points of the enemy.
@@ -175,8 +175,8 @@ public class Enemy extends Entity {
      * Sets the boolean isFrozen to true;
      */
     public void freeze() {
-<span class="nc" id="L178">        isFrozen = true;</span>
-<span class="nc" id="L179">    }</span>
+<span class="fc" id="L178">        isFrozen = true;</span>
+<span class="fc" id="L179">    }</span>
 
     /**
      * Checks if the enemy is currently frozen.
@@ -193,30 +193,30 @@ public class Enemy extends Entity {
      */
     public void tick() {
 <span class="fc" id="L195">        this.move();</span>
-<span class="pc bpc" id="L196" title="1 of 2 branches missed.">        if (isFrozen) {</span>
-<span class="nc" id="L197">            movementSpeed = (initialMovementSpeed / 3);</span>
-<span class="nc" id="L198">            freezeTimer += 1 * App.gameSpeed;</span>
-<span class="nc bnc" id="L199" title="All 2 branches missed.">            if (freezeTimer &gt;= 90) {</span>
-<span class="nc" id="L200">                isFrozen = false;</span>
-<span class="nc" id="L201">                movementSpeed = initialMovementSpeed;</span>
-<span class="nc" id="L202">                freezeTimer = 0;</span>
+<span class="fc bfc" id="L196" title="All 2 branches covered.">        if (isFrozen) {</span>
+<span class="fc" id="L197">            movementSpeed = (initialMovementSpeed / 3);</span>
+<span class="fc" id="L198">            freezeTimer += 1 * App.gameSpeed;</span>
+<span class="fc bfc" id="L199" title="All 2 branches covered.">            if (freezeTimer &gt;= 90) {</span>
+<span class="fc" id="L200">                isFrozen = false;</span>
+<span class="fc" id="L201">                movementSpeed = initialMovementSpeed;</span>
+<span class="fc" id="L202">                freezeTimer = 0;</span>
             }
         }
-<span class="pc bpc" id="L205" title="1 of 2 branches missed.">        if (currentHitPoints &lt;= 0) {</span>
-<span class="nc" id="L206">            isPlayingDeathAnimation = true;</span>
-<span class="nc" id="L207">            movementSpeed = 0;</span>
-<span class="nc" id="L208">            animationTimer += 1 * App.gameSpeed;</span>
-<span class="nc bnc" id="L209" title="All 4 branches missed.">            if (animationTimer &gt;= 4 &amp;&amp; spriteIndex &lt; spriteSheet.size()) {</span>
-<span class="nc" id="L210">                sprite = spriteSheet.get(spriteIndex);</span>
-<span class="nc" id="L211">                animationTimer = 0;</span>
-<span class="nc" id="L212">                spriteIndex++;</span>
-<span class="nc bnc" id="L213" title="All 2 branches missed.">                if (spriteIndex &gt;= spriteSheet.size()) {</span>
-<span class="nc bnc" id="L214" title="All 2 branches missed.">                    if (App.currentMana + manaGainedOnKill &lt; App.currentManaCap) {</span>
-<span class="nc" id="L215">                        App.currentMana += manaGainedOnKill;</span>
+<span class="fc bfc" id="L205" title="All 2 branches covered.">        if (currentHitPoints &lt;= 0) {</span>
+<span class="fc" id="L206">            isPlayingDeathAnimation = true;</span>
+<span class="fc" id="L207">            movementSpeed = 0;</span>
+<span class="fc" id="L208">            animationTimer += 1 * App.gameSpeed;</span>
+<span class="pc bpc" id="L209" title="1 of 4 branches missed.">            if (animationTimer &gt;= 4 &amp;&amp; spriteIndex &lt; spriteSheet.size()) {</span>
+<span class="fc" id="L210">                sprite = spriteSheet.get(spriteIndex);</span>
+<span class="fc" id="L211">                animationTimer = 0;</span>
+<span class="fc" id="L212">                spriteIndex++;</span>
+<span class="fc bfc" id="L213" title="All 2 branches covered.">                if (spriteIndex &gt;= spriteSheet.size()) {</span>
+<span class="pc bpc" id="L214" title="1 of 2 branches missed.">                    if (App.currentMana + manaGainedOnKill &lt; App.currentManaCap) {</span>
+<span class="fc" id="L215">                        App.currentMana += manaGainedOnKill;</span>
 <span class="nc bnc" id="L216" title="All 2 branches missed.">                    } else if (App.currentMana + manaGainedOnKill &gt; App.currentManaCap) {</span>
 <span class="nc" id="L217">                        App.currentMana = App.currentManaCap;</span>
                     }
-<span class="nc" id="L219">                    isAlive = false;</span>
+<span class="fc" id="L219">                    isAlive = false;</span>
                 }
             }
         }

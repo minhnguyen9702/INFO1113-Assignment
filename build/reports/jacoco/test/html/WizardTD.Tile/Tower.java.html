@@ -11,7 +11,7 @@ import WizardTD.Fireball;
  * It extends the Tile class. Towers cannot be placed on it and enemies cannot walk on it.
  */
 public class Tower extends Tile {
-<span class="nc" id="L14">    protected ArrayList&lt;Enemy&gt; enemyInRange = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L14">    protected ArrayList&lt;Enemy&gt; enemyInRange = new ArrayList&lt;&gt;();</span>
     protected float range;
     protected float speed;
     protected float damage;
@@ -27,19 +27,19 @@ public class Tower extends Tile {
      * @param y The y-coordinate of the Tower.
      */
     public Tower(float x, float y) {
-<span class="nc" id="L30">        super(x, y);</span>
-<span class="nc" id="L31">        this.sprite = App.tower0Sprite;</span>
-<span class="nc" id="L32">        this.rangeLevel = 0;</span>
-<span class="nc" id="L33">        this.speedLevel = 0;</span>
-<span class="nc" id="L34">        this.damageLevel = 0;</span>
-<span class="nc" id="L35">        this.range = App.initialTowerRange;</span>
-<span class="nc" id="L36">        this.speed = App.initialTowerSpeed;</span>
-<span class="nc" id="L37">        this.damage = App.initialTowerDamage;</span>
+<span class="fc" id="L30">        super(x, y);</span>
+<span class="fc" id="L31">        this.sprite = App.tower0Sprite;</span>
+<span class="fc" id="L32">        this.rangeLevel = 0;</span>
+<span class="fc" id="L33">        this.speedLevel = 0;</span>
+<span class="fc" id="L34">        this.damageLevel = 0;</span>
+<span class="fc" id="L35">        this.range = App.initialTowerRange;</span>
+<span class="fc" id="L36">        this.speed = App.initialTowerSpeed;</span>
+<span class="fc" id="L37">        this.damage = App.initialTowerDamage;</span>
 
-<span class="nc" id="L39">        isTowerPlaceable = false;</span>
-<span class="nc" id="L40">        canEnemyWalk = false;</span>
-<span class="nc" id="L41">        purchaseTower();</span>
-<span class="nc" id="L42">    }</span>
+<span class="fc" id="L39">        isTowerPlaceable = false;</span>
+<span class="fc" id="L40">        canEnemyWalk = false;</span>
+<span class="fc" id="L41">        purchaseTower();</span>
+<span class="fc" id="L42">    }</span>
     
     /**
      * Returns the list of enemies within the tower's attack range.
@@ -57,7 +57,7 @@ public class Tower extends Tile {
      * @return true if the enemy is in enemyInRange list; otherwise, false.
      */
     public boolean enemyInRangeContains(Enemy enemy) {
-<span class="nc" id="L60">        return enemyInRange.contains(enemy);</span>
+<span class="fc" id="L60">        return enemyInRange.contains(enemy);</span>
     }
 
     /**
@@ -66,8 +66,8 @@ public class Tower extends Tile {
      * @param enemy The enemy to add.
      */
     public void enemyInRangeAdd(Enemy enemy) {
-<span class="nc" id="L69">        enemyInRange.add(enemy);</span>
-<span class="nc" id="L70">    }</span>
+<span class="fc" id="L69">        enemyInRange.add(enemy);</span>
+<span class="fc" id="L70">    }</span>
 
     /**
      * Removes an enemy from the enemyInRange list.
@@ -75,8 +75,8 @@ public class Tower extends Tile {
      * @param enemy The enemy to remove.
      */
     public void enemyInRangeRemove(Enemy enemy) {
-<span class="nc" id="L78">        enemyInRange.remove(enemy);</span>
-<span class="nc" id="L79">    }</span>
+<span class="fc" id="L78">        enemyInRange.remove(enemy);</span>
+<span class="fc" id="L79">    }</span>
 
     /**
      * Removes a list of enemies from the enemyInRange list.
@@ -84,8 +84,8 @@ public class Tower extends Tile {
      * @param enemiesToRemove The list of enemies to remove.
      */
     public void enemyInRangeRemoveAll(ArrayList&lt;Enemy&gt; enemiesToRemove) {
-<span class="nc" id="L87">        enemyInRange.removeAll(enemiesToRemove);</span>
-<span class="nc" id="L88">    }</span>
+<span class="fc" id="L87">        enemyInRange.removeAll(enemiesToRemove);</span>
+<span class="fc" id="L88">    }</span>
 
     /**
      * Returns the attack range of the tower.
@@ -93,7 +93,7 @@ public class Tower extends Tile {
      * @return The attack range of the tower.
      */
     public float getRange() {
-<span class="nc" id="L96">        return range;</span>
+<span class="fc" id="L96">        return range;</span>
     }
 
     /**
@@ -118,37 +118,37 @@ public class Tower extends Tile {
      * Upgrades the tower's attack range if sufficient mana is available.
      */
     public void upgradeRange() {
-<span class="nc bnc" id="L121" title="All 2 branches missed.">        if (App.currentMana &gt; this.getRangeCost()) {</span>
-<span class="nc" id="L122">            App.currentMana -= this.getRangeCost();</span>
-<span class="nc" id="L123">            rangeLevel += 1;</span>
-<span class="nc" id="L124">            range += 32;</span>
-<span class="nc" id="L125">            changeTowerSprite();</span>
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">        if (App.currentMana &gt; this.getRangeCost()) {</span>
+<span class="fc" id="L122">            App.currentMana -= this.getRangeCost();</span>
+<span class="fc" id="L123">            rangeLevel += 1;</span>
+<span class="fc" id="L124">            range += 32;</span>
+<span class="fc" id="L125">            changeTowerSprite();</span>
         }
-<span class="nc" id="L127">    }</span>
+<span class="fc" id="L127">    }</span>
 
     /**
      * Upgrades the tower's attack speed if sufficient mana is available.
      */
     public void upgradeSpeed() {
-<span class="nc bnc" id="L133" title="All 2 branches missed.">        if (App.currentMana &gt; this.getSpeedCost())  {</span>
-<span class="nc" id="L134">            App.currentMana -= this.getSpeedCost();</span>
-<span class="nc" id="L135">            speedLevel += 1;</span>
-<span class="nc" id="L136">            speed += 0.5;</span>
-<span class="nc" id="L137">            changeTowerSprite();</span>
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">        if (App.currentMana &gt; this.getSpeedCost())  {</span>
+<span class="fc" id="L134">            App.currentMana -= this.getSpeedCost();</span>
+<span class="fc" id="L135">            speedLevel += 1;</span>
+<span class="fc" id="L136">            speed += 0.5;</span>
+<span class="fc" id="L137">            changeTowerSprite();</span>
         }
-<span class="nc" id="L139">    }</span>
+<span class="fc" id="L139">    }</span>
 
     /**
      * Upgrades the tower's attack damage if sufficient mana is available.
      */
     public void upgradeDamage() {
-<span class="nc bnc" id="L145" title="All 2 branches missed.">        if (App.currentMana &gt; this.getDamageCost())  {</span>
-<span class="nc" id="L146">            App.currentMana -= this.getDamageCost();</span>
-<span class="nc" id="L147">            damageLevel += 1;</span>
-<span class="nc" id="L148">            damage += (damage/2);</span>
-<span class="nc" id="L149">            changeTowerSprite();</span>
+<span class="pc bpc" id="L145" title="1 of 2 branches missed.">        if (App.currentMana &gt; this.getDamageCost())  {</span>
+<span class="fc" id="L146">            App.currentMana -= this.getDamageCost();</span>
+<span class="fc" id="L147">            damageLevel += 1;</span>
+<span class="fc" id="L148">            damage += (damage/2);</span>
+<span class="fc" id="L149">            changeTowerSprite();</span>
         }
-<span class="nc" id="L151">    }</span>
+<span class="fc" id="L151">    }</span>
 
     /**
      * Returns the current level of the tower's attack range.
@@ -156,7 +156,7 @@ public class Tower extends Tile {
      * @return The current range level.
      */
     public int getRangeLevel() {
-<span class="nc" id="L159">        return rangeLevel;</span>
+<span class="fc" id="L159">        return rangeLevel;</span>
     }
 
     /**
@@ -165,7 +165,7 @@ public class Tower extends Tile {
      * @return The current speed level.
      */
     public int getSpeedLevel() {
-<span class="nc" id="L168">        return speedLevel;</span>
+<span class="fc" id="L168">        return speedLevel;</span>
     }
 
     /**
@@ -174,7 +174,7 @@ public class Tower extends Tile {
      * @return The current damage level.
      */
     public int getDamageLevel() {
-<span class="nc" id="L177">        return damageLevel;</span>
+<span class="fc" id="L177">        return damageLevel;</span>
     }
 
     /**
@@ -183,7 +183,7 @@ public class Tower extends Tile {
      * @return The mana cost of upgrading range.
      */
     public float getRangeCost() {
-<span class="nc" id="L186">        return 20 + 10*rangeLevel;</span>
+<span class="fc" id="L186">        return 20 + 10*rangeLevel;</span>
     }
 
     /**
@@ -192,7 +192,7 @@ public class Tower extends Tile {
      * @return The mana cost of upgrading speed.
      */
     public float getSpeedCost() {
-<span class="nc" id="L195">        return 20 + 10*speedLevel;</span>
+<span class="fc" id="L195">        return 20 + 10*speedLevel;</span>
     }
 
     /**
@@ -201,7 +201,7 @@ public class Tower extends Tile {
      * @return The mana cost of upgrading damage.
      */
     public float getDamageCost() {
-<span class="nc" id="L204">        return 20 + 10*damageLevel;</span>
+<span class="fc" id="L204">        return 20 + 10*damageLevel;</span>
     }
 
     /**
@@ -210,12 +210,12 @@ public class Tower extends Tile {
      * @return The base level of the tower.
      */
     public int getBaseLevel() {
-<span class="nc bnc" id="L213" title="All 6 branches missed.">        if (rangeLevel &gt;= 2 &amp;&amp; speedLevel &gt;= 2 &amp;&amp; damageLevel &gt;= 2) {</span>
+<span class="pc bpc" id="L213" title="5 of 6 branches missed.">        if (rangeLevel &gt;= 2 &amp;&amp; speedLevel &gt;= 2 &amp;&amp; damageLevel &gt;= 2) {</span>
 <span class="nc" id="L214">            return 2;</span>
-<span class="nc bnc" id="L215" title="All 6 branches missed.">        } else if (rangeLevel &gt;= 1 &amp;&amp; speedLevel &gt;= 1 &amp;&amp; damageLevel &gt;= 1) {</span>
-<span class="nc" id="L216">            return 1;</span>
+<span class="pc bpc" id="L215" title="1 of 6 branches missed.">        } else if (rangeLevel &gt;= 1 &amp;&amp; speedLevel &gt;= 1 &amp;&amp; damageLevel &gt;= 1) {</span>
+<span class="fc" id="L216">            return 1;</span>
         } else {
-<span class="nc" id="L218">            return 0;</span>
+<span class="fc" id="L218">            return 0;</span>
         }
     }
 
@@ -223,21 +223,21 @@ public class Tower extends Tile {
      * Deducts the cost of purchasing a tower from the player's mana when a tower is created.
      */
     public void purchaseTower() {
-<span class="nc" id="L226">        App.currentMana -= App.towerCost;</span>
-<span class="nc" id="L227">    }</span>
+<span class="fc" id="L226">        App.currentMana -= App.towerCost;</span>
+<span class="fc" id="L227">    }</span>
 
     /**
      * Changes the tower's sprite based on its base level.
      */
     public void changeTowerSprite() {
-<span class="nc bnc" id="L233" title="All 2 branches missed.">        if (this.getBaseLevel() == 2) {</span>
+<span class="pc bpc" id="L233" title="1 of 2 branches missed.">        if (this.getBaseLevel() == 2) {</span>
 <span class="nc" id="L234">            this.sprite = App.tower2Sprite;</span>
-<span class="nc bnc" id="L235" title="All 2 branches missed.">        } else if (this.getBaseLevel() == 1) {</span>
-<span class="nc" id="L236">            this.sprite = App.tower1Sprite;</span>
+<span class="fc bfc" id="L235" title="All 2 branches covered.">        } else if (this.getBaseLevel() == 1) {</span>
+<span class="fc" id="L236">            this.sprite = App.tower1Sprite;</span>
         } else {
-<span class="nc" id="L238">            this.sprite = App.tower0Sprite;</span>
+<span class="fc" id="L238">            this.sprite = App.tower0Sprite;</span>
         }
-<span class="nc" id="L240">    }</span>
+<span class="fc" id="L240">    }</span>
 
     /**
      * Shoots a projectile (fireball) at the first enemy in range.
@@ -246,24 +246,24 @@ public class Tower extends Tile {
      * @see Fireball
      */
     public void shootProjectile() {
-<span class="nc" id="L249">        App.fireballList.add(new Fireball(this.x+16, this.y+16, enemyInRange.get(0), damage));</span>
-<span class="nc" id="L250">    }</span>
+<span class="fc" id="L249">        App.fireballList.add(new Fireball(this.x+16, this.y+16, enemyInRange.get(0), damage));</span>
+<span class="fc" id="L250">    }</span>
 
     /**
      * Updates the tower's behavior and attacks enemies within its range with fireballs
      * depending on the tower's attack speed by calling shootProjectile().
      */
     public void tick() {
-<span class="nc bnc" id="L257" title="All 2 branches missed.">        if (enemyInRange.size() == 0) {</span>
-<span class="nc" id="L258">            timer = 60/speed;</span>
+<span class="fc bfc" id="L257" title="All 2 branches covered.">        if (enemyInRange.size() == 0) {</span>
+<span class="fc" id="L258">            timer = 60/speed;</span>
         }
-<span class="nc bnc" id="L260" title="All 2 branches missed.">        if (enemyInRange.size() != 0) {</span>
-<span class="nc bnc" id="L261" title="All 2 branches missed.">            if (timer &gt;= 60/speed) {</span>
-<span class="nc" id="L262">                timer = 0;</span>
-<span class="nc" id="L263">                shootProjectile();</span>
+<span class="fc bfc" id="L260" title="All 2 branches covered.">        if (enemyInRange.size() != 0) {</span>
+<span class="fc bfc" id="L261" title="All 2 branches covered.">            if (timer &gt;= 60/speed) {</span>
+<span class="fc" id="L262">                timer = 0;</span>
+<span class="fc" id="L263">                shootProjectile();</span>
             }
-<span class="nc" id="L265">            timer += 1*App.gameSpeed;</span>
+<span class="fc" id="L265">            timer += 1*App.gameSpeed;</span>
         }
-<span class="nc" id="L267">    }</span>
+<span class="fc" id="L267">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>

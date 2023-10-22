@@ -1,6 +1,3 @@
-// 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
-// 
-
 package WizardTD;
 
 import java.awt.Graphics2D;
@@ -477,8 +474,6 @@ public class App extends PApplet {
      */
     @Override
     public void mousePressed(MouseEvent e) {
-        System.out.println("x:" + mouseX);
-        System.out.println("y:" + mouseY);
         // for building towers and icetowers
         if (gameState == GameState.GAMENORMAL) {
             for (int i = 0; i < gameMap.length; i++) {

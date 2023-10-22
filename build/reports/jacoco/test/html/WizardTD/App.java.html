@@ -419,54 +419,54 @@ public class App extends PApplet {
      */
 	@Override
     public void keyPressed(){
-<span class="nc bnc" id="L422" title="All 2 branches missed.">        if (gameState == GameState.GAMENORMAL) {</span>
-<span class="nc bnc" id="L423" title="All 4 branches missed.">            if (key == 'F' || key == 'f') {</span>
-<span class="nc" id="L424">                buttonList.get(0).isClicked();</span>
-<span class="nc" id="L425">                isFastForward = buttonList.get(0).getIsClicked();</span>
-<span class="nc" id="L426">                ((GameSpeedButton)buttonList.get(0)).changeGameSpeed();</span>
+<span class="pc bpc" id="L422" title="1 of 2 branches missed.">        if (gameState == GameState.GAMENORMAL) {</span>
+<span class="pc bpc" id="L423" title="1 of 4 branches missed.">            if (key == 'F' || key == 'f') {</span>
+<span class="fc" id="L424">                buttonList.get(0).isClicked();</span>
+<span class="fc" id="L425">                isFastForward = buttonList.get(0).getIsClicked();</span>
+<span class="fc" id="L426">                ((GameSpeedButton)buttonList.get(0)).changeGameSpeed();</span>
             }
 
-<span class="nc bnc" id="L429" title="All 4 branches missed.">            if (key == 'P' || key == 'p') {</span>
-<span class="nc" id="L430">                buttonList.get(1).isClicked();</span>
-<span class="nc" id="L431">                isPaused = buttonList.get(1).getIsClicked();</span>
-<span class="nc" id="L432">                ((GameSpeedButton)buttonList.get(1)).changeGameSpeed();</span>
+<span class="pc bpc" id="L429" title="1 of 4 branches missed.">            if (key == 'P' || key == 'p') {</span>
+<span class="fc" id="L430">                buttonList.get(1).isClicked();</span>
+<span class="fc" id="L431">                isPaused = buttonList.get(1).getIsClicked();</span>
+<span class="fc" id="L432">                ((GameSpeedButton)buttonList.get(1)).changeGameSpeed();</span>
             }
 
-<span class="nc bnc" id="L435" title="All 4 branches missed.">            if (key == 'T' || key == 't') {</span>
-<span class="nc" id="L436">                buttonList.get(2).isClicked();</span>
-<span class="nc" id="L437">                isBuildTower = buttonList.get(2).getIsClicked();</span>
+<span class="pc bpc" id="L435" title="1 of 4 branches missed.">            if (key == 'T' || key == 't') {</span>
+<span class="fc" id="L436">                buttonList.get(2).isClicked();</span>
+<span class="fc" id="L437">                isBuildTower = buttonList.get(2).getIsClicked();</span>
             }
 
-<span class="nc bnc" id="L440" title="All 4 branches missed.">            if (key == 'I' || key == 'i') {</span>
-<span class="nc" id="L441">                buttonList.get(3).isClicked();</span>
-<span class="nc" id="L442">                isBuildIceTower = buttonList.get(3).getIsClicked();</span>
+<span class="pc bpc" id="L440" title="1 of 4 branches missed.">            if (key == 'I' || key == 'i') {</span>
+<span class="fc" id="L441">                buttonList.get(3).isClicked();</span>
+<span class="fc" id="L442">                isBuildIceTower = buttonList.get(3).getIsClicked();</span>
             }
 
-<span class="nc bnc" id="L445" title="All 2 branches missed.">            if (key == '1') {</span>
-<span class="nc" id="L446">                buttonList.get(4).isClicked();</span>
-<span class="nc" id="L447">                isUpgradeRange = buttonList.get(4).getIsClicked();</span>
+<span class="fc bfc" id="L445" title="All 2 branches covered.">            if (key == '1') {</span>
+<span class="fc" id="L446">                buttonList.get(4).isClicked();</span>
+<span class="fc" id="L447">                isUpgradeRange = buttonList.get(4).getIsClicked();</span>
             }
 
-<span class="nc bnc" id="L450" title="All 2 branches missed.">            if (key == '2') {</span>
-<span class="nc" id="L451">                buttonList.get(5).isClicked();</span>
-<span class="nc" id="L452">                isUpgradeSpeed = buttonList.get(5).getIsClicked();</span>
+<span class="fc bfc" id="L450" title="All 2 branches covered.">            if (key == '2') {</span>
+<span class="fc" id="L451">                buttonList.get(5).isClicked();</span>
+<span class="fc" id="L452">                isUpgradeSpeed = buttonList.get(5).getIsClicked();</span>
             }
 
-<span class="nc bnc" id="L455" title="All 2 branches missed.">            if (key == '3') {</span>
-<span class="nc" id="L456">                buttonList.get(6).isClicked();</span>
-<span class="nc" id="L457">                isUpgradeDamage = buttonList.get(6).getIsClicked();</span>
+<span class="fc bfc" id="L455" title="All 2 branches covered.">            if (key == '3') {</span>
+<span class="fc" id="L456">                buttonList.get(6).isClicked();</span>
+<span class="fc" id="L457">                isUpgradeDamage = buttonList.get(6).getIsClicked();</span>
             }
 
-<span class="nc bnc" id="L460" title="All 4 branches missed.">            if (key == 'M' || key == 'm') {</span>
+<span class="pc bpc" id="L460" title="2 of 4 branches missed.">            if (key == 'M' || key == 'm') {</span>
 <span class="nc" id="L461">                buttonList.get(7).isClicked();</span>
 <span class="nc" id="L462">                isUpgradeMana = buttonList.get(7).getIsClicked();</span>
             }
         }
 
-<span class="nc bnc" id="L466" title="All 6 branches missed.">        if (key == 'R' || key == 'r' &amp;&amp; gameState == GameState.GAMEOVER) {</span>
+<span class="pc bpc" id="L466" title="4 of 6 branches missed.">        if (key == 'R' || key == 'r' &amp;&amp; gameState == GameState.GAMEOVER) {</span>
 <span class="nc" id="L467">            setup();</span>
         }
-<span class="nc" id="L469">    }</span>
+<span class="fc" id="L469">    }</span>
 
     /**
      * Handles mouse click events, performing various actions based on the game's state and user interactions.
@@ -477,58 +477,56 @@ public class App extends PApplet {
      */
     @Override
     public void mousePressed(MouseEvent e) {
-<span class="nc" id="L480">        System.out.println(&quot;x:&quot; + mouseX);</span>
-<span class="nc" id="L481">        System.out.println(&quot;y:&quot; + mouseY);</span>
         // for building towers and icetowers
-<span class="nc bnc" id="L483" title="All 2 branches missed.">        if (gameState == GameState.GAMENORMAL) {</span>
-<span class="nc bnc" id="L484" title="All 2 branches missed.">            for (int i = 0; i &lt; gameMap.length; i++) {</span>
-<span class="nc bnc" id="L485" title="All 2 branches missed.">                for(int j = 0; j &lt; gameMap[i].length; j++) {</span>
-<span class="nc bnc" id="L486" title="All 8 branches missed.">                    if (mouseX &gt; gameMap[i][j].getX() &amp;&amp; mouseX &lt; gameMap[i][j].getX() + 32 &amp;&amp; mouseY &gt; gameMap[i][j].getY() &amp;&amp; mouseY &lt; gameMap[i][j].getY() + 32 </span>
-<span class="nc bnc" id="L487" title="All 2 branches missed.">                    &amp;&amp; gameMap[i][j].isTowerPlaceable()) {</span>
-<span class="nc bnc" id="L488" title="All 4 branches missed.">                        if (isBuildTower &amp;&amp; currentMana &gt; towerCost) {</span>
-<span class="nc" id="L489">                            gameMap[i][j] = new Tower(gameMap[i][j].getX(), gameMap[i][j].getY());</span>
-<span class="nc" id="L490">                            towerList.add((Tower)gameMap[i][j]);</span>
-<span class="nc bnc" id="L491" title="All 4 branches missed.">                        } else if (isBuildIceTower &amp;&amp; currentMana &gt; iceTowerCost) {</span>
-<span class="nc" id="L492">                            gameMap[i][j] = new IceTower(gameMap[i][j].getX(), gameMap[i][j].getY());</span>
-<span class="nc" id="L493">                            towerList.add((IceTower)gameMap[i][j]);</span>
+<span class="pc bpc" id="L481" title="1 of 2 branches missed.">        if (gameState == GameState.GAMENORMAL) {</span>
+<span class="fc bfc" id="L482" title="All 2 branches covered.">            for (int i = 0; i &lt; gameMap.length; i++) {</span>
+<span class="fc bfc" id="L483" title="All 2 branches covered.">                for(int j = 0; j &lt; gameMap[i].length; j++) {</span>
+<span class="fc bfc" id="L484" title="All 8 branches covered.">                    if (mouseX &gt; gameMap[i][j].getX() &amp;&amp; mouseX &lt; gameMap[i][j].getX() + 32 &amp;&amp; mouseY &gt; gameMap[i][j].getY() &amp;&amp; mouseY &lt; gameMap[i][j].getY() + 32 </span>
+<span class="pc bpc" id="L485" title="1 of 2 branches missed.">                    &amp;&amp; gameMap[i][j].isTowerPlaceable()) {</span>
+<span class="pc bpc" id="L486" title="1 of 4 branches missed.">                        if (isBuildTower &amp;&amp; currentMana &gt; towerCost) {</span>
+<span class="fc" id="L487">                            gameMap[i][j] = new Tower(gameMap[i][j].getX(), gameMap[i][j].getY());</span>
+<span class="fc" id="L488">                            towerList.add((Tower)gameMap[i][j]);</span>
+<span class="pc bpc" id="L489" title="2 of 4 branches missed.">                        } else if (isBuildIceTower &amp;&amp; currentMana &gt; iceTowerCost) {</span>
+<span class="fc" id="L490">                            gameMap[i][j] = new IceTower(gameMap[i][j].getX(), gameMap[i][j].getY());</span>
+<span class="fc" id="L491">                            towerList.add((IceTower)gameMap[i][j]);</span>
                         }
                     }
                 }
             }
             
             //checking if buttons are pressed;
-<span class="nc bnc" id="L500" title="All 2 branches missed.">            for (Button b : buttonList) {</span>
-<span class="nc bnc" id="L501" title="All 8 branches missed.">                if (mouseX &gt; b.getX() &amp;&amp; mouseX &lt; b.getX() + 40 &amp;&amp; mouseY &gt; b.getY() &amp;&amp; mouseY &lt; b.getY() + 40) {</span>
-<span class="nc" id="L502">                    b.isClicked();</span>
-<span class="nc" id="L503">                    isFastForward = buttonList.get(0).getIsClicked();</span>
-<span class="nc" id="L504">                    isPaused = buttonList.get(1).getIsClicked();</span>
-<span class="nc" id="L505">                    isBuildTower = buttonList.get(2).getIsClicked();</span>
-<span class="nc" id="L506">                    isBuildIceTower = buttonList.get(3).getIsClicked();</span>
-<span class="nc" id="L507">                    isUpgradeRange = buttonList.get(4).getIsClicked();</span>
-<span class="nc" id="L508">                    isUpgradeSpeed = buttonList.get(5).getIsClicked();</span>
-<span class="nc" id="L509">                    isUpgradeDamage = buttonList.get(6).getIsClicked();</span>
-<span class="nc" id="L510">                    isUpgradeMana = buttonList.get(7).getIsClicked();</span>
-<span class="nc bnc" id="L511" title="All 2 branches missed.">                    if (b instanceof GameSpeedButton) {</span>
-<span class="nc" id="L512">                        ((GameSpeedButton)b).changeGameSpeed();</span>
+<span class="fc bfc" id="L498" title="All 2 branches covered.">            for (Button b : buttonList) {</span>
+<span class="pc bpc" id="L499" title="1 of 8 branches missed.">                if (mouseX &gt; b.getX() &amp;&amp; mouseX &lt; b.getX() + 40 &amp;&amp; mouseY &gt; b.getY() &amp;&amp; mouseY &lt; b.getY() + 40) {</span>
+<span class="fc" id="L500">                    b.isClicked();</span>
+<span class="fc" id="L501">                    isFastForward = buttonList.get(0).getIsClicked();</span>
+<span class="fc" id="L502">                    isPaused = buttonList.get(1).getIsClicked();</span>
+<span class="fc" id="L503">                    isBuildTower = buttonList.get(2).getIsClicked();</span>
+<span class="fc" id="L504">                    isBuildIceTower = buttonList.get(3).getIsClicked();</span>
+<span class="fc" id="L505">                    isUpgradeRange = buttonList.get(4).getIsClicked();</span>
+<span class="fc" id="L506">                    isUpgradeSpeed = buttonList.get(5).getIsClicked();</span>
+<span class="fc" id="L507">                    isUpgradeDamage = buttonList.get(6).getIsClicked();</span>
+<span class="fc" id="L508">                    isUpgradeMana = buttonList.get(7).getIsClicked();</span>
+<span class="pc bpc" id="L509" title="1 of 2 branches missed.">                    if (b instanceof GameSpeedButton) {</span>
+<span class="nc" id="L510">                        ((GameSpeedButton)b).changeGameSpeed();</span>
                     }
                 }
-<span class="nc" id="L515">            }</span>
+<span class="fc" id="L513">            }</span>
 
-<span class="nc bnc" id="L517" title="All 2 branches missed.">            for (Tower tower : towerList) {</span>
-<span class="nc bnc" id="L518" title="All 8 branches missed.">                if (mouseX &gt; tower.getX() &amp;&amp; mouseX &lt; tower.getX() + 32 &amp;&amp; mouseY &gt; tower.getY() &amp;&amp; mouseY &lt; tower.getY() + 32) {</span>
-<span class="nc bnc" id="L519" title="All 2 branches missed.">                    if (isUpgradeRange) {</span>
-<span class="nc" id="L520">                        tower.upgradeRange();</span>
+<span class="fc bfc" id="L515" title="All 2 branches covered.">            for (Tower tower : towerList) {</span>
+<span class="pc bpc" id="L516" title="3 of 8 branches missed.">                if (mouseX &gt; tower.getX() &amp;&amp; mouseX &lt; tower.getX() + 32 &amp;&amp; mouseY &gt; tower.getY() &amp;&amp; mouseY &lt; tower.getY() + 32) {</span>
+<span class="pc bpc" id="L517" title="1 of 2 branches missed.">                    if (isUpgradeRange) {</span>
+<span class="fc" id="L518">                        tower.upgradeRange();</span>
                     } 
-<span class="nc bnc" id="L522" title="All 2 branches missed.">                    if (isUpgradeSpeed) {</span>
-<span class="nc" id="L523">                        tower.upgradeSpeed();</span>
+<span class="pc bpc" id="L520" title="1 of 2 branches missed.">                    if (isUpgradeSpeed) {</span>
+<span class="fc" id="L521">                        tower.upgradeSpeed();</span>
                     } 
-<span class="nc bnc" id="L525" title="All 2 branches missed.">                    if (isUpgradeDamage) {</span>
-<span class="nc" id="L526">                        tower.upgradeDamage();</span>
+<span class="pc bpc" id="L523" title="1 of 2 branches missed.">                    if (isUpgradeDamage) {</span>
+<span class="fc" id="L524">                        tower.upgradeDamage();</span>
                     }
                 }
-<span class="nc" id="L529">            }</span>
+<span class="fc" id="L527">            }</span>
         }
-<span class="nc" id="L531">    }</span>
+<span class="fc" id="L529">    }</span>
 
     /**
      * Checks the current game state, determining whether the player has won or lost the game.
@@ -536,30 +534,30 @@ public class App extends PApplet {
      * Else if all waves have been completed and the all enemies killed than the game is won.
      */
     public void checkGameState() {
-<span class="fc bfc" id="L539" title="All 2 branches covered.">        if (currentMana &lt; 0) {</span>
-<span class="fc" id="L540">            gameState = GameState.GAMEOVER;</span>
-<span class="fc" id="L541">            gameSpeed = 0;</span>
-<span class="pc bpc" id="L542" title="3 of 4 branches missed.">        } if (waves.get(2).getDuration() &lt;= 0 &amp;&amp; enemyList.isEmpty()) {</span>
-<span class="nc" id="L543">            gameState = GameState.GAMEWIN;</span>
-<span class="nc" id="L544">            gameSpeed = 0;</span>
+<span class="fc bfc" id="L537" title="All 2 branches covered.">        if (currentMana &lt; 0) {</span>
+<span class="fc" id="L538">            gameState = GameState.GAMEOVER;</span>
+<span class="fc" id="L539">            gameSpeed = 0;</span>
+<span class="pc bpc" id="L540" title="1 of 4 branches missed.">        } if (waves.get(2).getDuration() &lt;= 0 &amp;&amp; enemyList.isEmpty()) {</span>
+<span class="nc" id="L541">            gameState = GameState.GAMEWIN;</span>
+<span class="nc" id="L542">            gameSpeed = 0;</span>
         }
-<span class="fc" id="L546">    }</span>
+<span class="fc" id="L544">    }</span>
     
     /**
     * Increases the player's current mana over time, based on manaGainedPerSecond and game speed.
     * It ensures that mana does not exceed the mana cap when it is gained through manaGainedPerSecond.
     */
     public void gainManaPerSecond() {
-<span class="fc" id="L553">        manaGainedTimer += gameSpeed;</span>
-<span class="fc bfc" id="L554" title="All 2 branches covered.">        if (manaGainedTimer &gt;= 30) {</span>
-<span class="fc" id="L555">            manaGainedTimer = 0;</span>
-<span class="pc bpc" id="L556" title="1 of 2 branches missed.">            if (currentMana + (currentManaGainedPerSecond/2) &lt; currentManaCap) {</span>
-<span class="fc" id="L557">                currentMana += currentManaGainedPerSecond/2;</span>
-<span class="nc bnc" id="L558" title="All 2 branches missed.">            } else if (currentMana + (currentManaGainedPerSecond/2) &gt; currentManaCap) {</span>
-<span class="nc" id="L559">                currentMana = currentManaCap;</span>
+<span class="fc" id="L551">        manaGainedTimer += gameSpeed;</span>
+<span class="fc bfc" id="L552" title="All 2 branches covered.">        if (manaGainedTimer &gt;= 30) {</span>
+<span class="fc" id="L553">            manaGainedTimer = 0;</span>
+<span class="pc bpc" id="L554" title="1 of 2 branches missed.">            if (currentMana + (currentManaGainedPerSecond/2) &lt; currentManaCap) {</span>
+<span class="fc" id="L555">                currentMana += currentManaGainedPerSecond/2;</span>
+<span class="nc bnc" id="L556" title="All 2 branches missed.">            } else if (currentMana + (currentManaGainedPerSecond/2) &gt; currentManaCap) {</span>
+<span class="nc" id="L557">                currentMana = currentManaCap;</span>
             }
         }
-<span class="fc" id="L562">    }</span>
+<span class="fc" id="L560">    }</span>
     /**
      * Draws a cost indicator next to a game button to display the associated cost.
      * The cost is rendered as a white background with black text, providing a visual representation
@@ -570,44 +568,44 @@ public class App extends PApplet {
      * @param cost The action's mana cost, displayed next to the button.
      */
     public void drawCostIndicator(float buttonX, float buttonY, float cost) {
-<span class="nc" id="L573">        fill(255, 255, 255);</span>
-<span class="nc" id="L574">        rect(buttonX-70, buttonY+10, 60, 20);</span>
-<span class="nc" id="L575">        fill(0, 0, 0);</span>
-<span class="nc" id="L576">        text(&quot;cost: &quot; + Math.round(cost), buttonX-65, buttonY+25);</span>
-<span class="nc" id="L577">    }</span>
+<span class="fc" id="L571">        fill(255, 255, 255);</span>
+<span class="fc" id="L572">        rect(buttonX-70, buttonY+10, 60, 20);</span>
+<span class="fc" id="L573">        fill(0, 0, 0);</span>
+<span class="fc" id="L574">        text(&quot;cost: &quot; + Math.round(cost), buttonX-65, buttonY+25);</span>
+<span class="fc" id="L575">    }</span>
 
     /**
      * Progresses the current wave forward by reducing the current wave's prewavepause and then duration.
      * Also manages enemy spawning
      */
     public void moveWaveForwards() {
-<span class="pc bpc" id="L584" title="1 of 2 branches missed.">        if (gameSpeed &gt; 0) {</span>
-<span class="fc bfc" id="L585" title="All 2 branches covered.">            if (currentWave.getPreWavePause() &gt; 0) {</span>
-<span class="fc" id="L586">                currentWave.setPreWavePause(currentWave.getPreWavePause() - gameSpeed);</span>
-<span class="fc bfc" id="L587" title="All 2 branches covered.">            } else if (currentWave.getDuration() &gt; 0) {</span>
-<span class="fc" id="L588">                currentWave.setDuration(currentWave.getDuration() - gameSpeed);</span>
-<span class="fc" id="L589">                enemySpawnTimer += gameSpeed;</span>
-<span class="fc bfc" id="L590" title="All 2 branches covered.">                if (enemySpawnTimer &gt;= Math.floor(currentWave.getOriginalDuration() / currentWave.getTotalNumberOfMonsters())) {</span>
-<span class="fc" id="L591">                    enemySpawnTimer = 0;</span>
-<span class="fc" id="L592">                    currentWave.updateMonsterData();</span>
+<span class="pc bpc" id="L582" title="1 of 2 branches missed.">        if (gameSpeed &gt; 0) {</span>
+<span class="fc bfc" id="L583" title="All 2 branches covered.">            if (currentWave.getPreWavePause() &gt; 0) {</span>
+<span class="fc" id="L584">                currentWave.setPreWavePause(currentWave.getPreWavePause() - gameSpeed);</span>
+<span class="fc bfc" id="L585" title="All 2 branches covered.">            } else if (currentWave.getDuration() &gt; 0) {</span>
+<span class="fc" id="L586">                currentWave.setDuration(currentWave.getDuration() - gameSpeed);</span>
+<span class="fc" id="L587">                enemySpawnTimer += gameSpeed;</span>
+<span class="fc bfc" id="L588" title="All 2 branches covered.">                if (enemySpawnTimer &gt;= Math.floor(currentWave.getOriginalDuration() / currentWave.getTotalNumberOfMonsters())) {</span>
+<span class="fc" id="L589">                    enemySpawnTimer = 0;</span>
+<span class="fc" id="L590">                    currentWave.updateMonsterData();</span>
 
-<span class="fc" id="L594">                    MonsterData randomMonsterData = </span>
-<span class="fc" id="L595">                    currentWave.getMonsterDataList().get(Math.round(</span>
-<span class="fc" id="L596">                        random(0, currentWave.getMonsterDataList().size() -1)));</span>
+<span class="fc" id="L592">                    MonsterData randomMonsterData = </span>
+<span class="fc" id="L593">                    currentWave.getMonsterDataList().get(Math.round(</span>
+<span class="fc" id="L594">                        random(0, currentWave.getMonsterDataList().size() -1)));</span>
 
-<span class="fc" id="L598">                    List&lt;Tile&gt; randomPath = pathsList.get(Math.round(random(0, pathsList.size()-1)));</span>
+<span class="fc" id="L596">                    List&lt;Tile&gt; randomPath = pathsList.get(Math.round(random(0, pathsList.size()-1)));</span>
 
-<span class="fc" id="L600">                    enemyList.add(new Enemy(randomMonsterData, randomPath));;</span>
-<span class="fc" id="L601">                }</span>
+<span class="fc" id="L598">                    enemyList.add(new Enemy(randomMonsterData, randomPath));;</span>
+<span class="fc" id="L599">                }</span>
             } else {
-<span class="pc bpc" id="L603" title="1 of 2 branches missed.">                if (waveIndex &lt; waves.size() - 1) {</span>
-<span class="fc" id="L604">                    enemySpawnTimer = 0;</span>
-<span class="fc" id="L605">                    waveIndex++;</span>
-<span class="fc" id="L606">                    currentWave = waves.get(waveIndex);</span>
+<span class="pc bpc" id="L601" title="1 of 2 branches missed.">                if (waveIndex &lt; waves.size() - 1) {</span>
+<span class="fc" id="L602">                    enemySpawnTimer = 0;</span>
+<span class="fc" id="L603">                    waveIndex++;</span>
+<span class="fc" id="L604">                    currentWave = waves.get(waveIndex);</span>
                 }
             }
         }
-<span class="fc" id="L610">    }</span>
+<span class="fc" id="L608">    }</span>
     /**
      * Draw all elements in the game by current frame.
      * updates the game state, draws various game elements, including the Gamemap, towers, enemies,
@@ -615,64 +613,66 @@ public class App extends PApplet {
      */
 	@Override
     public void draw() {
-<span class="fc" id="L618">        gainManaPerSecond();</span>
-<span class="fc" id="L619">        moveWaveForwards();</span>
-<span class="fc" id="L620">        checkGameState();</span>
+<span class="fc" id="L616">        gainManaPerSecond();</span>
+<span class="fc" id="L617">        moveWaveForwards();</span>
+<span class="fc" id="L618">        checkGameState();</span>
 
         // the entire game map is drawn and towers can be placed if isTowerPlaceable() == true
-<span class="fc bfc" id="L623" title="All 2 branches covered.">        for (int i = 0; i &lt; gameMap.length; i++) {</span>
-<span class="fc bfc" id="L624" title="All 2 branches covered.">            for(int j = 0; j &lt; gameMap[i].length; j++) {</span>
-<span class="fc" id="L625">                gameMap[i][j].draw(this);</span>
+<span class="fc bfc" id="L621" title="All 2 branches covered.">        for (int i = 0; i &lt; gameMap.length; i++) {</span>
+<span class="fc bfc" id="L622" title="All 2 branches covered.">            for(int j = 0; j &lt; gameMap[i].length; j++) {</span>
+<span class="fc" id="L623">                gameMap[i][j].draw(this);</span>
             }
         }
+
         // a second for loop is needed in order to draw tower ranges :( I couldn't figure out a more efficent way of doing this.
-<span class="pc bpc" id="L629" title="1 of 2 branches missed.">        if (towerList != null) {</span>
-<span class="pc bpc" id="L630" title="1 of 2 branches missed.">            for (Tower tower : towerList) {</span>
-            // this part is for drawing tower upgrades
-<span class="nc" id="L632">            strokeWeight(1);</span>
-<span class="nc" id="L633">            stroke(255, 0, 255);</span>
-<span class="nc" id="L634">            noFill();</span>
+<span class="pc bpc" id="L628" title="1 of 2 branches missed.">        if (towerList != null) {</span>
+<span class="fc bfc" id="L629" title="All 2 branches covered.">            for (Tower tower : towerList) {</span>
+                // this part is for drawing tower upgrades
+<span class="fc" id="L631">                strokeWeight(1);</span>
+<span class="fc" id="L632">                stroke(255, 0, 255);</span>
+<span class="fc" id="L633">                noFill();</span>
 
-<span class="nc bnc" id="L636" title="All 2 branches missed.">            for (int i = 0; i &lt; tower.getRangeLevel() - tower.getBaseLevel(); i++) {</span>
-<span class="nc" id="L637">                ellipse(tower.getX()+4+(i*8), tower.getY()+4, 8, 8);</span>
-            }
-
-<span class="nc bnc" id="L640" title="All 2 branches missed.">            for (int i = 0; i &lt; tower.getDamageLevel() - tower.getBaseLevel(); i++) {</span>
-<span class="nc" id="L641">                line(tower.getX()+(8*i), tower.getY()+24, tower.getX()+8+(8*i), tower.getY()+32);</span>
-<span class="nc" id="L642">                line(tower.getX()+8+(8*i), tower.getY()+24, tower.getX()+(8*i), tower.getY()+32);</span>
-            }
-
-<span class="nc" id="L645">            stroke(0, 255, 255);</span>
-<span class="nc" id="L646">            strokeWeight((float)(tower.getSpeedLevel()-tower.getBaseLevel()));</span>
-<span class="nc bnc" id="L647" title="All 2 branches missed.">            if(tower.getSpeedLevel() &gt; 0) {</span>
-<span class="nc" id="L648">                rect(tower.getX()+6, tower.getY()+6, 20, 20);</span>
-            }
-
-            // this section of code is for draing the tower's ranges
-<span class="nc" id="L652">            strokeWeight(1);</span>
-<span class="nc" id="L653">            stroke(0, 0, 0);</span>
-<span class="nc" id="L654">            noFill();</span>
-<span class="nc bnc" id="L655" title="All 10 branches missed.">            if (mouseX &gt; tower.getX() &amp;&amp; mouseX &lt; tower.getX() + 32 &amp;&amp; mouseY &gt; tower.getY() &amp;&amp; mouseY &lt; tower.getY() + 32 &amp;&amp;</span>
-                gameState == GameState.GAMENORMAL) {
-<span class="nc" id="L657">                ellipse(tower.getX()+16, tower.getY()+16, tower.getRange()*2, tower.getRange()*2);</span>
-            }
-            // this section of code checks if enemies are in range of the tower
-<span class="nc bnc" id="L660" title="All 2 branches missed.">            for (Enemy enemy : enemyList) {</span>
-<span class="nc bnc" id="L661" title="All 2 branches missed.">                if (dist(enemy.getX()+10, enemy.getY()+10, tower.getX()+16, tower.getY()+16) &lt; tower.getRange()) {</span>
-<span class="nc bnc" id="L662" title="All 2 branches missed.">                    if (!tower.enemyInRangeContains(enemy)) {</span>
-<span class="nc" id="L663">                        tower.enemyInRangeAdd(enemy);</span>
-                    }
-                } else {
-<span class="nc" id="L666">                    tower.enemyInRangeRemove(enemy);</span>
+<span class="pc bpc" id="L635" title="1 of 2 branches missed.">                for (int i = 0; i &lt; tower.getRangeLevel() - tower.getBaseLevel(); i++) {</span>
+<span class="nc" id="L636">                    ellipse(tower.getX()+4+(i*8), tower.getY()+4, 8, 8);</span>
                 }
-<span class="nc" id="L668">            }</span>
-            // towers have to tick in order to fire fireballs/iceballs
-<span class="nc" id="L670">            tower.tick();</span>
-<span class="nc" id="L671">            tower.enemyInRangeRemoveAll(enemiesPlayingDeathAnimation);</span>
-<span class="nc" id="L672">        }</span>
-<span class="fc" id="L673">        enemiesPlayingDeathAnimation.clear();</span>
+
+<span class="pc bpc" id="L639" title="1 of 2 branches missed.">                for (int i = 0; i &lt; tower.getDamageLevel() - tower.getBaseLevel(); i++) {</span>
+<span class="nc" id="L640">                    line(tower.getX()+(8*i), tower.getY()+24, tower.getX()+8+(8*i), tower.getY()+32);</span>
+<span class="nc" id="L641">                    line(tower.getX()+8+(8*i), tower.getY()+24, tower.getX()+(8*i), tower.getY()+32);</span>
+                }
+
+<span class="fc" id="L644">                stroke(0, 255, 255);</span>
+<span class="fc" id="L645">                strokeWeight((float)(tower.getSpeedLevel()-tower.getBaseLevel()));</span>
+<span class="pc bpc" id="L646" title="1 of 2 branches missed.">                if(tower.getSpeedLevel() &gt; 0) {</span>
+<span class="fc" id="L647">                    rect(tower.getX()+6, tower.getY()+6, 20, 20);</span>
+                }
+
+                // this section of code is for draing the tower's ranges
+<span class="fc" id="L651">                strokeWeight(1);</span>
+<span class="fc" id="L652">                stroke(0, 0, 0);</span>
+<span class="fc" id="L653">                noFill();</span>
+<span class="pc bpc" id="L654" title="3 of 10 branches missed.">                if (mouseX &gt; tower.getX() &amp;&amp; mouseX &lt; tower.getX() + 32 &amp;&amp; mouseY &gt; tower.getY() &amp;&amp; mouseY &lt; tower.getY() + 32 &amp;&amp;</span>
+                    gameState == GameState.GAMENORMAL) {
+<span class="fc" id="L656">                    ellipse(tower.getX()+16, tower.getY()+16, tower.getRange()*2, tower.getRange()*2);</span>
+                }
+                // this section of code checks if enemies are in range of the tower
+<span class="fc bfc" id="L659" title="All 2 branches covered.">                for (Enemy enemy : enemyList) {</span>
+<span class="fc bfc" id="L660" title="All 2 branches covered.">                    if (dist(enemy.getX()+10, enemy.getY()+10, tower.getX()+16, tower.getY()+16) &lt; tower.getRange()) {</span>
+<span class="fc bfc" id="L661" title="All 2 branches covered.">                        if (!tower.enemyInRangeContains(enemy)) {</span>
+<span class="fc" id="L662">                            tower.enemyInRangeAdd(enemy);</span>
+                        }
+                    } else {
+<span class="fc" id="L665">                        tower.enemyInRangeRemove(enemy);</span>
+                    }
+<span class="fc" id="L667">                }</span>
+                // towers have to tick in order to fire fireballs/iceballs
+<span class="fc" id="L669">                tower.tick();</span>
+<span class="fc" id="L670">                tower.enemyInRangeRemoveAll(enemiesPlayingDeathAnimation);</span>
+<span class="fc" id="L671">            }</span>
+<span class="fc" id="L672">            enemiesPlayingDeathAnimation.clear();</span>
         }
 
+        // this draws the grass behind wizardHome
 <span class="fc" id="L676">        image(wizardHomeBackground, homeCol*CELLSIZE, homeRow*CELLSIZE+TOPBAR);</span>
 
 <span class="pc bpc" id="L678" title="1 of 2 branches missed.">        if (enemyList != null) {</span>
@@ -680,9 +680,9 @@ public class App extends PApplet {
                 // this checks if enemies are alive otherwise they are removed from enemyList
 <span class="fc" id="L681">                fill(255, 0, 0);</span>
 <span class="fc" id="L682">                rect(enemy.getX()-3, enemy.getY()-6, 26, 3);</span>
-<span class="pc bpc" id="L683" title="1 of 2 branches missed.">                if (enemy.getCurrentHitPoints() &gt; 0) {</span>
-<span class="pc bpc" id="L684" title="1 of 2 branches missed.">                    if (enemy.isFreeze()) {</span>
-<span class="nc" id="L685">                        fill(0, 255, 255);</span>
+<span class="fc bfc" id="L683" title="All 2 branches covered.">                if (enemy.getCurrentHitPoints() &gt; 0) {</span>
+<span class="fc bfc" id="L684" title="All 2 branches covered.">                    if (enemy.isFreeze()) {</span>
+<span class="fc" id="L685">                        fill(0, 255, 255);</span>
                     } else {
 <span class="fc" id="L687">                        fill(0, 255, 0);</span>
                     }
@@ -690,11 +690,11 @@ public class App extends PApplet {
                 }
 <span class="fc" id="L691">                enemy.tick();</span>
 <span class="fc" id="L692">                enemy.draw(this);</span>
-<span class="pc bpc" id="L693" title="1 of 2 branches missed.">                if (enemy.isPlayingDeathAnimation())</span>
-<span class="nc" id="L694">                    enemiesPlayingDeathAnimation.add(enemy);</span>
+<span class="fc bfc" id="L693" title="All 2 branches covered.">                if (enemy.isPlayingDeathAnimation())</span>
+<span class="fc" id="L694">                    enemiesPlayingDeathAnimation.add(enemy);</span>
                 // this checks if enemies are alive otherwise they will be added to enemiesToRemove and thus be removed from enemyList later.
-<span class="pc bpc" id="L696" title="1 of 2 branches missed.">                if (!enemy.isAlive()) {</span>
-<span class="nc" id="L697">                    enemiesDead.add(enemy);</span>
+<span class="fc bfc" id="L696" title="All 2 branches covered.">                if (!enemy.isAlive()) {</span>
+<span class="fc" id="L697">                    enemiesDead.add(enemy);</span>
                 }
 <span class="fc" id="L699">            }</span>
 <span class="fc" id="L700">            enemyList.removeAll(enemiesDead);</span>
@@ -702,79 +702,79 @@ public class App extends PApplet {
         }
 
 <span class="pc bpc" id="L704" title="1 of 2 branches missed.">        if (fireballList != null) {</span>
-<span class="pc bpc" id="L705" title="1 of 2 branches missed.">            for(Fireball fireball : fireballList) {</span>
-<span class="nc" id="L706">                fireball.tick();</span>
-<span class="nc" id="L707">                fireball.draw(this);</span>
-<span class="nc bnc" id="L708" title="All 2 branches missed.">                if (fireball.getIsCollided()) {</span>
-<span class="nc" id="L709">                    fireballsToRemove.add(fireball);</span>
+<span class="fc bfc" id="L705" title="All 2 branches covered.">            for(Fireball fireball : fireballList) {</span>
+<span class="fc" id="L706">                fireball.tick();</span>
+<span class="fc" id="L707">                fireball.draw(this);</span>
+<span class="fc bfc" id="L708" title="All 2 branches covered.">                if (fireball.getIsCollided()) {</span>
+<span class="fc" id="L709">                    fireballsToRemove.add(fireball);</span>
                 }
-<span class="nc" id="L711">            }</span>
+<span class="fc" id="L711">            }</span>
 <span class="fc" id="L712">            fireballList.removeAll(fireballsToRemove);</span>
 <span class="fc" id="L713">            fireballsToRemove.clear();</span>
         }
 
 <span class="fc" id="L716">        gameMap[homeRow][homeCol].draw(this);</span>
 
-    // draws topbar and sidebar
+        // draws topbar and sidebar
 <span class="fc" id="L719">        noStroke();</span>
 <span class="fc" id="L720">        fill(210, 180, 140);</span>
 <span class="fc" id="L721">        rect(0, 0, 760, 40);</span>
 <span class="fc" id="L722">        rect(640, 40,120, 640);</span>
-        
-<span class="pc bpc" id="L724" title="1 of 2 branches missed.">        if (towerList != null) {</span>
-<span class="pc bpc" id="L725" title="1 of 2 branches missed.">            for (Tower tower : towerList) {</span>
-<span class="nc bnc" id="L726" title="All 8 branches missed.">                if (mouseX &gt; tower.getX() &amp;&amp; mouseX &lt; tower.getX() + 32 &amp;&amp; mouseY &gt; tower.getY() &amp;&amp; mouseY &lt; tower.getY() + 32) {</span>
-<span class="nc" id="L727">                    int rangeCost = 0;</span>
-<span class="nc" id="L728">                    int speedCost = 0;</span>
-<span class="nc" id="L729">                    int damageCost = 0;</span>
-<span class="nc bnc" id="L730" title="All 6 branches missed.">                    if (isUpgradeRange || isUpgradeDamage || isUpgradeSpeed) {</span>
-<span class="nc" id="L731">                        fill(255, 255, 255);</span>
-<span class="nc" id="L732">                        stroke(0, 0 ,0);</span>
-<span class="nc" id="L733">                        rect(650, 500 , 90, 18);</span>
-<span class="nc" id="L734">                        rect(650, 518 , 90, 62);</span>
-<span class="nc" id="L735">                        rect(650, 580 , 90, 18);</span>
-<span class="nc" id="L736">                        fill(0, 0, 0);</span>
-<span class="nc" id="L737">                        textSize(12);</span>
-<span class="nc" id="L738">                        text(&quot;Upgrade Cost:&quot;, 652, 514);</span>
-<span class="nc bnc" id="L739" title="All 2 branches missed.">                        if (isUpgradeRange) {</span>
-<span class="nc" id="L740">                            rangeCost = Math.round(tower.getRangeCost());</span>
-<span class="nc" id="L741">                            text(&quot;Range: &quot; + rangeCost, 652, 534);</span>
+
+        // this section draws the tooltips for the tower upgrade costs
+<span class="pc bpc" id="L725" title="1 of 2 branches missed.">        if (towerList != null) {</span>
+<span class="fc bfc" id="L726" title="All 2 branches covered.">            for (Tower tower : towerList) {</span>
+<span class="pc bpc" id="L727" title="2 of 8 branches missed.">                if (mouseX &gt; tower.getX() &amp;&amp; mouseX &lt; tower.getX() + 32 &amp;&amp; mouseY &gt; tower.getY() &amp;&amp; mouseY &lt; tower.getY() + 32) {</span>
+<span class="fc" id="L728">                    int rangeCost = 0;</span>
+<span class="fc" id="L729">                    int speedCost = 0;</span>
+<span class="fc" id="L730">                    int damageCost = 0;</span>
+<span class="pc bpc" id="L731" title="5 of 6 branches missed.">                    if (isUpgradeRange || isUpgradeDamage || isUpgradeSpeed) {</span>
+<span class="fc" id="L732">                        fill(255, 255, 255);</span>
+<span class="fc" id="L733">                        stroke(0, 0 ,0);</span>
+<span class="fc" id="L734">                        rect(650, 500 , 90, 18);</span>
+<span class="fc" id="L735">                        rect(650, 518 , 90, 62);</span>
+<span class="fc" id="L736">                        rect(650, 580 , 90, 18);</span>
+<span class="fc" id="L737">                        fill(0, 0, 0);</span>
+<span class="fc" id="L738">                        textSize(12);</span>
+<span class="fc" id="L739">                        text(&quot;Upgrade Cost:&quot;, 652, 514);</span>
+<span class="pc bpc" id="L740" title="1 of 2 branches missed.">                        if (isUpgradeRange) {</span>
+<span class="fc" id="L741">                            rangeCost = Math.round(tower.getRangeCost());</span>
+<span class="fc" id="L742">                            text(&quot;Range: &quot; + rangeCost, 652, 534);</span>
                         }
-<span class="nc bnc" id="L743" title="All 2 branches missed.">                        if (isUpgradeSpeed) {</span>
-<span class="nc" id="L744">                            speedCost = Math.round(tower.getSpeedCost());</span>
-<span class="nc" id="L745">                            text(&quot;Speed: &quot; + speedCost, 652, 554);</span>
+<span class="pc bpc" id="L744" title="1 of 2 branches missed.">                        if (isUpgradeSpeed) {</span>
+<span class="fc" id="L745">                            speedCost = Math.round(tower.getSpeedCost());</span>
+<span class="fc" id="L746">                            text(&quot;Speed: &quot; + speedCost, 652, 554);</span>
                         }
-<span class="nc bnc" id="L747" title="All 2 branches missed.">                        if (isUpgradeDamage) {</span>
-<span class="nc" id="L748">                            damageCost = Math.round(tower.getDamageCost());</span>
-<span class="nc" id="L749">                            text(&quot;Damage: &quot; + damageCost, 652, 574);</span>
+<span class="pc bpc" id="L748" title="1 of 2 branches missed.">                        if (isUpgradeDamage) {</span>
+<span class="fc" id="L749">                            damageCost = Math.round(tower.getDamageCost());</span>
+<span class="fc" id="L750">                            text(&quot;Damage: &quot; + damageCost, 652, 574);</span>
                         }
-<span class="nc" id="L751">                        text(&quot;Total: &quot; + (rangeCost + speedCost + damageCost), 652, 594);</span>
+<span class="fc" id="L752">                        text(&quot;Total: &quot; + (rangeCost + speedCost + damageCost), 652, 594);</span>
                     }
                 }
-<span class="nc" id="L754">            }</span>
+<span class="fc" id="L755">            }</span>
         }
-
 
     // this section of code draws the buttons and their labels.
 <span class="fc bfc" id="L759" title="All 2 branches covered.">        for (Button b : buttonList) {</span>
     
 <span class="fc" id="L761">            stroke(0, 0, 0);</span>
-<span class="pc bpc" id="L762" title="7 of 8 branches missed.">            if (mouseX &gt; b.getX() &amp;&amp; mouseX &lt; b.getX() + 40 &amp;&amp; mouseY &gt; b.getY() &amp;&amp; mouseY &lt; b.getY() + 40) {</span>
+<span class="fc bfc" id="L762" title="All 8 branches covered.">            if (mouseX &gt; b.getX() &amp;&amp; mouseX &lt; b.getX() + 40 &amp;&amp; mouseY &gt; b.getY() &amp;&amp; mouseY &lt; b.getY() + 40) {</span>
                 // this section draws the cost indicators by calling the drawcost indicator function
-<span class="nc bnc" id="L764" title="All 2 branches missed.">                if (b instanceof TowerButton) {</span>
-<span class="nc" id="L765">                    TowerButton towerB = (TowerButton)b;</span>
-<span class="nc" id="L766">                    drawCostIndicator(b.getX(), b.getY(), towerB.getTowerPrice());</span>
-<span class="nc bnc" id="L767" title="All 2 branches missed.">                } if (b instanceof ManaButton) {</span>
+<span class="pc bpc" id="L764" title="1 of 2 branches missed.">                if (b instanceof TowerButton) {</span>
+<span class="fc" id="L765">                    TowerButton towerB = (TowerButton)b;</span>
+<span class="fc" id="L766">                    drawCostIndicator(b.getX(), b.getY(), towerB.getTowerPrice());</span>
+<span class="pc bpc" id="L767" title="1 of 2 branches missed.">                } if (b instanceof ManaButton) {</span>
 <span class="nc" id="L768">                    drawCostIndicator(b.getX(), b.getY(), manaPoolSpellCost);</span>
                 }
                 // this section of code changes the color of the button based on whether it is being hovered on or not
-<span class="nc bnc" id="L771" title="All 2 branches missed.">                if (b.getIsClicked()) {</span>
+<span class="pc bpc" id="L771" title="1 of 2 branches missed.">                if (b.getIsClicked()) {</span>
 <span class="nc" id="L772">                    fill(255, 255, 0);</span>
                 } else {
-<span class="nc" id="L774">                    fill(255, 255, 255);</span>
+<span class="fc" id="L774">                    fill(255, 255, 255);</span>
                 }
-<span class="pc bpc" id="L776" title="1 of 2 branches missed.">            } else if (b.getIsClicked()) {</span>
-<span class="nc" id="L777">                fill(255, 255, 0);</span>
+<span class="fc bfc" id="L776" title="All 2 branches covered.">            } else if (b.getIsClicked()) {</span>
+<span class="fc" id="L777">                fill(255, 255, 0);</span>
             } else {
 <span class="fc" id="L779">                noFill();</span>
             }

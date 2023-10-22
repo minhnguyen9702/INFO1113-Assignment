@@ -9,7 +9,7 @@ import java.util.Random;;
 * It is a specialized tower that extends the Tower class.
 */
 public class IceTower extends Tower {
-<span class="nc" id="L12">    public Random random = new Random();</span>
+<span class="fc" id="L12">    public Random random = new Random();</span>
 
     /**
      * Creates a new IceTower instance at the specified coordinates.
@@ -18,18 +18,18 @@ public class IceTower extends Tower {
      * @param y The y-coordinate of the IceTower.
      */
     public IceTower(float x, float y) {
-<span class="nc" id="L21">        super(x, y);</span>
-<span class="nc" id="L22">        this.sprite = App.icetower0Sprite;</span>
-<span class="nc" id="L23">        this.rangeLevel = 0;</span>
-<span class="nc" id="L24">        this.speedLevel = 0;</span>
-<span class="nc" id="L25">        this.damageLevel = 0;</span>
-<span class="nc" id="L26">        this.range = App.initialTowerRange - 32;</span>
-<span class="nc" id="L27">        this.speed = App.initialTowerSpeed *3/2;</span>
-<span class="nc" id="L28">        this.damage = App.initialTowerDamage *2/3;</span>
+<span class="fc" id="L21">        super(x, y);</span>
+<span class="fc" id="L22">        this.sprite = App.icetower0Sprite;</span>
+<span class="fc" id="L23">        this.rangeLevel = 0;</span>
+<span class="fc" id="L24">        this.speedLevel = 0;</span>
+<span class="fc" id="L25">        this.damageLevel = 0;</span>
+<span class="fc" id="L26">        this.range = App.initialTowerRange - 32;</span>
+<span class="fc" id="L27">        this.speed = App.initialTowerSpeed *3/2;</span>
+<span class="fc" id="L28">        this.damage = App.initialTowerDamage *2/3;</span>
 
-<span class="nc" id="L30">        isTowerPlaceable = false;</span>
-<span class="nc" id="L31">        canEnemyWalk = false;</span>
-<span class="nc" id="L32">    }</span>
+<span class="fc" id="L30">        isTowerPlaceable = false;</span>
+<span class="fc" id="L31">        canEnemyWalk = false;</span>
+<span class="fc" id="L32">    }</span>
 
     /**
      * Deducts the cost of purchasing an IceTower from the player's mana when 
@@ -37,22 +37,22 @@ public class IceTower extends Tower {
      */
     @Override
     public void purchaseTower() {
-<span class="nc" id="L40">        App.currentMana -= App.iceTowerCost;;</span>
-<span class="nc" id="L41">    }</span>
+<span class="fc" id="L40">        App.currentMana -= App.iceTowerCost;;</span>
+<span class="fc" id="L41">    }</span>
 
     /**
      * Changes the ice tower's sprite based on its base level.
      */
     @Override
     public void changeTowerSprite() {
-<span class="nc bnc" id="L48" title="All 2 branches missed.">        if (this.getBaseLevel() == 2) {</span>
+<span class="pc bpc" id="L48" title="1 of 2 branches missed.">        if (this.getBaseLevel() == 2) {</span>
 <span class="nc" id="L49">            this.sprite = App.icetower2Sprite;</span>
-<span class="nc bnc" id="L50" title="All 2 branches missed.">        } else if (this.getBaseLevel() == 1) {</span>
-<span class="nc" id="L51">            this.sprite = App.icetower1Sprite;</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">        } else if (this.getBaseLevel() == 1) {</span>
+<span class="fc" id="L51">            this.sprite = App.icetower1Sprite;</span>
         } else {
-<span class="nc" id="L53">            this.sprite = App.icetower0Sprite;</span>
+<span class="fc" id="L53">            this.sprite = App.icetower0Sprite;</span>
         }
-<span class="nc" id="L55">    }</span>
+<span class="fc" id="L55">    }</span>
 
     /**
      * Shoots a projectile (Iceball) at a random enemy in range.
@@ -62,7 +62,7 @@ public class IceTower extends Tower {
      */
     @Override
     public void shootProjectile() {
-<span class="nc" id="L65">        App.fireballList.add(new Iceball(this.x+16, this.y+16, enemyInRange.get(random.nextInt(enemyInRange.size())), damage));</span>
-<span class="nc" id="L66">    }</span>
+<span class="fc" id="L65">        App.fireballList.add(new Iceball(this.x+16, this.y+16, enemyInRange.get(random.nextInt(enemyInRange.size())), damage));</span>
+<span class="fc" id="L66">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>
